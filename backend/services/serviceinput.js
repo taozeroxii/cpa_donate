@@ -29,6 +29,29 @@ module.exports = {
       );
     });
   },
+  onEditgroupItem(value){
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `INSERT INTO ${table.group_type} SET ? `,value,(error, result) => {
+          if (error) return reject(error);
+          resolve(result);
+        }
+      );
+    });
+  },
+
+  onDeletegroupItem(value){
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `INSERT INTO ${table.group_type} SET ? `,value,(error, result) => {
+          if (error) return reject(error);
+          resolve(result);
+        }
+      );
+    });
+  },
+
+
   //  ประเภทรายการสินค้า    -------- ---------------------------------------------------
   findItemtype() {
     return new Promise((resolve, reject) => {
