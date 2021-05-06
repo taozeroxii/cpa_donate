@@ -19,6 +19,16 @@ module.exports = {
       );
     });
   },
+  onAddgroupItem(value){
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `INSERT INTO ${table.group_type} SET ? `,value,(error, result) => {
+          if (error) return reject(error);
+          resolve(result);
+        }
+      );
+    });
+  },
   //  ประเภทรายการสินค้า    -------- ---------------------------------------------------
   findItemtype() {
     return new Promise((resolve, reject) => {
@@ -50,4 +60,20 @@ module.exports = {
       );
     });
   },
+  onAdditemlist(value){
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `INSERT INTO ${table.itemlist} SET ? `,value,(error, result) => {
+          if (error) return reject(error);
+          resolve(result);
+        }
+      );
+    });
+  },
+
+
+
+
+
+
 };
