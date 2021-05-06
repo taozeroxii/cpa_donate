@@ -39,18 +39,25 @@ router.get('/itemtype',async (req,res)=>{
     catch(ex){res.error(ex)}
 })
 
-// เรียกข้อมูลบริจาครายนชิ้นเพื่อแสดงข้อมูลตอนแก้ไข
-router.get('/itemtype/:id',async (req,res)=>{
+//----------------------- itemlist ----------------------------------------------
+router.get('/itemlist',async (req,res)=>{ 
     try{
-        const listitem =await service.findItemType({ item_id:req.params.item_id })
-        if(!listitem) throw new Error('Not Found Item !!!');
-        res.json(listitem);
+        const itemlist = await service.findItemList()
+        if(!itemlist) throw new Error('Not Found Item !!!');
+        res.json(itemlist);
     }
     catch(ex){res.error(ex)}
 })
 
-
-
+router.get('/itemlistbyid/:id',async (req,res)=>{ 
+    try{
+        // console.log(req.params.id)
+        const onelistitem = await service.findItemListByid(req.params.id)
+        if(!onelistitem) throw new Error('Not Found Item !!!');
+        res.json(onelistitem);
+    }
+    catch(ex){res.error(ex)}
+})
 
 
 

@@ -11,6 +11,7 @@ server.use(cors())
 var helmet = require('helmet')
 server.use(helmet())
 
+server.use(require('./configs/middleware'));//เรียกใช้งานไฟล์ middleware ที่เขียนไว้ดัก error message ต่างๆ
 server.use(bodyParser.urlencoded({ extended: false,limit:'500MB' }));
 server.use(bodyParser.json({limit:'500MB'}));// parser ตัวแปรที่ถูกส่งเข้ามาจาก client ถ้าไม่ใส่จะทำให้ backend ไม่รู้ว่าเป็นประเภทไหน
 
