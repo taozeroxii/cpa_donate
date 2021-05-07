@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { check, query } = require("express-validator");
-const service = require("../service/servicedonate");
+// const service = require("../service/servicedonate");
 
 router.get("/", (req, res) => {
   res.json({ message: "donate route" });

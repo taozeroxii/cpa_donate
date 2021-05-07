@@ -1,9 +1,9 @@
 const connection = require("../configs/mycon");
 
-const table = {
-  group_type: "donate_group_type",
-  itemtype: "donate_item_type",
-  itemlist: "donate_item_list",
+const table = { // service  select insert update delete item รายการสินค้า
+  group_type: "donate_group_type",// กลุ่มรายการสินค้า
+  itemtype: "donate_item_type",   // หน่วยนับ
+  itemlist: "donate_item_list",   // รายการสินค้า
 };
 
 module.exports = {
