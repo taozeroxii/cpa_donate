@@ -12,30 +12,39 @@
             <v-row>
               <v-col class="d-flex" lg="2" cols="4">
                 <v-select
+                  v-validate="'required'"
+                  name="pname"
                   v-model="account.pname"
                   :items="items"
                   label="คำนำหน้า"
                   :rules="pnameRule"
+                  :class="{ 'v-input--has-state theme--light v-text-field v-text-field--is-booted error--text': errors.has( 'pname'  ),  }"
                 ></v-select>
               </v-col>
 
               <v-col lg="5" cols="4">
                 <v-text-field
+                  v-validate="'required'"
                   name="fname"
                   label="ชื่อ"
                   id="fname"
-                  v-model="account.fname"
+                  :class="{  'v-input--has-state theme--light v-text-field v-text-field--is-booted error--text': errors.has(     'fname'   ),   }"
+                  v-model.trim="account.fname"
                   :rules="fnameRule"
                 />
+                <!-- <span>{{ errors.first("fname") }}</span> -->
               </v-col>
               <v-col lg="5" cols="4">
                 <v-text-field
+                  v-validate="'required'"
                   name="lname"
                   label="นามสกุล"
                   id="lname"
-                  v-model="account.lname"
+                  v-model.trim="account.lname"
                   :rules="lnameRule"
+                  :class="{'v-input--has-state theme--light v-text-field v-text-field--is-booted error--text': errors.has('lname') }"
                 />
+                <!-- <span>{{ errors.first("lname") }}</span> -->
               </v-col>
             </v-row>
 
@@ -43,15 +52,20 @@
               <!-- Username -->
               <v-col lg="6" cols="4">
                 <v-text-field
+                  v-validate="'required'"
                   name="username"
                   label="Username"
                   id="username"
-                  v-model="account.username"
+                  v-model.trim="account.username"
+                  :class="{'v-input--has-state theme--light v-text-field v-text-field--is-booted error--text': errors.has( 'username' ),}"
                   :rules="usernameRules"
-              /></v-col>
+                /><!-- <span>{{ errors.first("username") }}</span>-->
+              </v-col>
+
               <!-- Password -->
               <v-col lg="6" cols="4">
                 <v-text-field
+                  v-validate="'required|min:6'"
                   name="password"
                   label="Password"
                   id="password"
@@ -61,36 +75,60 @@
                   @click:append="isShowPassword = !isShowPassword"
                   :type="isShowPassword ? 'text' : 'password'"
                   counter
-                  v-model="account.password"
+                  v-model.trim="account.password"
                   :rules="passwordRules"
-              /></v-col>
+                  :class="{'v-input--has-state theme--light v-text-field v-text-field--is-booted error--text': errors.has('password' )}"
+                />
+                <!-- <span>{{ errors.first("password") }}</span> -->
+              </v-col>
             </v-row>
 
             <v-row>
               <v-col class="d-flex" lg="12" cols="4">
                 <v-select
-                  v-model="account.role"
+                  v-validate="'required'"
+                  name="role"
+                  v-model="account.default_role"
                   :items="role"
                   item-text="name"
                   item-value="id"
+                  :rules="roleRules"
                   label="สิทธิการใช้งาน"
-
-                ></v-select>
+                  :class="{
+                    'v-input--has-state theme--light v-text-field v-text-field--is-booted error--text': errors.has(
+                      'role'
+                    ),
+                  }"
+                >
+                </v-select>
               </v-col>
             </v-row>
+
             <!-- <span>{{ account }}</span> -->
+
             <v-row class="justify-space-between px-3 pt-5 mb-5">
               <v-col cols="6">
                 <v-btn type="submit" block color="success">
-                  บันทึก
-                  <v-icon dark right> mdi-checkbox-marked-circle </v-icon>
-                </v-btn></v-col
-              >
+                  บันทึก<v-icon dark right> mdi-checkbox-marked-circle </v-icon>
+                </v-btn>
+              </v-col>
               <v-col cols="6">
-                <v-btn block color="orange darken-2" dark @click="cancel">
-                  <v-icon dark left> mdi-arrow-left</v-icon>ยกเลิก</v-btn
-                ></v-col
-              >
+                <v-btn block color="orange darken-2" dark @click="cancel"
+                  ><v-icon dark left> mdi-arrow-left</v-icon>ยกเลิก</v-btn
+                >
+              </v-col>
+
+              <v-col>
+                <v-alert
+                  v-if="errorMessage"
+                  outlined
+                  type="warning"
+                  prominent
+                  border="left"
+                >
+                  {{ errorMessage }}</v-alert
+                >
+              </v-col>
             </v-row>
           </v-form>
         </v-card-text>
@@ -100,13 +138,17 @@
 </template>
 
 <script>
-// import api from '@/services/api'
+import Axios from "axios";
 
 export default {
   data() {
     return {
+      errorMessage: "",
       isShowPassword: false,
-      role:[{id:"1",name:"admin"},{id:"2",name:"user"}],
+      role: [
+        { id: "1", name: "admin" },
+        { id: "2", name: "user" },
+      ],
       items: ["นาย", "นาง", "นางสาว"],
       account: {
         username: "",
@@ -114,18 +156,17 @@ export default {
         pname: "",
         fname: "",
         lname: "",
-        role:""
+        default_role :"",
       },
       usernameRules: [(v1) => !!v1 || "โปรดกรอก username"],
       passwordRules: [
         (v1) => !!v1 || "โปรดกรอก Password",
-        (v2) =>
-          !!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(v2) ||
-          "ขั้นต่ำ 8 ตัว, ต้องมีตัวอีกษรอย่างน้อย 1 ตัว",
+        (v2) => !!/^(?=.{6,})/.test(v2) || "Password ขั้นต่ำ 6 ตัว",
       ],
       pnameRule: [(v1) => !!v1 || "โปรดกรอก คำนำหน้าชื่อ"],
       fnameRule: [(v1) => !!v1 || "โปรดกรอก ชื่อ"],
       lnameRule: [(v1) => !!v1 || "โปรดกรอก นามสกุล"],
+      roleRules: [(v1) => !!v1 || "โปรดกรอก สิทธิผู้ใช้งาน"],
     };
   },
   methods: {
@@ -134,9 +175,33 @@ export default {
     },
     submit() {
       console.log(this.account);
+      this.$validator.validateAll().then((valid) => {
+        // console.log(valid);
+        if (!valid) return;
+        Axios.post("api/account/register",this.account)
+          .then((response) => {
+            console.log(response);
+            this.account = {
+              username: "",
+              password: "",
+              pname: "",
+              fname: "",
+              lname: "",
+              default_role :"",
+            }
+          })
+          .catch((err) => {
+            // console.log(err.response.data.message);
+            this.errorMessage = err.response.data.message;
+          });
+      });
     },
   },
 };
 </script>
 
-<style></style>
+<style>
+.error-input {
+  color: red !important;
+}
+</style>

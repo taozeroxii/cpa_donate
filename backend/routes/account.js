@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const { check, query, validationResult } = require("express-validator");
-const { onRegister } = require("../services/accountservice");
 const services = require("../services/accountservice");
 
 router.get("/", async (req, res) => {
@@ -8,16 +7,17 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/register",[
-  check('pname').not().isEmpty(),
-  check('fname').not().isEmpty(),
-  check('lname').not().isEmpty(),
-  check('username').not().isEmpty(),
-  check('password').not().isEmpty(),
+  check('pname','โปรดกรอกคำนำหน้า').not().isEmpty(),
+  check('fname','โปรดกรอกชื่อ').not().isEmpty(),
+  check('lname','โปรดกรอกนามสกุล').not().isEmpty(),
+  check('username','โปรดกรอก username').not().isEmpty(),
+  check('password','โปรดกรอก password').not().isEmpty(),
   check('default_role').not().isEmpty().isInt(),
 ], async (req, res) => {
   try{
+    // console.log(req.body)
     req.validate();
-    const create = await onRegister(req.body);
+    const create = await services.onRegister(req.body);
     res.json(create);
   }catch(ex){res.status(400).json({message:ex.message})}
 
@@ -30,14 +30,15 @@ router.post("/login",[
 ], async (req, res) => {
   try{
     req.validate();
-    res.json(req.body);
+    const userLogin = await services.onLogin(req.body);
+    // req.session.userLogin = userLogin;//เก็บ session เมื่อ login สำเร็จ
+    res.json(userLogin);
   }catch(ex){res.status(400).json({message:ex.message})}
-
 });
 
 
 
-router.get("/submenu/:id", async (req, res) => {
+router.get("/edit-user/:id", async (req, res) => {
   //   try {
   //     const model = await services.findById(req.params.id);
   //     if (!model) throw new Error("ไม่พบข้อมูลที่ค้นหา");
