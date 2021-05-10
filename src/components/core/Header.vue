@@ -1,12 +1,12 @@
 <template>
   <div id="Header">
-    <v-app-bar color="accent-4" app dense >
-      <!-- <v-app-bar-nav-icon ></v-app-bar-nav-icon> -->
+    <v-app-bar color="accent-4" app dense>
+      <v-btn icon @click="onClickMenu(route)"> <v-icon>mdi-home</v-icon></v-btn>
 
       <v-toolbar-title>version.{{ version }}</v-toolbar-title>
 
       <v-spacer></v-spacer>
-      <span>Username: none</span>
+      <span>คุณ: none</span>
       <v-btn icon> <v-icon>mdi-export</v-icon></v-btn>
     </v-app-bar>
   </div>
@@ -17,6 +17,11 @@ export default {
   computed: {
     version() {
       return "1.0";
+    },
+  },
+  methods: {
+    onClickMenu() {
+      this.$router.push('/').catch(() => {});
     },
   },
 };

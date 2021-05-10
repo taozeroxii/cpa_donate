@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container id="Edituser">
     <v-row class="justify-center mt-5">
       <v-card style="width:90%;" outline>
         <v-img class="align-end" height="100px">
@@ -74,7 +74,6 @@
                   item-text="name"
                   item-value="id"
                   label="สิทธิการใช้งาน"
-
                 ></v-select>
               </v-col>
             </v-row>
@@ -82,7 +81,7 @@
             <v-row class="justify-space-between px-3 pt-5 mb-5">
               <v-col cols="6">
                 <v-btn type="submit" block color="success">
-                  บันทึก
+                  แก้ไข
                   <v-icon dark right> mdi-checkbox-marked-circle </v-icon>
                 </v-btn></v-col
               >
@@ -103,10 +102,19 @@
 // import api from '@/services/api'
 
 export default {
+  name: "Edituser",
   data() {
     return {
       isShowPassword: false,
-      role:[{id:"1",name:"admin"},{id:"2",name:"user"}],
+      role: [
+        { id: "1", name: "admin" },
+        { id: "2", name: "user" },
+        { id: "3", name: "ดูแลอุปกรณ์" },
+        { id: "4", name: "ดูแลเวชภัณฑ์" },
+        { id: "5", name: "ครุภัณฑ์" },
+        { id: "6", name: "อุปโภค" },
+        { id: "7", name: "บริโภค" },
+      ],
       items: ["นาย", "นาง", "นางสาว"],
       account: {
         username: "",
@@ -114,7 +122,7 @@ export default {
         pname: "",
         fname: "",
         lname: "",
-        role:""
+        role: "",
       },
       usernameRules: [(v1) => !!v1 || "โปรดกรอก username"],
       passwordRules: [
@@ -127,6 +135,10 @@ export default {
       fnameRule: [(v1) => !!v1 || "โปรดกรอก ชื่อ"],
       lnameRule: [(v1) => !!v1 || "โปรดกรอก นามสกุล"],
     };
+  },
+   async mounted() {
+    // let result = await api.getUserid(this.$route.params.id);
+    // this.product = result.data;
   },
   methods: {
     cancel() {

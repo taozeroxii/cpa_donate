@@ -1,14 +1,10 @@
 <template>
-  <v-container>
-    <v-row class="justify-center">
-      <v-card style="width:400px;">
-        <v-img
-          class="white--text align-end"
-          src=""
-          height="200px"
-        >
-          <v-card-title primary-title>
-            Login
+  <v-container mt-5>
+    <v-row class="justify-center mt-5">
+      <v-card style="width:400px;" shaped>
+        <v-img class="white--text align-end success" src="" height="120px">
+          <v-card-title>
+            ระบบรับบริจาค รพ.เจ้าพระยาอภัยภูเบศร
           </v-card-title>
         </v-img>
         <v-card-text>
@@ -34,7 +30,7 @@
             />
 
             <v-row class="justify-space-between px-3 pt-5 mb-5">
-              <v-btn type="submit" color="success">Login</v-btn>
+              <v-btn type="submit" color="success">เข้าสู่ระบบ</v-btn>
             </v-row>
           </v-form>
         </v-card-text>
@@ -49,7 +45,7 @@
 export default {
   mounted() {
     // if (api.isLoggedIn()) {
-    //   this.$router.push("/");
+    //   this.$router.push("/home");
     // }
   },
   data() {
@@ -57,8 +53,8 @@ export default {
       isShowPassword: false,
       account: {
         username: "",
-        password: ""
-      }
+        password: "",
+      },
     };
   },
   methods: {
@@ -70,7 +66,7 @@ export default {
     //     password: this.account.password
     //   });
     // }
-  }
+  },
 };
 </script>
 

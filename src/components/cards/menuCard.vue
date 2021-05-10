@@ -1,61 +1,27 @@
 <template>
-  <div id="menuCard">
-    <v-expansion-panels>
-      <v-expansion-panel
-        v-for="(item, i) in menumain"
-        :key="i"
-        @click="showSubmenu(item.main_id)"
-      >
-        <v-expansion-panel-header>
-          {{ item.main_name }}
-        </v-expansion-panel-header>
-        <v-expansion-panel-content>
-          <v-list dense>
-            <v-list-item
-              class="tile"
-              v-for="(item, index) in menusss"
-              :key="index"
-              link
-              @click="onClickMenu(item.menu_file)"
-            >
-              <v-list-item-content> {{ item.menu_sub }}</v-list-item-content>
-            </v-list-item>
-          </v-list>
-        </v-expansion-panel-content>
-      </v-expansion-panel>
-    </v-expansion-panels>
-  </div>
+  <v-card ripple id="StockCard"   @click="onClickMenu(menulink)">
+    <v-list-item two-line>
+      <v-list-item-content>
+        <v-list-item-title class="headline mb-1">{{ title }}. </v-list-item-title>
+        <v-list-item-subtitle class="title">{{ subtitle }}</v-list-item-subtitle>
+      </v-list-item-content>
+
+      <v-list-item-avatar tile size="80" :color="avatar_bg">
+        <v-icon color="white"> {{ avatar_ic }} </v-icon>
+      </v-list-item-avatar>
+    </v-list-item>
+  </v-card>
 </template>
 
 <script>
-import Axios from "axios";
 export default {
   name: "menuCard",
-  data() {
-    return {
-      menumain: "",
-      menusss: "",
-      rout: "",
-    };
-  },
-  async mounted() {
-    // console.log("menu");
-    await  Axios.get("http://localhost:3000/api/menu").then((result) => {
-      //console.log(JSON.stringify(result.data));
-      this.menumain = result.data;
-    });
-  },
+  props: ["title", "subtitle", "avatar_bg", "avatar_ic","menulink"],
+  menulinks:"",
   methods: {
-    async showSubmenu(id) {
-     await Axios.get(`http://localhost:3000/api/menu/submenu/${id}`).then(
-        (result) => {
-          // console.log(JSON.stringify(result.data));
-          this.menusss = result.data;
-        }
-      );
-    },
-    onClickMenu(link){
-      this.$router.push(`/tableshowdata/${link}`)
+    onClickMenu(menulink){     
+      console.log(menulink)
+      this.$router.push(menulink).catch(()=>{});
     }
   },
 };

@@ -4,7 +4,7 @@ const router = require('express').Router();
 //ข้อมูลกลุ่มประเภทของรับบริจาค router
 router.use('/typeinput',require('./type_input'));// จัดการข้อมูลรายการสินค้าและหน่วยสินค้าต่างๆ
 router.use('/donate',require('./donate'));// จัดการข้อมูลการรับบริจาคหรือจ่ายให้หน่วยงาน
-router.use('/user',require('./user'));
+router.use('/account',require('./account'));
 
 
 
