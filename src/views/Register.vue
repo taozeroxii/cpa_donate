@@ -177,7 +177,8 @@ export default {
               lname: "",
               default_role :"",
             }
-             this.errorMessage = 'Insert success';
+              // alertify.success(('Success message'));
+           
           })
           .catch((err) => {
             // console.log(err.response.data.message);

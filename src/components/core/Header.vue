@@ -6,7 +6,7 @@
       <v-toolbar-title>version.{{ version }}</v-toolbar-title>
 
       <v-spacer></v-spacer>
-      <span>คุณ: Guest</span>
+      <span>สวัสดี :  {{this.$store.state.use ? 'Guest':this.$store.state.user.pname+' '+this.$store.state.user.fname+' '+this.$store.state.user.lname}}</span>
       <v-btn icon @click="Logout()"> <v-icon>mdi-export</v-icon></v-btn>
     </v-app-bar>
   </div>
