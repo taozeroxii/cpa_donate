@@ -75,6 +75,7 @@ export default {
         axios.post("api/account/login",this.account)
           .then((response) => {
             console.log(response.data);
+            this.$router.push('/dashboard')
           })
           .catch((err) => {
             // console.log(err.response.data.message);

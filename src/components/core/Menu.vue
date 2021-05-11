@@ -44,8 +44,8 @@ export default {
     return {
       selectedMenu: 0,
       menus: [
-        ["mdi-home-city", "หน้าหลัก", "/"],
         ["mdi-chart-line", "Dashboard", "/dashboard"],
+        ["mdi-home-city", "หน้าหลัก", "/"],
         ["mdi-folder-multiple", "Report", "/report"],
         ["mdi-account-group-outline", "about", "/about"],
       ],

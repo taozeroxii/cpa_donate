@@ -13,25 +13,25 @@ const routes = [
     path: "/dashboard", name: "dashboard", component: () => import("@/views/dashboard.vue"),
   },
   {
-    path: "/report", name: "report", component: () => import("@/views/report.vue"),
+    path: "/report",meta:{auth:true}, name: "report", component: () => import("@/views/report.vue"),
   },
   {
     path: "/about", name: "About", component: () =>import( "../views/About.vue"),
   },
   {
-    path: "/donate", name: "Donate", component: () =>import( "../views/Donate"),
+    path: "/donate",meta:{auth:true}, name: "Donate", component: () =>import( "../views/Donate"),
   },
   {
-    path: "/withdraw", name: "wDraw", component: () =>import( "../views/wDraw"),
+    path: "/withdraw",meta:{auth:true}, name: "wDraw", component: () =>import( "../views/wDraw"),
   },
   {
-    path: "/item-list", name: "ItemList", component: () =>import( "../views/itemList"),
+    path: "/item-list",meta:{auth:true}, name: "ItemList", component: () =>import( "../views/itemList"),
   },
   {
-    path: "/item-unit", name: "itemUnit", component: () =>import( "../views/itemUnit"),
+    path: "/item-unit",meta:{auth:true}, name: "itemUnit", component: () =>import( "../views/itemUnit"),
   }, 
   {
-    path: "/userlist", name: "userlist", component: () => import("@/views/userlist.vue"),
+    path: "/userlist",meta:{auth:true}, name: "userlist", component: () => import("@/views/userlist.vue"),
   },
 
 
@@ -55,7 +55,7 @@ const routes = [
 
   {
     path: "*",
-    redirect: "/home",
+    redirect: "/login",
   },
 ];
 
@@ -71,9 +71,7 @@ router.beforeEach((to,from,next)=>{
    console.log(to.path)
   // console.log(router.app.$store)
   if(!to.meta.auth)return next();
-  router.app.$store.dispatch('get_user_login').then(()=>next() ) .catch(() => next({ name: 'login' }))
-
-
+  router.app.$store.dispatch('get_user_login').then(()=>next() )   .catch(() => next({ name: 'login' }))
 })
 
 export default router;
