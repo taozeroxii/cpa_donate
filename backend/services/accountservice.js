@@ -61,6 +61,7 @@ module.exports = {
     });
   },
 
+
   getAlluserlist(){
     return new Promise ((resolve,reject)=>{
       connection.query(`select du.id,du.username,du.pname,du.fname,du.lname,du.default_role,dur.role from donate_user du left join donate_user_role dur on du.default_role = dur.id`
@@ -72,4 +73,16 @@ module.exports = {
     })
   },
   
+  
+  editUserByid(id){
+    return new Promise ((resolve,reject)=>{
+      connection.query(`select username, pname,fname,lname,default_role from  donate_user where id = ?`,[id],(error,res)=>{
+        if(error) return reject(error);
+        resolve(res[0])
+      })
+   
+
+    })
+  }
+
 };

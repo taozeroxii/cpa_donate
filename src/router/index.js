@@ -37,10 +37,10 @@ const routes = [
 
 
   {
-    path: "/register", name: "register", component: () => import("@/views/Register.vue"),
+    path: "/register",meta:{auth:true}, name: "register", component: () => import("@/views/Register.vue"),
   },
   {
-    path: "/edit-user/:id", name: "EditUser", component: () => import("@/views/edits/EditUser.vue")
+    path: "/edit-user/:id",meta:{auth:true}, name: "EditUser", component: () => import("@/views/edits/EditUser.vue")
   },
 
 

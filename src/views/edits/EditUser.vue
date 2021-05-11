@@ -69,7 +69,7 @@
             <v-row>
               <v-col class="d-flex" lg="12" cols="4">
                 <v-select
-                  v-model="account.role"
+                  v-model="account.default_role"
                   :items="role"
                   item-text="name"
                   item-value="id"
@@ -99,7 +99,7 @@
 </template>
 
 <script>
-// import api from '@/services/api'
+import axios from 'axios'
 
 export default {
   name: "Edituser",
@@ -109,11 +109,11 @@ export default {
       role: [
         { id: "1", name: "admin" },
         { id: "2", name: "user" },
-        { id: "3", name: "ดูแลอุปกรณ์" },
-        { id: "4", name: "ดูแลเวชภัณฑ์" },
-        { id: "5", name: "ครุภัณฑ์" },
-        { id: "6", name: "อุปโภค" },
-        { id: "7", name: "บริโภค" },
+        // { id: "3", name: "ดูแลอุปกรณ์" },
+        // { id: "4", name: "ดูแลเวชภัณฑ์" },
+        // { id: "5", name: "ครุภัณฑ์" },
+        // { id: "6", name: "อุปโภค" },
+        // { id: "7", name: "บริโภค" },
       ],
       items: ["นาย", "นาง", "นางสาว"],
       account: {
@@ -122,7 +122,7 @@ export default {
         pname: "",
         fname: "",
         lname: "",
-        role: "",
+        default_role: "",
       },
       usernameRules: [(v1) => !!v1 || "โปรดกรอก username"],
       passwordRules: [
@@ -136,8 +136,11 @@ export default {
       lnameRule: [(v1) => !!v1 || "โปรดกรอก นามสกุล"],
     };
   },
-   async mounted() {
-    // let result = await api.getUserid(this.$route.params.id);
+    async mounted() {
+    // console.log(this.$route.params.id)
+    const resdata = await axios.get(`http://localhost:3000/api/account/get-user/${this.$route.params.id}`);
+    this.account = resdata.data;
+    // console.log( this.account)
     // this.product = result.data;
   },
   methods: {

@@ -64,7 +64,7 @@ router.post( "/logout",(req,res)=>{
   }
 });
 
-router.get("/edit-user/:id", async (req, res) => {
+router.get("/get-user/:id", async (req, res) => {
   //   try {
   //     const model = await services.findById(req.params.id);
   //     if (!model) throw new Error("ไม่พบข้อมูลที่ค้นหา");
@@ -72,6 +72,8 @@ router.get("/edit-user/:id", async (req, res) => {
   //   } catch (ex) {
   //     res.error(ex);
   //   }
+  const model = await services.editUserByid(req.params.id);
+  res.json(model)
 });
 
 router.get("/getuserlist", async (req, res) => {
