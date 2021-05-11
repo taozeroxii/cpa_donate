@@ -43,7 +43,7 @@ router.post( "/login",
     }
   }
 );
-
+//ดึง user เพื่อ login และเก็บลง session
 router.post("/getUserLogin", (req, res) => {
   try {
     if (req.session.userLogin) {
@@ -73,5 +73,16 @@ router.get("/edit-user/:id", async (req, res) => {
   //     res.error(ex);
   //   }
 });
+
+router.get("/getuserlist", async (req, res) => {
+    try {
+      const model =  await services.getAlluserlist();
+      if (!model) throw new Error("ไม่พบข้อมูลที่ค้นหา");
+      res.json(model);
+    } catch (ex) {
+      res.error(ex);
+    }
+});
+
 
 module.exports = router;

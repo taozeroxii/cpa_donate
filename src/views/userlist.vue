@@ -1,7 +1,6 @@
 <template>
-  <v-container>
+  <v-container id="userlist">
     <!-- Table section -->
-
     <v-card style="margin:15px">
       <v-data-table :search="search" :headers="headers" :items="mDataArray">
         <!-- table top section -->
@@ -79,6 +78,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: "userlist",
   data() {
@@ -119,6 +119,17 @@ export default {
       //   let result = await api.getProducts();
       //   this.mDataArray = result.data;
     },
+  },
+  mounted() {
+       axios
+      .get(
+        `http://localhost:3000/api/account/getuserlist`
+      )
+      .then((result) => {
+        // this.sql_name = result.data.sql_head; //name 1
+        // this.mDataArray = result.data; //code 1
+        console.log(result.data);
+      });
   },
 };
 </script>

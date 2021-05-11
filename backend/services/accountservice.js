@@ -60,5 +60,15 @@ module.exports = {
       );
     });
   },
+
+  getAlluserlist(){
+    return new Promise ((resolve,reject)=>{
+      connection.query('select id,username,pname,fname,lname from donate_user',(error, result) => {
+        // console.log(result);
+        if (error) return reject(error);
+        resolve(result)
+      })
+    })
+  },
   
 };
