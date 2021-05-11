@@ -138,7 +138,7 @@ export default {
   },
     async mounted() {
     // console.log(this.$route.params.id)
-    const resdata = await axios.get(`http://localhost:3000/api/account/get-user/${this.$route.params.id}`);
+    const resdata = await axios.get(`api/account/get-user/${this.$route.params.id}`);
     this.account = resdata.data;
     // console.log( this.account)
     // this.product = result.data;
