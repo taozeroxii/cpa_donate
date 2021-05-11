@@ -4,7 +4,7 @@
       <v-card style="width:90%;" outline>
         <v-img class="align-end" height="100px">
           <v-card-title primary-title>
-            เพิ่มผู้ใช้งาน
+            แก้ไขข้อมูลผู้ใช้งาน
           </v-card-title>
         </v-img>
         <v-card-text>

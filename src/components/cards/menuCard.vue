@@ -20,7 +20,7 @@ export default {
   menulinks:"",
   methods: {
     onClickMenu(menulink){     
-      console.log(menulink)
+      // console.log(menulink)
       this.$router.push(menulink).catch(()=>{});
     }
   },

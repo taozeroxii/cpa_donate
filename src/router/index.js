@@ -7,7 +7,7 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/home",name: "home", component: () => import("@/views/Home.vue"),
+    path: "/",name: "home" ,meta:{auth:true}, component: () => import("@/views/Home.vue"),
   },
   {
     path: "/dashboard", name: "dashboard", component: () => import("@/views/dashboard.vue"),
@@ -64,5 +64,14 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
+
+//ตรวจสอบสิทธิเข้าถึงหน้า
+router.beforeEach((to,from,next)=>{
+  // console.log(to.meta)
+  // console.log(router.app.$store)
+  if(!to.meta.auth)return next();
+  router.app.$store.dispatch('get_user_login').then(()=>next()) .catch(() => next({ name: 'login' }))
+
+})
 
 export default router;

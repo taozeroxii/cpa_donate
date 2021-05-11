@@ -1,11 +1,20 @@
 const express = require("express");
 var cors = require('cors')
 const server = express();
+const expressSession = require('express-session')
 const bodyParser = require('body-parser')
 const PORT = 3000;
 const routes = require('./routes');
 
 server.use(cors())
+
+//ตั้งค่า session สำหรับระบบ
+server.use(expressSession({
+    secret: 'thisistestweb',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {}
+}))
 
 //ปกป้อง HTTP HEADER ด้วย Helmet
 var helmet = require('helmet')

@@ -119,15 +119,7 @@
               </v-col>
 
               <v-col>
-                <v-alert
-                  v-if="errorMessage"
-                  outlined
-                  type="warning"
-                  prominent
-                  border="left"
-                >
-                  {{ errorMessage }}</v-alert
-                >
+                <v-alert v-if="errorMessage" outlined type="warning" prominent border="left" > {{ errorMessage }}</v-alert >
               </v-col>
             </v-row>
           </v-form>
@@ -174,7 +166,7 @@ export default {
       this.$router.back();
     },
     submit() {
-      console.log(this.account);
+      // console.log(this.account);
       this.$validator.validateAll().then((valid) => {
         // console.log(valid);
         if (!valid) return;

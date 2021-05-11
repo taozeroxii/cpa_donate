@@ -15,6 +15,7 @@
               label="Username"
               id="username"
               v-model="account.username"
+              :rules="usernameRules"
             />
 
             <!-- Password -->
@@ -26,12 +27,14 @@
               :append-icon="isShowPassword ? 'visibility' : 'visibility_off'"
               @click:append="isShowPassword = !isShowPassword"
               :type="isShowPassword ? 'text' : 'password'"
+              :rules="passwordRules"
               counter
             />
 
             <v-row class="justify-space-between px-3 pt-5 mb-5">
               <v-btn type="submit" color="success">เข้าสู่ระบบ</v-btn>
             </v-row>
+            <v-alert v-if="errorMessage" outlined type="warning" prominent border="left" > {{ errorMessage }}</v-alert >
           </v-form>
         </v-card-text>
       </v-card>
@@ -40,7 +43,7 @@
 </template>
 
 <script>
-// import api from "@/services/api";
+import axios from "axios";
 
 export default {
   mounted() {
@@ -50,22 +53,36 @@ export default {
   },
   data() {
     return {
+      errorMessage:"",
       isShowPassword: false,
       account: {
         username: "",
         password: "",
       },
+      usernameRules: [(v1) => !!v1 || "โปรดกรอก username"],
+      passwordRules: [
+        (v1) => !!v1 || "โปรดกรอก Password",
+        (v2) => !!/^(?=.{6,})/.test(v2) || "Password ขั้นต่ำ 6 ตัว",
+      ],
     };
   },
   methods: {
-    // submit() {
-    //   this.$router.push("/stock");
-    //   this.$store.dispatch({
-    //     type: "doLogin",
-    //     username: this.account.username,
-    //     password: this.account.password
-    //   });
-    // }
+      submit() {
+      // console.log(this.account);
+      this.$validator.validateAll().then((valid) => {
+        // console.log(valid);
+        if (!valid) return;
+        axios.post("api/account/login",this.account)
+          .then((response) => {
+            console.log(response.data);
+            this.$router.push('/home');
+          })
+          .catch((err) => {
+            // console.log(err.response.data.message);
+            this.errorMessage = err.response.data.message;
+          });
+      });
+    },
   },
 };
 </script>
