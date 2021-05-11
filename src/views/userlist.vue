@@ -36,6 +36,7 @@
             <td>{{ item.fname }}</td>
             <td>{{ item.lname }}</td>
             <td>{{ item.username }}</td>
+            <td>{{ item.role }}</td>
             <!-- <td>{{ item.price | currency("฿") }}</td>
             <td>{{ item.stock | number("0,0") }} pcs.</td> -->
             <td>
@@ -86,7 +87,7 @@ export default {
       search: "",
       selectedProductId: "",
       confirmDeleteDlg: false,
-      mDataArray: [{ id: "1", pname: "นาย.",fname:"ชื่อ",lname:"สกุล" ,username:"asdss"},{ id: "2", pname: "นาง.",fname:"a",lname:"b" ,username:"usern2"},{ id: "3", pname: "นางสาว.",fname:"c",lname:"d" ,username:"user3"}],
+      mDataArray: [],
       headers: [
         {
           text: "Id",
@@ -98,6 +99,7 @@ export default {
         { text: "ชื่อ", value: "fname" },
         { text: "สกุล", value: "lname" },
         { text: "username", value: "username" },
+        { text: "default_สิทธิ", value: "default_role" },
         { text: "Action", value: "action" },
       ],
     };
@@ -122,12 +124,10 @@ export default {
   },
   mounted() {
        axios
-      .get(
-        `http://localhost:3000/api/account/getuserlist`
-      )
+      .get(`api/account/getuserlist` )
       .then((result) => {
         // this.sql_name = result.data.sql_head; //name 1
-        this.mDataArray = result.data; //code 1
+        this.mDataArray = result.data; 
         // console.log(result.data);
       });
   },

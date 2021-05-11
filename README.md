@@ -1,24 +1,21 @@
 # fontend
-
-## Project setup
-```
 npm install
-```
-
-### Compiles and hot-reloads for development
-```
 npm run serve
-```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+# backend
+เช็คไฟล์ configs -> mycon มีไหม เพิ่มไปแล้วใส่ config mysql
+const mysql = require('mysql');
+const connection  = mysql.createConnection({
+  host            : '',
+  user            : '',
+  password        : '',
+  database        : 'cpadonate_db',
+  charset:'utf8'
+});
+//connection.getConnection((err,connect)=> console.log(err));//เช็ค connection 
+module.exports = connection;
 
-### Lints and fixes files
-```
-npm run lint
-```
+npm install 
+npm start
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+
