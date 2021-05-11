@@ -127,8 +127,8 @@ export default {
       )
       .then((result) => {
         // this.sql_name = result.data.sql_head; //name 1
-        // this.mDataArray = result.data; //code 1
-        console.log(result.data);
+        this.mDataArray = result.data; //code 1
+        // console.log(result.data);
       });
   },
 };
