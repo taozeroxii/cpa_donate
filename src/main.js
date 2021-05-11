@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
-import store from './store' //ต้อง import store ก่อน router ไม่เช่นนั้นค่าในstore จะไม่มา
-import router from './router'
 import vuetify from './plugins/vuetify'
 import VeeValidate from 'vee-validate'
+import store from './store' //ต้อง import store ก่อน router ไม่เช่นนั้นค่าในstore จะไม่มา
+import router from './router'
 import 'material-design-icons-iconfont'
 
 

@@ -67,10 +67,12 @@ const router = new VueRouter({
 
 //ตรวจสอบสิทธิเข้าถึงหน้า
 router.beforeEach((to,from,next)=>{
-  // console.log(to.meta)
+  //  console.log(to)
+   console.log(to.path)
   // console.log(router.app.$store)
   if(!to.meta.auth)return next();
-  router.app.$store.dispatch('get_user_login').then(()=>next()) .catch(() => next({ name: 'login' }))
+  router.app.$store.dispatch('get_user_login').then(()=>next() ) .catch(() => next({ name: 'login' }))
+
 
 })
 

@@ -10,7 +10,7 @@ export default new Vuex.Store({
     user:null
   },
   mutations: {
-    set_user:(state,user)=> {state.user = user , state.isLogged = true}
+    set_user:(state,user)=> state.user = user 
   },
   actions: {
     get_user_login:({commit})=>axios.post('api/account/getUserLogin').then(res =>commit('set_user',res.data ))
