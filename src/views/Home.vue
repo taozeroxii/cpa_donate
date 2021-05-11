@@ -68,5 +68,9 @@ export default {
     };
   },
   methods: {},
+   created(){
+    // const userLogin = this.$store.state.user;
+    // console.log(userLogin)
+  }
 };
 </script>

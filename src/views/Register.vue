@@ -94,11 +94,7 @@
                   item-value="id"
                   :rules="roleRules"
                   label="สิทธิการใช้งาน"
-                  :class="{
-                    'v-input--has-state theme--light v-text-field v-text-field--is-booted error--text': errors.has(
-                      'role'
-                    ),
-                  }"
+                  :class="{ 'v-input--has-state theme--light v-text-field v-text-field--is-booted error--text': errors.has('role' ), }"
                 >
                 </v-select>
               </v-col>
@@ -181,6 +177,7 @@ export default {
               lname: "",
               default_role :"",
             }
+             this.errorMessage = 'Insert success';
           })
           .catch((err) => {
             // console.log(err.response.data.message);

@@ -6,7 +6,7 @@
       <v-toolbar-title>version.{{ version }}</v-toolbar-title>
 
       <v-spacer></v-spacer>
-      <span>คุณ: none</span>
+      <span>คุณ: Guest</span>
       <v-btn icon @click="Logout()"> <v-icon>mdi-export</v-icon></v-btn>
     </v-app-bar>
   </div>

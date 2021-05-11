@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <Header />
-    <Menu   />
+    <Header v-if="this.$route.name!='login'"/>
+    <Menu   v-if="this.$route.name!='login'" />
     <Content />
   </v-app>
 </template>

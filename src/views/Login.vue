@@ -33,8 +33,17 @@
 
             <v-row class="justify-space-between px-3 pt-5 mb-5">
               <v-btn type="submit" color="success">เข้าสู่ระบบ</v-btn>
+                 <button type="button" @click.exact="Clear" @click.alt="useDefault">clear</button> <!-- @click.alt ต้องกด alt + คลิก จะไปเรียกฟังก์ชันค่า default -->
             </v-row>
-            <v-alert v-if="errorMessage" outlined type="warning" prominent border="left" > {{ errorMessage }}</v-alert >
+            <v-alert
+              v-if="errorMessage"
+              outlined
+              type="warning"
+              prominent
+              border="left"
+            >
+              {{ errorMessage }}</v-alert
+            >
           </v-form>
         </v-card-text>
       </v-card>
@@ -53,7 +62,7 @@ export default {
   },
   data() {
     return {
-      errorMessage:"",
+      errorMessage: "",
       isShowPassword: false,
       account: {
         username: "",
@@ -67,21 +76,34 @@ export default {
     };
   },
   methods: {
-      submit() {
+    submit() {
       // console.log(this.account);
       this.$validator.validateAll().then((valid) => {
         // console.log(valid);
         if (!valid) return;
-        axios.post("api/account/login",this.account)
+        axios
+          .post("api/account/login", this.account)
           .then((response) => {
             console.log(response.data);
-            this.$router.push('/dashboard')
+            this.$router.push("/dashboard");
           })
           .catch((err) => {
             // console.log(err.response.data.message);
             this.errorMessage = err.response.data.message;
           });
       });
+    },
+    Clear(){
+        this.account = {
+        username: "",
+        password: "",
+      };
+    },
+    useDefault() {
+      this.account = {
+        username: "admintaonaja",
+        password: "taotest",
+      };
     },
   },
 };
