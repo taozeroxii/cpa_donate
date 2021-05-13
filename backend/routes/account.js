@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { check, query, validationResult } = require("express-validator");
+const { check, query, validationResult ,param} = require("express-validator");
 const services = require("../services/accountservice");
 
 router.get("/", async (req, res) => {
@@ -43,6 +43,17 @@ router.post( "/login",
     }
   }
 );
+
+router.get("/getuserlist", async (req, res) => {
+  try {
+    const model =  await services.getAlluserlist();
+    if (!model) throw new Error("ไม่พบข้อมูลที่ค้นหา");
+    res.json(model);
+  } catch (ex) {
+    res.error(ex);
+  }
+});
+
 //ดึง user เพื่อ login และเก็บลง session
 router.post("/getUserLogin", (req, res) => {
   try {
@@ -65,26 +76,37 @@ router.post( "/logout",(req,res)=>{
 });
 
 router.get("/get-user/:id", async (req, res) => {
-  //   try {
-  //     const model = await services.findById(req.params.id);
-  //     if (!model) throw new Error("ไม่พบข้อมูลที่ค้นหา");
-  //     res.json(model);
-  //   } catch (ex) {
-  //     res.error(ex);
-  //   }
-  const model = await services.editUserByid(req.params.id);
-  res.json(model)
-});
-
-router.get("/getuserlist", async (req, res) => {
     try {
-      const model =  await services.getAlluserlist();
+      const model = await services.getUserByid(req.params.id);
       if (!model) throw new Error("ไม่พบข้อมูลที่ค้นหา");
       res.json(model);
     } catch (ex) {
       res.error(ex);
     }
 });
+
+
+
+router.put("/edit-user/:id",[
+  param('id').isInt(),// check param id from url ต้องเป็น int
+  check('username').not().isEmpty(),
+  check('password').not().isEmpty(),
+  check('pname').not().isEmpty(),
+  check('fname').not().isEmpty(),
+  check('lname').not().isEmpty(),
+  check('default_role').not().isEmpty()
+], async (req, res) => {
+  try {
+    req.validate();
+    const finduser = await services.getUserByid(req.params.id);
+    // console.log(finduser)
+    if (!finduser) throw new Error("ไม่พบข้อมูลที่ค้นหา");
+    res.json(await services.updateUserByid(finduser.id,req.body));
+  } 
+  catch (ex) { res.error(ex);
+  }
+});
+
 
 
 module.exports = router;

@@ -40,7 +40,7 @@ const routes = [
     path: "/register",meta:{auth:true}, name: "register", component: () => import("@/views/Register.vue"),
   },
   {
-    path: "/edit-user/:id",meta:{auth:true}, name: "EditUser", component: () => import("@/views/edits/EditUser.vue")
+    path: "/edit-user/:id",meta:{auth:true}, name: "EditUser", component: () => import("@/views/EditUser.vue")
   },
 
 
@@ -71,7 +71,9 @@ router.beforeEach((to,from,next)=>{
   //  console.log(to.path)
   // console.log(router.app.$store)
   if(!to.meta.auth)return next();
-  router.app.$store.dispatch('get_user_login').then(()=>next() )   .catch(() => next({ name: 'login' }))
+  router.app.$store.dispatch('get_user_login')
+  .then(()=>next() )   
+  .catch(() => next({ name: 'login' }))
 })
 
 export default router;

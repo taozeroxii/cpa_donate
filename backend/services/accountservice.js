@@ -47,7 +47,14 @@ module.exports = {
           if (error) return reject(error);
           if (result.length > 0) {
             const userLogin = result[0];
-            if ( password_varify( value.password, userLogin.password,userLogin.salz )) {// นำค่าที่พิมมาไปเช็คกับรหัสผ่านใน ฐานข้อมูล + salz ว่าตรงกันไหม
+            if (
+              password_varify(
+                value.password,
+                userLogin.password,
+                userLogin.salz
+              )
+            ) {
+              // นำค่าที่พิมมาไปเช็คกับรหัสผ่านใน ฐานข้อมูล + salz ว่าตรงกันไหม
               delete userLogin.password;
               delete userLogin.salz;
               delete userLogin.insertdatetime;
@@ -61,28 +68,60 @@ module.exports = {
     });
   },
 
-
-  getAlluserlist(){
-    return new Promise ((resolve,reject)=>{
-      connection.query(`select du.id,du.username,du.pname,du.fname,du.lname,du.default_role,dur.role from donate_user du left join donate_user_role dur on du.default_role = dur.id`
-      ,(error, result) => {
-        // console.log(result);
-        if (error) return reject(error);
-        resolve(result)
-      })
-    })
+  getAlluserlist() {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `select du.id,du.username,du.pname,du.fname,du.lname,du.default_role,dur.role from donate_user du left join donate_user_role dur on du.default_role = dur.id where du.id != 1 ORDER BY du.id desc`,
+        (error, result) => {
+          // console.log(result);
+          if (error) return reject(error);
+          resolve(result);
+        }
+      );
+    });
   },
-  
-  
-  editUserByid(id){
-    return new Promise ((resolve,reject)=>{
-      connection.query(`select username, pname,fname,lname,default_role from  donate_user where id = ?`,[id],(error,res)=>{
-        if(error) return reject(error);
-        resolve(res[0])
-      })
-   
 
-    })
-  }
+  getUserByid(id) {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `select id,username, pname,fname,lname,default_role from  donate_user where id = ?`,
+        [id],
+        (error, res) => {
+          if (error) return reject(error);
+          resolve(res[0]);
+        }
+      );
+    });
+  },
 
+  updateUserByid(id, value) {
+    return new Promise((resolve, reject) => {
+      // console.log(connection.escape(id));
+      // console.log(value)
+      salz = randomstring.generate(7);
+      value.password = value.password + salz;
+      value.password = password_hash(value.password);
+      const $query = `UPDATE donate_user SET  username = ? , password = ? , pname    = ? , fname= ? , lname = ?,default_role = ?, staff_update = ? WHERE id = ? `;
+      // console.log(id);
+      connection.query($query,[ value.username, value.password,  value.pname, value.fname, value.lname, value.default_role,value.staff_update, id ],
+        (error, result) => {
+            if (error) return reject(error);
+            resolve(result);
+        }
+      );
+    });
+  },
+
+  deleteUser(id) {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `DELETE  from  donate_user where id = ?`,
+        [id],
+        (error, res) => {
+          if (error) return reject(error);
+          resolve(res[0]);
+        }
+      );
+    });
+  },
 };

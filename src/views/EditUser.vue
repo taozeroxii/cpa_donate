@@ -12,7 +12,7 @@
             <v-row>
               <v-col class="d-flex" lg="2" cols="4">
                 <v-select
-                  v-model="account.pname"
+                  v-model="useraccount.pname"
                   :items="items"
                   label="คำนำหน้า"
                   :rules="pnameRule"
@@ -24,7 +24,7 @@
                   name="fname"
                   label="ชื่อ"
                   id="fname"
-                  v-model="account.fname"
+                  v-model="useraccount.fname"
                   :rules="fnameRule"
                 />
               </v-col>
@@ -33,7 +33,7 @@
                   name="lname"
                   label="นามสกุล"
                   id="lname"
-                  v-model="account.lname"
+                  v-model="useraccount.lname"
                   :rules="lnameRule"
                 />
               </v-col>
@@ -46,7 +46,7 @@
                   name="username"
                   label="Username"
                   id="username"
-                  v-model="account.username"
+                  v-model="useraccount.username"
                   :rules="usernameRules"
               /></v-col>
               <!-- Password -->
@@ -61,7 +61,7 @@
                   @click:append="isShowPassword = !isShowPassword"
                   :type="isShowPassword ? 'text' : 'password'"
                   counter
-                  v-model="account.password"
+                  v-model="useraccount.password"
                   :rules="passwordRules"
               /></v-col>
             </v-row>
@@ -69,7 +69,7 @@
             <v-row>
               <v-col class="d-flex" lg="12" cols="4">
                 <v-select
-                  v-model="account.default_role"
+                  v-model="useraccount.default_role"
                   :items="role"
                   item-text="name"
                   item-value="id"
@@ -77,7 +77,7 @@
                 ></v-select>
               </v-col>
             </v-row>
-            <!-- <span>{{ account }}</span> -->
+            <!-- <span>{{ useraccount }}</span> -->
             <v-row class="justify-space-between px-3 pt-5 mb-5">
               <v-col cols="6">
                 <v-btn type="submit" block color="success">
@@ -116,7 +116,7 @@ export default {
         // { id: "7", name: "บริโภค" },
       ],
       items: ["นาย", "นาง", "นางสาว"],
-      account: {
+      useraccount: {
         username: "",
         password: "",
         pname: "",
@@ -138,8 +138,8 @@ export default {
   },
     async mounted() {
     // console.log(this.$route.params.id)
-    const resdata = await axios.get(`api/account/get-user/${this.$route.params.id}`);
-    this.account = resdata.data;
+    const resdata = await axios.get(`/api/account/get-user/${this.$route.params.id}`);
+    this.useraccount = resdata.data;
     // console.log( this.account)
     // this.product = result.data;
   },
@@ -148,7 +148,11 @@ export default {
       this.$router.back();
     },
     submit() {
-      console.log(this.account);
+      // console.log(this.account);
+      // axios.post(`/api/accont/edit-user/`,this.useraccount,(err,res)=>{
+      //   if(err) return err
+      //   console.log(res)
+      // })
     },
   },
 };

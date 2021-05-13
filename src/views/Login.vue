@@ -84,7 +84,8 @@ export default {
         axios
           .post("api/account/login", this.account)
           .then((response) => {
-            console.log(response.data);
+            response
+            // console.log(response.data);
             this.$router.push("/dashboard");
           })
           .catch((err) => {
