@@ -31,7 +31,7 @@
             @keydown.space.prevent
             :rules="[() => !!form.item_type_id || 'This field is required']"
             :items="type_item"
-            label="โปรดเลือกประเภทบริจาค"
+            label="โปรดเลือกหน่วยนับ"
             placeholder="Select..."
             required
           ></v-autocomplete>

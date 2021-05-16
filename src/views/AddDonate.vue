@@ -100,9 +100,7 @@ export default {
         var i;
         for (i = 0; i < response.data.length; i++) {
           this.stock.push(
-            response.data[i].group_item_type_id +
-              " " +
-              response.data[i].type_name
+            response.data[i].group_item_type_id +"   : " +response.data[i].type_name
           );
         }
       })
@@ -122,7 +120,11 @@ export default {
 
     submit() {
       this.form.staff = this.$store.state.user.pname+' '+this.$store.state.user.fname+' '+this.$store.state.user.lname;
-      this.form.item_id = this.form.item_id[0];
+      this.form.item_id = this.form.item_id[0]+this.form.item_id[1]+this.form.item_id[2];
+      if(this.form.itemlist != null) {
+        this.form.itemlist  = this.form.itemlist[0]+this.form.itemlist[1]+this.form.itemlist[2] ;
+        this.form.itemlist  = this.form.itemlist.trim();
+      }
       // console.log(this.form);
       axios.post("api/donate/add-donate", this.form)
         .then((response) => {
@@ -151,7 +153,7 @@ export default {
           var i;
           for (i = 0; i < response.data.length; i++) {
             this.itemlist.push(
-              response.data[i].item_id + " " + response.data[i].item_name+ " ( "+response.data[i].item_name_type+" ) "
+              response.data[i].item_id + "  : " + response.data[i].item_name+ " ( "+response.data[i].item_name_type+" ) "
             );
           }
         })
