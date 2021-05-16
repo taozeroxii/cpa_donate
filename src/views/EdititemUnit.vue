@@ -107,7 +107,7 @@ async mounted() {
             item_name_type:null,
             note:null
           };
-          this.successMessage = "แก้ไขสำเร็จ";
+          this.alertify.success('แก้ไขสำเร็จ');
           this.errorRes = "";
         }).catch((err) => {this.errorRes = err.response.data.message;});
     },

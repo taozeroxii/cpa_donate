@@ -28,7 +28,7 @@ export default new Vuex.Store({
   },
   getters: {
     get_name(state) {
-      return state.user.pname+''+state.user.fname+' '+state.user.lname;
+      return state.user.pname+''+state.user.fname+' '+state.user.lname+' สิทธิการเข้าถึง : '+state.user.default_role_name;
     }
   },
   modules: {

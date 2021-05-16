@@ -178,8 +178,8 @@ export default {
               lname: "",
               default_role :"",
             }
-              // alertify.success(('Success message'));
-            this.errorMessage = "Insert success";
+            this.alertify.success('เพิ่มข้อมูลสำเร็จ');
+            // this.errorMessage = "Insert success";
           })
           .catch((err) => {
             // console.log(err.response.data.message);

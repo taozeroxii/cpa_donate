@@ -153,6 +153,7 @@ export default {
       axios.put(`/api/account/edit-user/${this.$route.params.id}`,this.useraccount,(err,res)=>{
         if(err) return err
         console.log(res);
+        this.alertify.success('แก้ไขสำเร็จ');
       }).catch((err) => {this.errMessage = err.response.data.message;});
 
     },

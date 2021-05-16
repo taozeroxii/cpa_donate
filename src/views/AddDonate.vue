@@ -132,7 +132,7 @@ export default {
           this.form.item_id= null;
           this.form.amount= null;
           this.checkinput=null
-          this.successMessage = 'เพิ่มสำเร็จ';
+          this.alertify.success('เพิ่มข้อมูลสำเร็จ !!');
           this.errorRes ='';
         }).catch((err) => {this.errorRes = err.response.data.message; });
     },
