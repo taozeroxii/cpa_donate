@@ -35,7 +35,6 @@
             <td>{{ item.pname }}</td>
             <td>{{ item.fname }}</td>
             <td>{{ item.lname }}</td>
-            <td>{{ item.username }}</td>
             <td>{{ item.role }}</td>
             <!-- <td>{{ item.price | currency("฿") }}</td>
             <td>{{ item.stock | number("0,0") }} pcs.</td> -->
@@ -44,7 +43,7 @@
                 edit
               </v-icon>
               <span class="ma-1"></span>
-              <v-icon @click="deleteItem(item)">
+              <v-icon  @click="deleteItem(item)">
                 delete
               </v-icon>
             </td>
@@ -99,7 +98,6 @@ export default {
         { text: "คำนำหน้า", value: "pname" },
         { text: "ชื่อ", value: "fname" },
         { text: "สกุล", value: "lname" },
-        { text: "username", value: "username" },
         { text: "default_สิทธิ", value: "default_role" },
         { text: "Action", value: "action" },
       ],
@@ -112,9 +110,11 @@ export default {
         this.$router.push(`/edit-user/${item.id}`);
     },
     deleteItem(item) {
+        if(this.$store.state.user.default_role_name =='admin'){
         this.selectedUserId = item.id;
         this.confirmDeleteDlg = true;
         console.log('เลือกลบ id: ' +this.selectedUserId )
+        }
     },
     async confirmDelete() {
         // console.log(this.selectedUserId)
