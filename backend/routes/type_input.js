@@ -117,6 +117,7 @@ router.delete("/itemtype/:id", async (req, res) => {
   }
 });
 //----------------------- itemlist ---------------------------------------------------------------------------------------
+
 router.get("/itemlist", async (req, res) => {
   try {
     const itemlist = await service.findItemList();
@@ -126,6 +127,7 @@ router.get("/itemlist", async (req, res) => {
     res.error(ex);
   }
 });
+
 //แสดงข้อมูลแค่ 1 rowเพื่อแก้ไข
 router.get("/itemlist/:id", async (req, res) => {
   try {
@@ -137,12 +139,24 @@ router.get("/itemlist/:id", async (req, res) => {
     res.error(ex);
   }
 });
+
+router.get("/itemlistgroupid/:id", async (req, res) => {// หน้า adddonate ดึงรายการสินค้าตามกลุ่มที่เลือก
+  try {
+    const itemlistgroupid = await service.findItemListBygroupId(req.params.id);
+    if (!itemlistgroupid) throw new Error("Not Found Item !!!");
+    res.json(itemlistgroupid);
+  } catch (ex) {
+    res.error(ex);
+  }
+});
+
+
 //เพิ่มข้อมูลสินค้ารับบริจาครายชื่อและพประเภทต่างๆ
-router.post( "/itemlist",
+router.post( "/add-item",
   [
-    check(  "item_type_id", "โปรดเลือกหน่วยบรรจุ(ค่าที่ส่งมาต้องเป็นตัวเลขเท่านั้น)") .not() .isEmpty() .isInt(),
+    check( "item_type_id", "โปรดเลือกหน่วยบรรจุ") .not() .isEmpty() .isInt(),
     check("group_item_type_id", "โปรดเลือกกลุ่มประเภท").not().isEmpty().isInt(),
-    check("item_name").not().isEmpty(),
+    check("item_name", "โปรดกรอกชื่อรายการสินค้า").not().isEmpty(),
   ],
   async (req, res) => {
     try {

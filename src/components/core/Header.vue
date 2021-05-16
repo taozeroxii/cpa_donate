@@ -1,7 +1,7 @@
 <template>
   <div id="Header">
     <v-app-bar color="accent-4" app dense>
-      <v-btn icon @click="onClickMenu()"> <v-icon>mdi-home</v-icon></v-btn>
+      <!-- <v-btn icon @click="onClickMenu()"> <v-icon>mdi-home</v-icon></v-btn> -->
 
       <v-toolbar-title>version.{{ version }}</v-toolbar-title>
 
@@ -26,9 +26,9 @@ export default {
     },
   },
   methods: {
-    onClickMenu() {
-      this.$router.push('/home').catch(() => {});
-    },
+    // onClickMenu() {
+    //   this.$router.push('/home').catch(() => {});
+    // },
     Logout() {
       axios.post('api/account/logout').then((response)=>{
         console.log(response.data.message);

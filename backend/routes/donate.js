@@ -1,29 +1,48 @@
 const router = require("express").Router();
 const { check, query } = require("express-validator");
-// const service = require("../service/servicedonate");
+const service = require("../services/servicedonate");
 
 router.get("/", (req, res) => {
   res.json({ message: "donate route" });
 });
 
 //แสดงข้อมูลรับบริจาคทั้งหมด
-router.get("/donatelist", (req, res) => {
-  res.json({ message: "donate route" });
+router.get("/donatelist",async (req, res) => {
+  try{
+    const result = await service.findAllDonateList();
+    res.json(result);
+  }catch(ex){
+    res.error(ex);
+  }
 });
 
-//เพิ่มข้อมูลการรับบริจาค
+//แสดงข้อมูลสินค้าทั้งหมด
+router.get("/itemlist",async (req, res) => {
+  try{
+    const result = await service.findAllitemList();
+    res.json(result);
+  }catch(ex){
+    res.error(ex);
+  }
+});
+
+
+//เพิ่มข้อมูลการรับบริจาค adddonate
 router.post(
-    "/additem",
-    [check("item_name").not().isEmpty(), check("item_type_id").not().isEmpty()],
+    "/add-donate",[
+    check("donor","โปรดกรอกรายชื่อผู้บริจาค").not().isEmpty(),
+    check("amount","โปรดกรอกจำนวนที่เป็นตัวเลขเท่านั้น").not().isEmpty().isInt(),
+    check("item_id","โปรดเลือกรายการสิ่งของ").not().isEmpty()],
     async (req, res) => {
       try {
         req.validate();
-        res.json({ message: await service.insertItem(req.body) });
+        res.json({ message: await service.insertDetaildonate(req.body) });
       } catch (ex) {
         res.error(ex);
       }
     }
   );
+
 // เรียกข้อมูลบริจาครายนชิ้นเพื่อแสดงข้อมูลตอนแก้ไข
 router.get("/itemlist/:id", async (req, res) => {
   try {
@@ -36,8 +55,6 @@ router.get("/itemlist/:id", async (req, res) => {
     res.error(ex);
   }
 });
-
-
 
 //ลบข้อมูล
 router.delete("/:id", async (req, res) => {

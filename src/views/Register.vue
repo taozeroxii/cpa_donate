@@ -145,6 +145,7 @@ export default {
         fname: "",
         lname: "",
         default_role :"",
+        isuse:"Y"
       },
       usernameRules: [(v1) => !!v1 || "โปรดกรอก username"],
       passwordRules: [
@@ -178,7 +179,7 @@ export default {
               default_role :"",
             }
               // alertify.success(('Success message'));
-           
+            this.errorMessage = "Insert success";
           })
           .catch((err) => {
             // console.log(err.response.data.message);

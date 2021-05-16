@@ -2,7 +2,7 @@
   <v-container id="userlist">
     <!-- Table section -->
     <v-card style="margin:15px">
-      <v-data-table :search="search" :headers="headers" :items="mDataArray">
+      <v-data-table :search="search" :headers="headers" :items="mDataArray" :loading="loaddata" loading-text="Loading... Please wait">
         <!-- table top section -->
         <template v-slot:top>
           <v-toolbar flat color="white">
@@ -85,8 +85,9 @@ export default {
   data() {
     return {
       search: "",
-      selectedProductId: "",
+      selectedUserId: "",
       confirmDeleteDlg: false,
+      loaddata:true,
       mDataArray: [],
       headers: [
         {
@@ -104,33 +105,33 @@ export default {
       ],
     };
   },
+
+
   methods: {
     editItem(item) {
         this.$router.push(`/edit-user/${item.id}`);
     },
-    deleteItem() {
-      //   this.selectedProductId = item.id;
+    deleteItem(item) {
+        this.selectedUserId = item.id;
         this.confirmDeleteDlg = true;
+        console.log('เลือกลบ id: ' +this.selectedUserId )
     },
     async confirmDelete() {
-      //   await api.deleteProduct(this.selectedProductId);
-      //   this.confirmDeleteDlg = false;
-      //   this.loadProducts();
+        // console.log(this.selectedUserId)
+        await axios.delete(`api/account/delete-user/${this.selectedUserId}`);
+        this.confirmDeleteDlg = false;
+        this.loadUser();
     },
-    async loadProducts() {
-      //   let result = await api.getProducts();
-      //   this.mDataArray = result.data;
+    async loadUser() {
+        await axios.get(`api/account/getuserlist` ).then((result) => {this.mDataArray = result.data;  });
+        this.loaddata = false;
     },
   },
+
+
   mounted() {
-       axios
-      .get(`api/account/getuserlist` )
-      .then((result) => {
-        // this.sql_name = result.data.sql_head; //name 1
-        this.mDataArray = result.data; 
-        // console.log(result.data);
-      });
-  },
+    this.loadUser();
+  }
 };
 </script>
 

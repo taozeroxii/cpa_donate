@@ -71,7 +71,7 @@ module.exports = {
   getAlluserlist() {
     return new Promise((resolve, reject) => {
       connection.query(
-        `select du.id,du.username,du.pname,du.fname,du.lname,du.default_role,dur.role from donate_user du left join donate_user_role dur on du.default_role = dur.id where du.id != 1 ORDER BY du.id desc`,
+        `select du.id,du.username,du.pname,du.fname,du.lname,du.default_role,dur.role from donate_user du left join donate_user_role dur on du.default_role = dur.id where du.id != 1 AND isuse = 'Y' ORDER BY du.id desc`,
         (error, result) => {
           // console.log(result);
           if (error) return reject(error);
@@ -101,9 +101,9 @@ module.exports = {
       salz = randomstring.generate(7);
       value.password = value.password + salz;
       value.password = password_hash(value.password);
-      const $query = `UPDATE donate_user SET  username = ? , password = ? , pname    = ? , fname= ? , lname = ?,default_role = ?, staff_update = ? WHERE id = ? `;
+      const $query = `UPDATE donate_user SET  username = ? , password = ? , pname    = ? , fname= ? , lname = ?,default_role = ?, staff_update = ? ,salz = ? WHERE id = ? `;
       // console.log(id);
-      connection.query($query,[ value.username, value.password,  value.pname, value.fname, value.lname, value.default_role,value.staff_update, id ],
+      connection.query($query,[ value.username, value.password,  value.pname, value.fname, value.lname, value.default_role,value.staff_update,salz, id ],
         (error, result) => {
             if (error) return reject(error);
             resolve(result);
@@ -112,16 +112,18 @@ module.exports = {
     });
   },
 
-  deleteUser(id) {
+  deleteUser(id,value) {
     return new Promise((resolve, reject) => {
       connection.query(
-        `DELETE  from  donate_user where id = ?`,
-        [id],
+        `UPDATE  donate_user SET isuse = 'N' ,staff_update = ? where id = ?`,
+        [value.staff_update,id],
         (error, res) => {
           if (error) return reject(error);
-          resolve(res[0]);
+          resolve(res);
         }
       );
     });
   },
+
+
 };

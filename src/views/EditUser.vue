@@ -91,6 +91,7 @@
                 ></v-col
               >
             </v-row>
+            <p style="color:red">{{errMessage}}</p>
           </v-form>
         </v-card-text>
       </v-card>
@@ -127,33 +128,35 @@ export default {
       usernameRules: [(v1) => !!v1 || "โปรดกรอก username"],
       passwordRules: [
         (v1) => !!v1 || "โปรดกรอก Password",
-        (v2) =>
-          !!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(v2) ||
-          "ขั้นต่ำ 8 ตัว, ต้องมีตัวอีกษรอย่างน้อย 1 ตัว",
+        (v2) => !!/^(?=.{6,})/.test(v2) || "Password ขั้นต่ำ 6 ตัว",
       ],
       pnameRule: [(v1) => !!v1 || "โปรดกรอก คำนำหน้าชื่อ"],
       fnameRule: [(v1) => !!v1 || "โปรดกรอก ชื่อ"],
       lnameRule: [(v1) => !!v1 || "โปรดกรอก นามสกุล"],
+      errMessage:""
     };
   },
-    async mounted() {
+  
+  async mounted() {
     // console.log(this.$route.params.id)
     const resdata = await axios.get(`/api/account/get-user/${this.$route.params.id}`);
     this.useraccount = resdata.data;
-    // console.log( this.account)
-    // this.product = result.data;
+    // console.log( this.useraccount)
   },
+
   methods: {
     cancel() {
       this.$router.back();
     },
     submit() {
       // console.log(this.account);
-      // axios.post(`/api/accont/edit-user/`,this.useraccount,(err,res)=>{
-      //   if(err) return err
-      //   console.log(res)
-      // })
+      axios.put(`/api/account/edit-user/${this.$route.params.id}`,this.useraccount,(err,res)=>{
+        if(err) return err
+        console.log(res);
+      }).catch((err) => {this.errMessage = err.response.data.message;});
+
     },
+
   },
 };
 </script>

@@ -86,7 +86,6 @@ router.get("/get-user/:id", async (req, res) => {
 });
 
 
-
 router.put("/edit-user/:id",[
   param('id').isInt(),// check param id from url ต้องเป็น int
   check('username').not().isEmpty(),
@@ -102,6 +101,22 @@ router.put("/edit-user/:id",[
     // console.log(finduser)
     if (!finduser) throw new Error("ไม่พบข้อมูลที่ค้นหา");
     res.json(await services.updateUserByid(finduser.id,req.body));
+  } 
+  catch (ex) { res.error(ex);
+  }
+});
+
+
+
+router.delete("/delete-user/:id",[
+  param('id').isInt(),// check param id from url ต้องเป็น int
+], async (req, res) => {
+  try {
+    req.validate();
+    const finduser = await services.getUserByid(req.params.id);
+    // console.log(finduser)
+    if (!finduser) throw new Error("ไม่พบข้อมูลที่ค้นหา");
+    res.json(await services.deleteUser(finduser.id,req.body));
   } 
   catch (ex) { res.error(ex);
   }
