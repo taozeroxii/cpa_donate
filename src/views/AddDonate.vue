@@ -119,7 +119,7 @@ export default {
     },
 
     submit() {
-      this.form.staff = this.$store.state.user.pname+' '+this.$store.state.user.fname+' '+this.$store.state.user.lname;
+      this.form.staff = this.$store.getters.get_name;
       this.form.item_id = this.form.item_id[0]+this.form.item_id[1]+this.form.item_id[2];
       if(this.form.itemlist != null) {
         this.form.itemlist  = this.form.itemlist[0]+this.form.itemlist[1]+this.form.itemlist[2] ;

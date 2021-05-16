@@ -7,7 +7,7 @@ router.get("/", async (req, res) => {
   res.json("this is type_input Route");
 });
 
-//----------------------- groupitem -------------------------------------------------------------------------------------------
+//----------------------- groupitem หรือ คลังสินค้า -------------------------------------------------------------------------------------------
 router.get("/groupitem", async (req, res) => {
   try {
     const groupitem = await service.findGroupitem();
@@ -21,11 +21,9 @@ router.get("/groupitem", async (req, res) => {
 // เรียกข้อมูลบริจาครายนชิ้นเพื่อแสดงข้อมูลตอนแก้ไข
 router.get("/groupitem/:id", async (req, res) => {
   try {
-    const groupitem = await service.findGroupitemByid({
-      groupitem_id: req.params.id,
-    });
-    if (!groupitem) throw new Error("Not Found Item !!!");
-    res.json(groupitem);
+    const itemtype = await service.findItemtypeByid(req.params.id);
+    if (!itemtype) throw new Error("Not Found Item !!!");
+    res.json(itemtype);
   } catch (ex) {
     res.error(ex);
   }
@@ -44,17 +42,20 @@ router.post( "/groupitem",[check("type_name", "โปรดกรอกข้อ
 );
 
 // แก้ไขกลุ่ม
-router.put("/groupitem",[ check("type_name", "โปรดกรอกข้อมูลชื่อกลุ่มสินค้าหรือชื่อที่จัดเก็บสินค้า") .not().isEmpty() ],
-  async (req, res) => {
-    try {
-      const groupitem = await service.EditGroupitemByid({ groupitem_id: req.body, });
-      if (!groupitem) throw new Error("Not Found Item !!!");
-      res.json(groupitem);
-    } catch (ex) {
-      res.error(ex);
-    }
+
+router.put("/groupitem/:id",[
+  check('item_name_type').not().isEmpty(),
+], async (req, res) => {
+  try {
+    req.validate();
+    const finditem = await service.findItemtypeByid(req.params.id);
+    // console.log(finditem)
+    if (!finditem) throw new Error("ไม่พบข้อมูลที่ค้นหา");
+    res.json(await service.EditGroupitemByid(finditem.item_type_id,req.body));
+  } 
+  catch (ex) { res.error(ex);
   }
-);
+});
 
 //ลบกลุ่ม
 router.delete("/groupitem/:id", async (req, res) => {
@@ -82,7 +83,6 @@ router.post(
   "/itemtype",
   [
     check("item_name_type", "โปรดกรอกชื่อหน่วยนับที่ต้องการ").not().isEmpty(),
-    check("amount", "โปรดกรอกจำนวนต่อหน่วย").not().isEmpty().isInt(),
   ],
   async (req, res) => {
     try {

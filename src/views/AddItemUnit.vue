@@ -3,38 +3,39 @@
     <v-col cols="12" sm="10" md="8" lg="6">
       <v-card ref="form" class="mt-5">
         <v-card-text>
-          <h1 class="mb-5">เพิ่มข้อมูลสินค้า</h1>
+          <h1 class="mb-5">เพิ่มประเภทหน่วยนับ</h1>
           <v-autocomplete
-            ref="stock"
+            ref="type_item"
             @keydown.space.prevent
-            v-model="form.group_item_type_id"
-            :rules="[() => !!form.group_item_type_id || 'This field is required']"
-            :items="stock"
-            label="โปรดเลือกประเภทบริจาค"
+            :items="type_item"
+            label="ค้นหา - รายการหน่วยนับเดิม"
             placeholder="Select..."
             required
           ></v-autocomplete>
 
+          <br class="mt-5 mb-5">
+
+
           <v-text-field
             ref="itemname"
-            v-model="form.item_name"
-            :rules="[() => !!form.item_name || 'This field is required']"
+            v-model="form.item_name_type"
+            :rules="[() => !!form.item_name_type || 'This field is required']"
             :error-messages="errorMessages"
-            label="ชื่อรายการ"
+            label="ชื่อรายการหน่วยนับ"
             placeholder="โปรดกรอกชื่อรายการ"
             required
           ></v-text-field>
 
-          <v-autocomplete
-            ref="type_item"
-            v-model="form.item_type_id"
-            @keydown.space.prevent
-            :rules="[() => !!form.item_type_id || 'This field is required']"
-            :items="type_item"
-            label="โปรดเลือกหน่วยนับ"
-            placeholder="Select..."
-            required
-          ></v-autocomplete>
+
+            <v-text-field
+            ref="note"
+            v-model="form.note"
+            :error-messages="errorMessages"
+            label="หมายเหตุ"
+            placeholder=" - "
+          ></v-text-field>
+
+
         </v-card-text>
       
         <v-divider class="mt-12"></v-divider>
@@ -76,6 +77,7 @@
 <script>
 import axios from "axios";
 export default {
+  name:"additemunit",
   data: () => ({
     counter: 0,
     type_item:[],
@@ -85,23 +87,12 @@ export default {
     errorRes: "",
     groupstock_id: "",
     form: {
-      group_item_type_id:null,
-      item_type_id:null,
-      item_name: null,
-      insert_date: null,
-      staff:null
+      item_name_type:null,
+      note:null
     },
   }),
 
   async created() {
-    await axios.get(`api/typeinput/groupitem`).then((response) => {
-        //console.log(response.data);
-        var i;
-        for (i = 0; i < response.data.length; i++) {
-          this.stock.push(  response.data[i].group_item_type_id + " " + response.data[i].type_name );
-        }
-      }).catch((err) => { console.log(err); });
-
     await axios.get(`api/typeinput/itemtype`) .then((response) => {
         // console.log(response.data);
         var i;
@@ -121,24 +112,14 @@ export default {
     },
 
     async submit() {
-        if( this.form.group_item_type_id!=null){ 
-            this.form.group_item_type_id = this.form.group_item_type_id[0];
-            this.form.group_item_type_id =  this.form.group_item_type_id.trim();
-        } 
-        if( this.form.item_type_id!=null){ 
-          this.form.item_type_id = this.form.item_type_id[0]+this.form.item_type_id[1]+this.form.item_type_id[2];
-          this.form.item_type_id = this.form.item_type_id.trim();
-        }
         this.form.staff = this.$store.getters.get_name;
         // console.log(this.form);
 
-        await axios .post("api/typeinput/add-item", this.form) .then((response) => {
+        await axios .post("api/typeinput/itemtype", this.form) .then((response) => {
           console.log(response.data.message);
           this.form = {
-                group_item_type_id:null,
-                item_type_id:null,
-                item_name: null,
-                insert_date: null,
+            item_name_type:null,
+            note:null
           };
           this.successMessage = "เพิ่มสำเร็จ";
           this.errorRes = "";

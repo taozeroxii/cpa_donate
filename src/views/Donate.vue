@@ -2,7 +2,7 @@
   <v-container id="donate">
     <!-- Table section -->
     <v-card style="margin:15px">
-      <v-data-table :search="search" :headers="headers" :items="mDataArray" :loading="loaddata" loading-text="Loading... Please wait">
+      <v-data-table :search="search" :headers="headers" :items="mDataArray" :loading="loaddata" loading-text="Loading... Please wait" :footer-props="{'items-per-page-options': [10, 20, 30, 40, 50]}">
         <!-- table top section -->
         <template v-slot:top>
           <v-toolbar flat color="white">

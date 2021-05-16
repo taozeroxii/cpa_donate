@@ -82,11 +82,10 @@ export default {
         // console.log(valid);
         if (!valid) return;
         axios
-          .post("api/account/login", this.account)
-          .then((response) => {
+          .post("api/account/login", this.account).then((response) => {
             response
             // console.log(response.data);
-            this.$router.push("/dashboard");
+            this.$router.push("/");
           })
           .catch((err) => {
             // console.log(err.response.data.message);

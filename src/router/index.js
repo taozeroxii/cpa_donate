@@ -48,6 +48,13 @@ const routes = [
   {
     path: "/item-unit",meta:{auth:true}, name: "itemUnit", component: () =>import( "../views/itemUnit"),
   }, 
+  {
+    path: "/add-item-unit",meta:{auth:true}, name: "additemunid", component: () =>import( "../views/AddItemUnit"),
+  }, 
+  {
+    path: "/edit-item-unit/:id",meta:{auth:true}, name: "edititemunitid", component: () =>import( "../views/EdititemUnit"),
+  }, 
+  
 
 
   //-------------------------------------------- USER ----------------------------------------------------------
@@ -83,9 +90,10 @@ const router = new VueRouter({
 //ตรวจสอบสิทธิเข้าถึงหน้า
 router.beforeEach((to,from,next)=>{
   //  console.log(to)
-  //  console.log(to.path)
+  //  console.log(to.name)
   // console.log(router.app.$store)
   if(!to.meta.auth)return next();
+  // if(to.name == `edititemunitid`) router.app.$store.dispatch('get_user_login_edit')//หากเข้า path ที่เป็น api/path/:id ให้เข้าไป get user login ตามนี้
   router.app.$store.dispatch('get_user_login')
   .then(()=>next() )   
   .catch(() => next({ name: 'login' }))

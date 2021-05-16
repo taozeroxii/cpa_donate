@@ -2,7 +2,7 @@
   <v-container id="itemlist">
     <!-- Table section -->
     <v-card style="margin:15px">
-      <v-data-table :search="search" :headers="headers" :items="mDataArray"  :loading="loaddata" loading-text="Loading... Please wait">
+      <v-data-table :search="search" :headers="headers" :items="mDataArray"  :loading="loaddata" loading-text="Loading... Please wait" :footer-props="{'items-per-page-options': [10, 20, 30, 40, 50]}" >
         <!-- table top section -->
         <template v-slot:top>
           <v-toolbar flat color="white">
@@ -108,6 +108,7 @@ export default {
         { text: "วันที่แก้ไขล่าสุด", value: "update_date" },
         { text: "Action", value: "action" },
       ],
+
     };
   },
 

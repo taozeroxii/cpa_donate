@@ -1,7 +1,7 @@
 <template>
   <div class="small">
+    <v-btn color="primary"  class="btn btn--success" @click="fillData()">Random กราฟ  </v-btn>
     <line-chart v-if="datacollection!=null" :chart-data="datacollection"></line-chart>
-    <button @click="fillData()">Randomize</button>
   </div>
 </template>
 
@@ -19,6 +19,7 @@
     },
     mounted () {
       this.fillData()
+    
     },
     methods: {
       fillData () {

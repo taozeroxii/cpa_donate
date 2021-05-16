@@ -52,15 +52,52 @@ module.exports = {
     },
 
 
-  //  ประเภทรายการสินค้า    -------- ---------------------------------------------------
+  //  ประเภทรายการสินค้าหน่วยนับ    -------- ---------------------------------------------------
   findItemtype() {
     return new Promise((resolve, reject) => {
-      connection.query(`SELECT * FROM ${table.itemtype} `, (error, result) => {
+      connection.query(`SELECT * FROM ${table.itemtype} ORDER BY item_type_id desc`, (error, result) => {
         if (error) return reject(error);
         resolve(result);
       });
     });
   },
+  
+  findItemtypeByid(id){
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `SELECT * FROM donate_item_type where item_type_id = ? `, [id],(error, result) => {
+          if (error) return reject(error);
+          resolve(result.length > 0 ? result[0] : null);
+        }
+      );
+    });
+  },
+
+  onAddItemType(value){
+    return new Promise((resolve, reject) => {
+      value.insertdatetime = new Date();
+      connection.query(
+        `INSERT INTO ${table.itemtype} SET ? `,value,(error, result) => {
+          if (error) return reject(error);
+          resolve(result);
+        }
+      );
+    });
+  },
+
+  EditGroupitemByid(id,value){
+    return new Promise((resolve, reject) => {
+      const $query = `UPDATE donate_item_type SET  item_name_type = ? , note = ? ,staff_update = ? WHERE item_type_id = ? `;
+      //  console.log(value);
+      connection.query($query,[ value.item_name_type, value.note, value.staff_update,id ],
+        (error, result) => {
+            if (error) return reject(error);
+            resolve(result);
+        }
+      );
+    });
+  },
+
 
   // function item list รายการสินค้ารับบริจาคทั้งหมด ---------------------------------------------------
   findItemList() {

@@ -2,11 +2,9 @@
   <div id="Header">
     <v-app-bar color="accent-4" app dense>
       <!-- <v-btn icon @click="onClickMenu()"> <v-icon>mdi-home</v-icon></v-btn> -->
-
       <v-toolbar-title>version.{{ version }}</v-toolbar-title>
-
       <v-spacer></v-spacer>
-      <span>สวัสดี :  {{this.$store.state.use ? 'Guest' :'test' }}</span>
+      <span >สวัสดี : {{this.$store.getters.get_name === 'nullnull null' ? "Guest" : this.$store.getters.get_name }}</span>
       <v-btn icon @click="Logout()"> <v-icon>mdi-export</v-icon></v-btn>
     </v-app-bar>
   </div>
@@ -17,7 +15,7 @@ export default {
   name: "Header",
   data() {
     return {
-     
+     a:null
     }
   },
   computed: {
@@ -26,12 +24,10 @@ export default {
     },
   },
   methods: {
-    // onClickMenu() {
-    //   this.$router.push('/home').catch(() => {});
-    // },
     Logout() {
       axios.post('api/account/logout').then((response)=>{
         console.log(response.data.message);
+        this.$store.commit("set_user", null);
         this.$router.push('/login').catch(() => {});
       }).catch((err) => {
          console.log(err.response.data.message);
@@ -39,7 +35,7 @@ export default {
     },
   },
   mounted() {
-   
+    //  console.log(this.$store.getters.get_name)
   },
 };
 </script>
