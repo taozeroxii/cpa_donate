@@ -119,7 +119,7 @@ export default {
       // this.$router.push(`/edit-item/${item.item_id}`);
     },
     deleteItem(item) {
-        this.selectedUserId = item.id;
+        this.selectedUserId = item.item_id;
         this.confirmDeleteDlg = true;
         console.log('เลือกลบ id: ' +this.selectedUserId )
     },

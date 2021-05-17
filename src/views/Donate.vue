@@ -119,13 +119,13 @@ export default {
         // this.$router.push(`/edit-donatein/${item.id}`);
     },
     deleteItem(item) {
-        this.selectedUserId = item.id;
+        this.selectedUserId = item.donate_id;
         this.confirmDeleteDlg = true;
         console.log('เลือกลบ id: ' +this.selectedUserId )
     },
     async confirmDelete() {
         // console.log(this.selectedUserId)
-        // await axios.delete(`api/account/delete-donatein/${this.selectedUserId}`);
+        // await axios.delete(`api/donate/delete-donatein/${this.selectedUserId}`);
         // this.confirmDeleteDlg = false;
         // this.loadDonateList();
     },
