@@ -15,7 +15,7 @@ export default {
   name: "Header",
   data() {
     return {
-     a:null
+     a:null,path:""
     }
   },
   computed: {
@@ -25,7 +25,9 @@ export default {
   },
   methods: {
     Logout() {
-      axios.post('api/account/logout').then((response)=>{
+      this.path =   './api/account/logout';
+      if(this.$router.currentRoute.name === 'EditUser')  this.path = '../../api/account/logout'; 
+      axios.post(this.path).then((response)=>{
         console.log(response.data.message);
         this.$store.commit("set_user", null);
         this.$router.push('/login').catch(() => {});
