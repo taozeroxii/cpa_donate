@@ -3,7 +3,7 @@
     <v-col cols="12" sm="10" md="8" lg="6">
       <v-card ref="form" class="mt-5">
         <v-card-text>
-          <h1 class="mb-5">เพิ่มข้อมูลสินค้า</h1>
+          <h1 class="mb-5">แก้ไขข้อมูลสินค้า</h1>
           <v-autocomplete
             ref="stock"
             @keydown.space.prevent
@@ -94,7 +94,7 @@ export default {
   }),
 
   async created() {
-    await axios.get(`api/typeinput/groupitem`).then((response) => {
+    await axios.get(`/api/typeinput/groupitem`).then((response) => {
         //console.log(response.data);
         var i;
         for (i = 0; i < response.data.length; i++) {
@@ -102,13 +102,24 @@ export default {
         }
       }).catch((err) => { console.log(err); });
 
-    await axios.get(`api/typeinput/itemtype`) .then((response) => {
+    await axios.get(`/api/typeinput/itemtype`) .then((response) => {
         // console.log(response.data);
         var i;
         for (i = 0; i < response.data.length; i++) {
           this.type_item.push( response.data[i].item_type_id + "  : " + response.data[i].item_name_type);
         }
       }).catch((err) => {  console.log(err);}); 
+  },
+
+  async mounted() {
+    const resdata = await axios.get(`/api/typeinput/itemlist/${this.$route.params.id}`);
+    // console.log(resdata.data)
+    this.form =  { 
+      group_item_type_id:resdata.data.group_item_type_id+ " " +resdata.data.type_name,
+      item_type_id:resdata.data.item_type_id+ "  : " +resdata.data.item_name_type,
+      item_name:resdata.data.item_name
+      }
+      console.log(this.form)
   },
 
 
@@ -130,7 +141,7 @@ export default {
           this.form.item_type_id = this.form.item_type_id.trim();
         }
         this.form.staff = this.$store.getters.get_name;
-        console.log(this.form);
+        // console.log(this.form);
 
         await axios .post("api/typeinput/add-item", this.form) .then((response) => {
           console.log(response.data.message);

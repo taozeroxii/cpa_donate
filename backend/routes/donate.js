@@ -6,7 +6,7 @@ router.get("/", (req, res) => {
   res.json({ message: "donate route" });
 });
 
-//แสดงข้อมูลรับบริจาคทั้งหมด
+//--------------------แสดงข้อมูลรับบริจาคทั้งหมด------------------------------------------------------------------------
 router.get("/donatelist",async (req, res) => {
   try{
     const result = await service.findAllDonateList();
@@ -15,20 +15,7 @@ router.get("/donatelist",async (req, res) => {
     res.error(ex);
   }
 });
-
-//แสดงข้อมูลสินค้าทั้งหมด
-router.get("/itemlist",async (req, res) => {
-  try{
-    const result = await service.findAllitemList();
-    res.json(result);
-  }catch(ex){
-    res.error(ex);
-  }
-});
-
-
-//เพิ่มข้อมูลการรับบริจาค adddonate
-router.post(
+router.post( //เพิ่มข้อมูลรับบริจาค
     "/add-donate",[
     check("donor","โปรดกรอกรายชื่อผู้บริจาค").not().isEmpty(),
     check("amount","โปรดกรอกจำนวนที่เป็นตัวเลขเท่านั้น").not().isEmpty().isInt(),
@@ -43,68 +30,5 @@ router.post(
     }
   );
 
-// เรียกข้อมูลบริจาครายนชิ้นเพื่อแสดงข้อมูลตอนแก้ไข
-router.get("/itemlist/:id", async (req, res) => {
-  try {
-    const listitem = await service.findOneitemList({
-      item_id: req.params.item_id,
-    });
-    if (!listitem) throw new Error("Not Found Item !!!");
-    res.json(listitem);
-  } catch (ex) {
-    res.error(ex);
-  }
-});
-
-//ลบข้อมูล
-router.delete("/:id", async (req, res) => {
-  try {
-    const Item = await service.findOne({ eq_id: req.params.id }); //หาข้อมูลในตาราง
-    if (!Item) throw new Error("Not found item");
-    const deleteItem = await service.onDelete(Item.eq_id); //รับ id มาและเอาไปเช็คว่าตรงกับ idไหนในตารางและลบออกไป
-    const deleteImg = path.join(equipDir, Item.eq_image); // ตัวแปร deleteImg เก็บค่าพาร์ทที่อยู่ไฟล์รูปภาพและชื่อภาพว่าเป็นภาพไหน Item.eq_image คือชื่อไฟล์นั้น
-    if (fs.existsSync(deleteImg)) fs.unlink(deleteImg, () => null); // ถ้าหากเจอภาพให้ลบอออกไปใส่ callback กับerror
-    res.send(deleteItem);
-  } catch (ex) {
-    res.error(ex);
-  }
-});
-
-//แก้ไขข้อมูล
-router.put(
-  "/:id",
-  [check("eq_name").not().isEmpty(), check("eq_image").not().isEmpty()],
-  async (req, res) => {
-    try {
-      req.validate();
-
-      // หาข้อมูลที่จะแก้ไข
-      const Item = await service.findOne({ eq_id: req.params.id }); //หาข้อมูลในตาราง
-      if (!Item) throw new Error("Not found item");
-
-      // ตรวจสอบ folder หากไม่มีให้ทำการสร้างfolder อันแรกให้สร้างโฟลเดอร์ upload และ2สร้าง equipments ในupload
-      if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir);
-      if (!fs.existsSync(equipDir)) fs.mkdirSync(equipDir);
-
-      //แปลงข้อมูลbase64เป็นรูปภาพ
-      req.body.eq_image = base64Img
-        .imgSync(req.body.eq_image, equipDir, `equip-${Date.now()}`)
-        .replace(equipDir, "")
-        .replace("\\", "");
-
-      const updateItem = await service.onUpdate(req.params.id, req.body);
-      //ตรวจสอบหากมีการเปลี่ยนแปลงข้อมูลตัว affectedRows จะไม่ใช่ 0 และสั่งลบภาพเดิมออก
-      if (updateItem.affectedRows > 0) {
-        const deleteImg = path.join(equipDir, Item.eq_image);
-        if (fs.existsSync(deleteImg)) fs.unlink(deleteImg, () => null);
-      }
-      res.json(updateItem);
-    } catch (ex) {
-      const delImg = path.join(equipDir, req.body.eq_image || "");
-      if (fs.existsSync(delImg)) fs.unlinkSync(delImg, () => null);
-      res.error(ex);
-    }
-  }
-);
 
 module.exports = router;

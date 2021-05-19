@@ -103,7 +103,7 @@ export default {
         },
         { text: "ชื่อรายการ", value: "item_name" },
         { text: "หน่วยนับ", value: "item_name_type" },
-        { text: "ที่จัดเก็บ", value: "group_type" },
+        { text: "ประเภท", value: "group_type" },
         { text: "วันที่เพิ่ม", value: "insert_date" },
         { text: "วันที่แก้ไขล่าสุด", value: "update_date" },
         { text: "Action", value: "action" },
@@ -116,7 +116,7 @@ export default {
   methods: {
     editItem(item) {
       console.log(item.item_id);
-      // this.$router.push(`/edit-item/${item.item_id}`);
+      this.$router.push(`/edit-item/${item.item_id}`);
     },
     deleteItem(item) {
         this.selectedUserId = item.item_id;
@@ -130,7 +130,7 @@ export default {
         // this.loadItemlist();
     },
     async loadItemlist() {
-        await axios.get(`api/donate/itemlist` ).then((result) => {this.mDataArray = result.data;  });
+        await axios.get(`api/typeinput/itemlist` ).then((result) => {this.mDataArray = result.data;  });
         this.loaddata = false;
     },
   },

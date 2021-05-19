@@ -102,17 +102,28 @@ module.exports = {
   // function item list รายการสินค้ารับบริจาคทั้งหมด ---------------------------------------------------
   findItemList() {
     return new Promise((resolve, reject) => {
-      connection.query(`SELECT * FROM ${table.itemlist} `, (error, result) => {
-        if (error) return reject(error);
-        resolve(result);
-      });
-    });
+          // resolve("test");
+          connection.query(
+            `SELECT dil.item_id,dil.item_name,dit.item_name_type,dgt.type_name as group_type,dil.insert_date,dil.update_date
+            FROM donate_item_list dil 
+            INNER JOIN donate_group_type dgt on dgt.group_item_type_id = dil.group_item_type_id
+            INNER JOIN donate_item_type dit on dit.item_type_id = dil.item_type_id
+            ORDER BY dil.update_date desc
+            `,
+            (error, result) => {
+              if (error) return reject(error);
+              resolve(result);
+            }
+          );
+        });
   },
 
   findItemListByid(id) {  //ดึงข้อมูลตามid แก้ไขรายการ
     return new Promise((resolve, reject) => {
       connection.query(
-        `SELECT * FROM ${table.itemlist} where item_id = ? `,
+        `SELECT dil.item_id,dil.item_type_id,dil.group_item_type_id,dil.item_name,dit.item_name_type,dgt.type_name FROM donate_item_list  dil
+         LEFT OUTER JOIN donate_item_type dit on dil.item_type_id = dit.item_type_id
+         LEFT OUTER JOIN donate_group_type dgt on dgt.group_item_type_id = dil.group_item_type_id where dil.item_id = ? `,
         [id],
         (error, result) => {
           if (error) return reject(error);

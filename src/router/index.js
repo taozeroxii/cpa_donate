@@ -60,6 +60,10 @@ const routes = [
     path: "/add-item",meta: { auth: true }, name: "additem",component: () => import("../views/AddItem.vue"),
   },
   {
+    path: "/edit-item/:id", meta: { auth: true },name: "edititem", component: () => import("../views/Edititem"),
+  },
+   //--------------------------------------- ประเภทหน่วยสินค้า ----------------------------------------------------------
+  {
     path: "/item-unit",meta: { auth: true }, name: "itemUnit", component: () => import("../views/itemUnit"),
   },
   {

@@ -2,10 +2,13 @@ const router = require("express").Router();
 const { check, query } = require("express-validator");
 const service = require("../services/serviceinput");
 
-// เรียกข้อมูลบริจาคทั้งหมด
+// 
 router.get("/", async (req, res) => {
   res.json("this is type_input Route");
 });
+
+
+
 
 //----------------------- groupitem หรือ คลังสินค้า -------------------------------------------------------------------------------------------
 router.get("/groupitem", async (req, res) => {
@@ -68,6 +71,10 @@ router.delete("/groupitem/:id", async (req, res) => {
   }
 });
 
+
+
+
+
 //----------------------- itemtype --------------------------------------------------------------------------------------------
 router.get("/itemtype", async (req, res) => {
   try {
@@ -116,6 +123,11 @@ router.delete("/itemtype/:id", async (req, res) => {
     res.error(ex);
   }
 });
+
+
+
+
+
 //----------------------- itemlist ---------------------------------------------------------------------------------------
 
 router.get("/itemlist", async (req, res) => {
