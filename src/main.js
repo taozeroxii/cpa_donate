@@ -6,12 +6,20 @@ import store from './store' //ต้อง import store ก่อน router ไ�
 import router from './router'
 import 'material-design-icons-iconfont'
 import Vue2filters from "vue2-filters"
+var moment = require('moment'); // require
 
 
 //impoer alertify มาใช้งานการแสดง alert ล่างขวาจอ
 import  'alertifyjs/build/css/alertify.css'
 import  'alertifyjs/build/css/themes/default.css'
 import * as alertify from 'alertifyjs'
+
+
+//filter สร้าง filter เพื่อกำหนด format วันที่
+Vue.filter('date',(value)=>{
+  // console.log(moment().format('L'))
+  return(moment(value).format('DD/MM/YYYY HH:mm:ss'))
+})
 
 Vue.config.productionTip = false
 Vue.use(VeeValidate) //ใช้งาน validate form 

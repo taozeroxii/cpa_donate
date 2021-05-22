@@ -35,8 +35,8 @@
             <td>{{ item.item_name }}</td>
             <td>{{ item.item_name_type }}</td>
             <td>{{ item.group_type }}</td>
-            <td>{{ item.insert_date  }}</td>
-            <td>{{ item.update_date }}</td>
+            <td>{{ item.insert_date | date  }}</td>
+            <td>{{ item.update_date | date}}</td>
             <!-- <td>{{ item.price | currency("฿") }}</td>
             <td>{{ item.stock | number("0,0") }} pcs.</td> -->
             <td>

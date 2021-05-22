@@ -2,19 +2,20 @@
   <v-container>
     <v-card>
       <v-btn class="success" @click="fillData()">Refresh</v-btn>
-      <LineChart style="height: 300px;" v-if="datacollection != null" :chart-data="datacollection"/>
+      <!-- <LineChart style="height: 300px;" v-if="datacollection != null" :chart-data="datacollection"/> -->
       <BarChart style="height: 300px;"  v-if="datacollection != null" :chartData="datacollection" />
     </v-card>
   </v-container>
 </template>
 
 <script>
-import LineChart from "@/components/charts/LineChart";
+// import LineChart from "@/components/charts/LineChart";
 import BarChart from '@/components/charts/BarChart'
 
 export default {
   components: {
-    LineChart,BarChart
+    // LineChart,
+    BarChart
   },
   data() {
     return {
@@ -44,13 +45,13 @@ export default {
         ],
         datasets: [
           {
-            label: "2019",
+            label: "2020",
             pointBackgroundColor: "white",
             pointBorderColor: "#249EBF",
             data: this.getRandomInt(),
 
-            borderColor: ["#43A047"],
-            borderWidth: 2,
+            borderColor: ["#0000"],
+            borderWidth: 1,
             backgroundColor: [
               "rgba(255, 99, 132, 0.2)",
               "rgba(54, 162, 235, 0.2)",
@@ -68,7 +69,7 @@ export default {
           },
 
           {
-            label: "2019",
+            label: "2021",
             pointBackgroundColor: "white",
             pointBorderColor: "#249EBF",
             data: this.getRandomInt(),
