@@ -1,55 +1,112 @@
 <template>
-  <div class="small">
-    <v-btn color="primary"  class="btn btn--success" @click="fillData()">Random กราฟ  </v-btn>
-    <line-chart v-if="datacollection!=null" :chart-data="datacollection"></line-chart>
-  </div>
+  <v-container>
+    <v-card>
+      <v-btn class="success" @click="fillData()">Refresh</v-btn>
+      <LineChart style="height: 300px;" v-if="datacollection != null" :chart-data="datacollection"/>
+      <BarChart style="height: 300px;"  v-if="datacollection != null" :chartData="datacollection" />
+    </v-card>
+  </v-container>
 </template>
 
 <script>
-  import LineChart from '@/components/charts/LineChart'
+import LineChart from "@/components/charts/LineChart";
+import BarChart from '@/components/charts/BarChart'
 
-  export default {
-    components: {
-      LineChart
+export default {
+  components: {
+    LineChart,BarChart
+  },
+  data() {
+    return {
+      datacollection: null,
+    };
+  },
+  mounted() {
+    this.fillData();
+  },
+  methods: {
+     fillData() {
+      this.datacollection = {
+        //Data to be represented on x-axis
+        labels: [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ],
+        datasets: [
+          {
+            label: "2019",
+            pointBackgroundColor: "white",
+            pointBorderColor: "#249EBF",
+            data: this.getRandomInt(),
+
+            borderColor: ["#43A047"],
+            borderWidth: 2,
+            backgroundColor: [
+              "rgba(255, 99, 132, 0.2)",
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(255, 206, 86, 0.2)",
+              "rgba(75, 192, 192, 0.2)",
+              "rgba(153, 102, 255, 0.2)",
+              "rgba(255, 159, 64, 0.2)",
+              "rgba(255, 99, 132, 0.2)",
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(255, 206, 86, 0.2)",
+              "rgba(75, 192, 192, 0.2)",
+              "rgba(153, 102, 255, 0.2)",
+              "rgba(255, 159, 64, 0.2)",
+            ],
+          },
+
+          {
+            label: "2019",
+            pointBackgroundColor: "white",
+            pointBorderColor: "#249EBF",
+            data: this.getRandomInt(),
+
+            borderColor: ["#ff0000"],
+            borderWidth: 2,
+            backgroundColor: [
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(255, 99, 132, 0.2)",
+              "rgba(255, 206, 86, 0.2)",
+              "rgba(75, 192, 192, 0.2)",
+              "rgba(153, 102, 255, 0.2)",
+              "rgba(255, 159, 64, 0.2)",
+              "rgba(255, 99, 132, 0.2)",
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(255, 206, 86, 0.2)",
+              "rgba(75, 192, 192, 0.2)",
+              "rgba(153, 102, 255, 0.2)",
+              "rgba(255, 159, 64, 0.2)",
+            ],
+          },
+        ],
+      };
     },
-    data () {
-      return {
-        datacollection: null
+     getRandomInt() {
+      let randoms = [];
+      for (let index = 0; index < 12; index++) {
+        randoms.push(Math.floor(Math.random() * (50000 - 5 + 1)) + 5);
       }
+      return randoms;
     },
-    mounted () {
-      this.fillData()
-    
-    },
-    methods: {
-      fillData () {
-        this.datacollection = {
-          labels: [this.getRandomInt(), this.getRandomInt()],
-          datasets: [
-            {
-              label: 'Data One',
-              fill:false,
-              backgroundColor: '#f87979',
-              data: [this.getRandomInt(), this.getRandomInt()]
-            }, {
-              label: 'Data two',
-                fill:false,
-              backgroundColor: '#fffff',
-              data: [this.getRandomInt(), this.getRandomInt()]
-            }
-          ]
-        }
-      },
-      getRandomInt () {
-        return Math.floor(Math.random() * (50 - 5 + 1)) + 5
-      }
-    }
-  }
+  },
+};
 </script>
 
 <style>
-  .small {
-    max-width: 600px;
-    margin:  150px auto;
-  }
+.small {
+  max-width: 600px;
+  margin: 150px auto;
+}
 </style>
