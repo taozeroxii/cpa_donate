@@ -1,4 +1,5 @@
-โปรแกรมรับบริจาคสิ่งของเบื้องต้น
+โปรแกรมรับบริจาคสิ่งของเบื้องต้น nodejs + vuejs +  template vuetify +alert alertify
+
 # fontend
 npm install
 npm run serve
