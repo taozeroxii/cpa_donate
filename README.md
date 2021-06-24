@@ -5,6 +5,7 @@ npm install
 npm run serve
 
 # backend
+มีไฟล์โครงสร้าง db ไฟล์ cpadonate_db นำเข้า mysql และคอนเนคเพื่อใช้งาน
 เช็คไฟล์ configs -> mycon มีไหม เพิ่มไปแล้วใส่ config mysql
 const mysql = require('mysql');
 const connection  = mysql.createConnection({
