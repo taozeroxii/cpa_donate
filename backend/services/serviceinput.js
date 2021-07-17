@@ -158,9 +158,29 @@ module.exports = {
     });
   },
 
+  findallusergroup(){
+    return new Promise((resolve, reject) => {
+      // value.insert_date = new Date();
+      connection.query(
+        `SELECT * FROM donate_user_role `,(error, result) => {
+          if (error) return reject(error);
+          resolve(result);
+        }
+      );
+    });
+  },
 
-
-
-
+  // function Deai lHead  เลขที่ใบ ---------------------------------------------------
+  findheadnumber(value){
+    return new Promise((resolve, reject) => {
+      // value.insert_date = new Date();
+      connection.query(
+        `SELECT * FROM donate_detail_head WHERE donate_head_id =  ? `,value,(error, result) => {
+          if (error) return reject(error);
+          resolve(result);
+        }
+      );
+    });
+  }
 
 };

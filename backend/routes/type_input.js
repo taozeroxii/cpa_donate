@@ -74,7 +74,6 @@ router.delete("/groupitem/:id", async (req, res) => {
 
 
 
-
 //----------------------- itemtype --------------------------------------------------------------------------------------------
 router.get("/itemtype", async (req, res) => {
   try {
@@ -161,6 +160,32 @@ router.get("/itemlistgroupid/:id", async (req, res) => {// หน้า adddonat
     res.error(ex);
   }
 });
+
+
+//----------------------- Donate Detail head ---------------------------------------------------------------------------------------
+router.get("/detail-head/:id/:user", async (req, res) => {// หน้า adddonate ดึงรายการสินค้าตามกลุ่มที่เลือก
+  try {
+    const headid = await service.findheadnumber(req.params.id,req.params.user);
+    if (!headid) throw new Error("Not Found Item !!!");
+    res.json(headid);
+  } catch (ex) {
+    res.error(ex);
+  }
+});
+
+
+
+
+router.get("/userrole", async (req, res) => {
+  try {
+    const usergroup = await service.findallusergroup();
+    if (!usergroup) throw new Error("Not Found Item !!!");
+    res.json(usergroup);
+  } catch (ex) {
+    res.error(ex);
+  }
+});
+
 
 
 //เพิ่มข้อมูลสินค้ารับบริจาครายชื่อและพประเภทต่างๆ

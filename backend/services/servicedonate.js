@@ -13,10 +13,11 @@ module.exports = {
     return new Promise((resolve, reject) => {
       // resolve("test");
       connection.query(
-        `SELECT ddi.id as donate_id,ddi.donor,dil.item_name,ddi.amount,dit.item_name_type,dgt.type_name,ddi.insert_date
+        `SELECT ddi.donate_head_id as donate_head_id,ddi.id as donate_id,ddn.donor_name as donor,dil.item_name,ddi.amount,dit.item_name_type,dgt.type_name,ddi.insert_date
         FROM ${table.detail_donatein} as ddi 
         INNER JOIN donate_item_list dil on ddi.item_id = dil.item_id
         INNER JOIN donate_group_type dgt on dgt.group_item_type_id = dil.group_item_type_id
+        LEFT JOIN donate_donor ddn on ddn.donor_id = ddi.donor_id
         INNER JOIN donate_item_type dit on dit.item_type_id = dil.item_type_id ORDER BY ddi.id desc`,
         (error, result) => {
           if (error) return reject(error);
@@ -53,7 +54,15 @@ module.exports = {
   deleteDetaildonate() {},
   //--------------------------------------------------------------------------------
 
-
+  findAllDonor(){ return new Promise((resolve, reject) => {
+    connection.query(
+      `SELECT * FROM donate_donor`,(error, result) => {
+        if (error) return reject(error);
+        resolve(result);
+      }
+    );
+  });
+  }
 
   
 

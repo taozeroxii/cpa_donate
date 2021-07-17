@@ -51,6 +51,12 @@ const routes = [
     name: "wDraw",
     component: () => import("../views/wDraw"),
   },
+  {
+    path: "/w-draw",
+    meta: { auth: true },
+    name: "addwDraw",
+    component: () => import("../views/addwDraw"),
+  },
 
   //-------------------------------------------- สินค้า ----------------------------------------------------------
   {
@@ -75,7 +81,7 @@ const routes = [
 
   //-------------------------------------------- USER ----------------------------------------------------------
   {
-    path: "/userlist", meta: { auth: true },name: "userlist",component: () => import("@/views/userlist.vue"),
+    path: "/userlist", meta: { auth:['admin'] },name: "userlist",component: () => import("@/views/userlist.vue"),
   },
   {
     path: "/register",meta: { auth: true },name: "register",component: () => import("@/views/Register.vue"),

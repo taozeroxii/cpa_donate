@@ -4,7 +4,7 @@
       <v-row>
         <v-col lg="3" md="6" sm="12" cols="12">
           <MenuCard
-            title="รับบริจาค"
+            title="รับบริจาค/ผู้มอบ"
             subtitle="คลิกเพื่อไปหน้ารับบริจาค"
             avatar_bg="#00a65a"
             avatar_ic="mdi-cart-outline"
@@ -14,7 +14,7 @@
 
         <v-col lg="3" md="6" sm="12" cols="12">
           <MenuCard
-            title="จ่าย"
+            title="จ่าย / ผู้รับมอบ"
             avatar_ic="mdi-directions"
             avatar_bg="#f39c12"
             subtitle="คลิกเพื่อไปหน้าจ่าย"
@@ -41,6 +41,27 @@
             menulink="/item-unit"
           />
         </v-col>
+
+         <v-col lg="3" md="6" sm="12" cols="12">
+          <MenuCard
+            title="กลุ่มภารกิจ"
+            avatar_ic="mdi-directions"
+            avatar_bg="#f39c12"
+            subtitle="จัดการข้อมูลกลุ่มภารกิจ"
+            menulink="/mission"
+          />
+        </v-col>
+
+         <v-col lg="3" md="6" sm="12" cols="12">
+          <MenuCard
+            title="หน่วยงาน"
+            avatar_ic="mdi-directions"
+            avatar_bg="#f39c12"
+            subtitle="จัดการข้อมูลกลุ่มภารกิจ"
+            menulink="/workgroup"
+          />
+        </v-col>
+
 
         <v-col lg="3" md="6" sm="12" cols="12">
           <MenuCard

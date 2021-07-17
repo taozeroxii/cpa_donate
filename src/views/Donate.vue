@@ -31,6 +31,7 @@
         <!-- table tr section -->
         <template v-slot:item="{ item }">
           <tr>
+            <td>{{ item.donate_head_id }}</td>
             <td>{{ item.donate_id }}</td>
             <td>{{ item.donor }}</td>
             <td>{{ item.item_name }}</td>
@@ -96,12 +97,8 @@ export default {
       loaddata:true,
       mDataArray: [],
       headers: [
-        {
-          text: "Id",
-          align: "left",
-          sortable: false,
-          value: "donate_id",
-        },
+        { text: "เลขที่รับบริจาค", value: "donate_head_id" },
+        { text: "Id", align: "left",  sortable: false, value: "donate_id", },
         { text: "ผู้บริจาค", value: "donor" },
         { text: "ชื่อสินค้า", value: "item_name" },
         { text: "จำนวน", value: "amount" },

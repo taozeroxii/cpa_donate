@@ -18,7 +18,11 @@
                   :items="items"
                   label="คำนำหน้า"
                   :rules="pnameRule"
-                  :class="{ 'v-input--has-state theme--light v-text-field v-text-field--is-booted error--text': errors.has( 'pname'  ),  }"
+                  :class="{
+                    'v-input--has-state theme--light v-text-field v-text-field--is-booted error--text': errors.has(
+                      'pname'
+                    ),
+                  }"
                 ></v-select>
               </v-col>
 
@@ -28,7 +32,11 @@
                   name="fname"
                   label="ชื่อ"
                   id="fname"
-                  :class="{  'v-input--has-state theme--light v-text-field v-text-field--is-booted error--text': errors.has(     'fname'   ),   }"
+                  :class="{
+                    'v-input--has-state theme--light v-text-field v-text-field--is-booted error--text': errors.has(
+                      'fname'
+                    ),
+                  }"
                   v-model.trim="account.fname"
                   :rules="fnameRule"
                 />
@@ -42,7 +50,11 @@
                   id="lname"
                   v-model.trim="account.lname"
                   :rules="lnameRule"
-                  :class="{'v-input--has-state theme--light v-text-field v-text-field--is-booted error--text': errors.has('lname') }"
+                  :class="{
+                    'v-input--has-state theme--light v-text-field v-text-field--is-booted error--text': errors.has(
+                      'lname'
+                    ),
+                  }"
                 />
                 <!-- <span>{{ errors.first("lname") }}</span> -->
               </v-col>
@@ -57,7 +69,11 @@
                   label="Username"
                   id="username"
                   v-model.trim="account.username"
-                  :class="{'v-input--has-state theme--light v-text-field v-text-field--is-booted error--text': errors.has( 'username' ),}"
+                  :class="{
+                    'v-input--has-state theme--light v-text-field v-text-field--is-booted error--text': errors.has(
+                      'username'
+                    ),
+                  }"
                   :rules="usernameRules"
                 /><!-- <span>{{ errors.first("username") }}</span>-->
               </v-col>
@@ -77,7 +93,11 @@
                   counter
                   v-model.trim="account.password"
                   :rules="passwordRules"
-                  :class="{'v-input--has-state theme--light v-text-field v-text-field--is-booted error--text': errors.has('password' )}"
+                  :class="{
+                    'v-input--has-state theme--light v-text-field v-text-field--is-booted error--text': errors.has(
+                      'password'
+                    ),
+                  }"
                 />
                 <!-- <span>{{ errors.first("password") }}</span> -->
               </v-col>
@@ -94,7 +114,11 @@
                   item-value="id"
                   :rules="roleRules"
                   label="สิทธิการใช้งาน"
-                  :class="{ 'v-input--has-state theme--light v-text-field v-text-field--is-booted error--text': errors.has('role' ), }"
+                  :class="{
+                    'v-input--has-state theme--light v-text-field v-text-field--is-booted error--text': errors.has(
+                      'role'
+                    ),
+                  }"
                 >
                 </v-select>
               </v-col>
@@ -115,7 +139,15 @@
               </v-col>
 
               <v-col>
-                <v-alert v-if="errorMessage" outlined type="warning" prominent border="left" > {{ errorMessage }}</v-alert >
+                <v-alert
+                  v-if="errorMessage"
+                  outlined
+                  type="warning"
+                  prominent
+                  border="left"
+                >
+                  {{ errorMessage }}</v-alert
+                >
               </v-col>
             </v-row>
           </v-form>
@@ -133,10 +165,7 @@ export default {
     return {
       errorMessage: "",
       isShowPassword: false,
-      role: [
-        { id: "1", name: "admin" },
-        { id: "2", name: "user" },
-      ],
+      role: [],
       items: ["นาย", "นาง", "นางสาว"],
       account: {
         username: "",
@@ -144,8 +173,8 @@ export default {
         pname: "",
         fname: "",
         lname: "",
-        default_role :"",
-        isuse:"Y"
+        default_role: "",
+        isuse: "Y",
       },
       usernameRules: [(v1) => !!v1 || "โปรดกรอก username"],
       passwordRules: [
@@ -158,6 +187,18 @@ export default {
       roleRules: [(v1) => !!v1 || "โปรดกรอก สิทธิผู้ใช้งาน"],
     };
   },
+  created() {
+    Axios.get("api/typeinput/userrole").then((res) => {
+        var i;
+        for (i = 0; i < res.data.length; i++) {
+          this.role.push( res.data[i].id +"   : " + res.data[i].role);
+        }
+      })
+      .catch((err) => {
+        // console.log(err.response.data.message);
+        this.errorMessage = err.res.data.message;
+      });
+  },
   methods: {
     cancel() {
       this.$router.back();
@@ -167,7 +208,7 @@ export default {
       this.$validator.validateAll().then((valid) => {
         // console.log(valid);
         if (!valid) return;
-        Axios.post("api/account/register",this.account)
+        Axios.post("api/account/register", this.account)
           .then((response) => {
             console.log(response);
             this.account = {
@@ -176,9 +217,9 @@ export default {
               pname: "",
               fname: "",
               lname: "",
-              default_role :"",
-            }
-            this.alertify.success('เพิ่มข้อมูลสำเร็จ');
+              default_role: "",
+            };
+            this.alertify.success("เพิ่มข้อมูลสำเร็จ");
             // this.errorMessage = "Insert success";
           })
           .catch((err) => {

@@ -3,7 +3,7 @@
     <v-col cols="12" sm="10" md="8" lg="6">
       <v-card ref="form" class="mt-5">
         <v-card-text>
-          <h1 class="mb-5">รับบริจาค / รับมอบ</h1>
+          <h1 class="mb-5"> จ่ายสิ่งของรับบริจาค / ส่งมอบ</h1>
 
           <v-text-field
             ref="head"
@@ -11,7 +11,7 @@
             :rules="[() => !!form.donate_head_id || 'This field is required' ,() => form.donate_head_id.length <= 5 || 'โปรดกรอกตัวอักษร น้อยกว่า 5 ตัว']"
             :error-messages="errorMessages"
             :disabled="ckDonatenumber"
-            label="เลขที่รับบริจาค / รับมอบ"
+            label="เลขที่จ่ายสิ่งของบริจาค / ส่งรับมอบ"
             placeholder="เสมือนเลขที่กำกับการรับบริจาคในครั้งนั้นๆ เช่น A001"
             required
           ></v-text-field>
@@ -22,8 +22,8 @@
             :rules="[() => !!form.donor_id || 'This field is required']"
             :error-messages="errorMessages"
             :items="donor"
-            label="ผู้บริจาค / ผู้มอบ"
-            placeholder="นาย ก. บริษัท ข."
+            label="กลุ่มภารกิจ / กลุ่มงาน "
+            placeholder=" ..."
             required
           ></v-autocomplete>
 
@@ -32,7 +32,7 @@
             v-model="groupstock_id"
             :rules="[() => !!groupstock_id || 'This field is required']"
             :items="stock"
-            label="โปรดเลือกประเภทบริจาค"
+            label="โปรดเลือกประเภทสิ่งของบริจาค"
             placeholder="Select..."
             required
             @click="clearlistitem"
@@ -124,15 +124,19 @@ export default {
 
   created() {
     axios.get(`api/typeinput/groupitem`) .then((response) => {
+        //console.log(response.data);
         var i;
-        for (i = 0; i < response.data.length; i++) {this.stock.push( response.data[i].group_item_type_id + "   : " +response.data[i].type_name );}
+        for (i = 0; i < response.data.length; i++) {this.stock.push( response.data[i].group_item_type_id + "   : " +response.data[i].type_name );
+        }
       })
       .catch((err) => {
         console.log(err);
       });
     axios.get(`api/donate/donorlist`) .then((response) => {
+        // console.log(response.data);
         var i;
-        for (i = 0; i < response.data.length; i++) {this.donor.push( response.data[i].donor_id + "   : " +response.data[i].donor_name );}
+        for (i = 0; i < response.data.length; i++) {this.donor.push( response.data[i].donor_id + "   : " +response.data[i].donor_name );
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -148,28 +152,29 @@ export default {
     },
 
     submit() {
-      this.form.staff = this.$store.getters.get_name;
-      this.form.item_id =this.form.item_id[0] + this.form.item_id[1] + this.form.item_id[2];
-      this.form.donor_id =this.form.donor_id[0] + this.form.donor_id[1] + this.form.donor_id[2];
-      if (this.form.itemlist != null) {
-        this.form.itemlist = this.form.itemlist[0] + this.form.itemlist[1] + this.form.itemlist[2];
-        this.form.itemlist = this.form.itemlist.trim();
-      }
+      console.log(this.form);
+      // this.form.staff = this.$store.getters.get_name;
+      // this.form.item_id =this.form.item_id[0] + this.form.item_id[1] + this.form.item_id[2];
+      // this.form.donor_id =this.form.donor_id[0] + this.form.donor_id[1] + this.form.donor_id[2];
+      // if (this.form.itemlist != null) {
+      //   this.form.itemlist = this.form.itemlist[0] + this.form.itemlist[1] + this.form.itemlist[2];
+      //   this.form.itemlist = this.form.itemlist.trim();
+      // }
    
-      // console.log(this.form);
-      axios
-        .post("api/donate/add-donate", this.form)
-        .then((response) => {
-          console.log(response);
-          this.form.item_id = null;
-          this.form.amount = null;
-          this.checkinput = null;
-          this.alertify.success("เพิ่มข้อมูลสำเร็จ !!");
-          this.errorRes = "";
-        })
-        .catch((err) => {
-          this.errorRes = err.response.data.message;
-        });
+      // // console.log(this.form);
+      // axios
+      //   .post("api/donate/add-donate", this.form)
+      //   .then((response) => {
+      //     console.log(response);
+      //     this.form.item_id = null;
+      //     this.form.amount = null;
+      //     this.checkinput = null;
+      //     this.alertify.success("เพิ่มข้อมูลสำเร็จ !!");
+      //     this.errorRes = "";
+      //   })
+      //   .catch((err) => {
+      //     this.errorRes = err.response.data.message;
+      //   });
     },
 
     clearlistitem() {

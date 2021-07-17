@@ -17,9 +17,11 @@ router.get("/donatelist",async (req, res) => {
 });
 router.post( //เพิ่มข้อมูลรับบริจาค
     "/add-donate",[
-    check("donor","โปรดกรอกรายชื่อผู้บริจาค").not().isEmpty(),
+    check("donate_head_id","โปรดใส่เลขที่รับบริจาค").not().isEmpty(),
+    check("donor_id","โปรดเลือกผู้รับบริจาค").not().isEmpty(),
     check("amount","โปรดกรอกจำนวนที่เป็นตัวเลขเท่านั้น").not().isEmpty().isInt(),
-    check("item_id","โปรดเลือกรายการสิ่งของ").not().isEmpty()],
+    check("item_id","โปรดเลือกรายการสิ่งของ").not().isEmpty(),
+  ],
     async (req, res) => {
       try {
         req.validate();
@@ -30,5 +32,13 @@ router.post( //เพิ่มข้อมูลรับบริจาค
     }
   );
 
+  router.get("/donorlist",async (req, res) => {
+    try{
+      const result = await service.findAllDonor();
+      res.json(result);
+    }catch(ex){
+      res.error(ex);
+    }
+  });
 
 module.exports = router;
