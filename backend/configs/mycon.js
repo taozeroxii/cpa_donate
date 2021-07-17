@@ -1,15 +1,3 @@
-// const mysql = require('mysql');
-// const connection  = mysql.createConnection({
-//   host            : '172.18.2.2',
-//   user            : 'webcvhost',
-//   password        : 'WebCpa10665Hos!',
-//   database        : 'cpadonate_db',
-//   charset:'utf8'
-// });
-// //connection.getConnection((err,connect)=> console.log(err));//เช็ค connection 
-// module.exports = connection;
-
-
 //- MYSQL Module
 try{
   var mysql_npm = require('../node_modules/mysql');
@@ -21,9 +9,9 @@ try{
 //- Connection configuration
 //-
 var db_config = {
-  host            : '172.18.2.2',
-  user            : 'webcvhost',
-  password        : 'WebCpa10665Hos!',
+  host            : '',
+  user            : '',
+  password        : '',
   database        : 'cpadonate_db',
   charset:'utf8'
 };
