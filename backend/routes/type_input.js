@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { check, query } = require("express-validator");
+const { check, query ,param} = require("express-validator");
 const service = require("../services/serviceinput");
 
 // 
@@ -20,7 +20,6 @@ router.get("/groupitem", async (req, res) => {
     res.error(ex);
   }
 });
-
 // เรียกข้อมูลบริจาครายนชิ้นเพื่อแสดงข้อมูลตอนแก้ไข
 router.get("/groupitem/:id", async (req, res) => {
   try {
@@ -31,7 +30,6 @@ router.get("/groupitem/:id", async (req, res) => {
     res.error(ex);
   }
 });
-
 //เพิ่มข้อมูลกลุ่มรายการสินค้า
 router.post( "/groupitem",[check("type_name", "โปรดกรอกข้อมูลชื่อกลุ่มสินค้าหรือชื่อที่จัดเก็บสินค้า") .not().isEmpty() ],
   async (req, res) => {
@@ -43,9 +41,7 @@ router.post( "/groupitem",[check("type_name", "โปรดกรอกข้อ
     }
   }
 );
-
 // แก้ไขกลุ่ม
-
 router.put("/groupitem/:id",[
   check('item_name_type').not().isEmpty(),
 ], async (req, res) => {
@@ -59,7 +55,6 @@ router.put("/groupitem/:id",[
   catch (ex) { res.error(ex);
   }
 });
-
 //ลบกลุ่ม
 router.delete("/groupitem/:id", async (req, res) => {
   try {
@@ -128,66 +123,6 @@ router.delete("/itemtype/:id", async (req, res) => {
 
 
 //----------------------- itemlist ---------------------------------------------------------------------------------------
-
-router.get("/itemlist", async (req, res) => {
-  try {
-    const itemlist = await service.findItemList();
-    if (!itemlist) throw new Error("Not Found Item !!!");
-    res.json(itemlist);
-  } catch (ex) {
-    res.error(ex);
-  }
-});
-
-//แสดงข้อมูลแค่ 1 rowเพื่อแก้ไข
-router.get("/itemlist/:id", async (req, res) => {
-  try {
-    // console.log(req.params.id)
-    const onelistitem = await service.findItemListByid(req.params.id);
-    if (!onelistitem) throw new Error("Not Found Item !!!");
-    res.json(onelistitem);
-  } catch (ex) {
-    res.error(ex);
-  }
-});
-
-router.get("/itemlistgroupid/:id", async (req, res) => {// หน้า adddonate ดึงรายการสินค้าตามกลุ่มที่เลือก
-  try {
-    const itemlistgroupid = await service.findItemListBygroupId(req.params.id);
-    if (!itemlistgroupid) throw new Error("Not Found Item !!!");
-    res.json(itemlistgroupid);
-  } catch (ex) {
-    res.error(ex);
-  }
-});
-
-
-//----------------------- Donate Detail head ---------------------------------------------------------------------------------------
-router.get("/detail-head/:id/:user", async (req, res) => {// หน้า adddonate ดึงรายการสินค้าตามกลุ่มที่เลือก
-  try {
-    const headid = await service.findheadnumber(req.params.id,req.params.user);
-    if (!headid) throw new Error("Not Found Item !!!");
-    res.json(headid);
-  } catch (ex) {
-    res.error(ex);
-  }
-});
-
-
-
-
-router.get("/userrole", async (req, res) => {
-  try {
-    const usergroup = await service.findallusergroup();
-    if (!usergroup) throw new Error("Not Found Item !!!");
-    res.json(usergroup);
-  } catch (ex) {
-    res.error(ex);
-  }
-});
-
-
-
 //เพิ่มข้อมูลสินค้ารับบริจาครายชื่อและพประเภทต่างๆ
 router.post( "/add-item",
   [
@@ -204,5 +139,81 @@ router.post( "/add-item",
     }
   }
 );
+router.get("/itemlist", async (req, res) => {
+  try {
+    const itemlist = await service.findItemList();
+    if (!itemlist) throw new Error("Not Found Item !!!");
+    res.json(itemlist);
+  } catch (ex) {
+    res.error(ex);
+  }
+});
+//แสดงข้อมูลแค่ 1 rowเพื่อแก้ไข
+router.get("/itemlist/:id", async (req, res) => {
+  try {
+    // console.log(req.params.id)
+    const onelistitem = await service.findItemListByid(req.params.id);
+    if (!onelistitem) throw new Error("Not Found Item !!!");
+    res.json(onelistitem);
+  } catch (ex) {
+    res.error(ex);
+  }
+});
+router.put("/edit-itemlist/:id",[
+  param('id').isInt(),// check param id from url ต้องเป็น int
+  check('group_item_type_id').not().isEmpty(),
+  check('item_type_id').not().isEmpty(),
+  check('item_name').not().isEmpty(),
+], async (req, res) => {
+  try {
+    console.log(req.params.id)
+    req.validate(req.params.id);
+    const finditem = await service.findItemListByid(req.params.id);
+    if (!finditem) throw new Error("ไม่พบข้อมูลรายการสินค้านี้");
+    const check_isuse = await service.checkitem_item_draw(req.params.id);
+    if (check_isuse) throw new Error("มีการเบิกจ่ายรายการสิ่งของนี้ไปแล้วไม่สามารถแก้ไขได้");
+    res.json(await service.updateItemList(finditem.item_id,req.body));
+  } 
+  catch (ex) { res.error(ex);
+  }
+});
+router.get("/itemlistgroupid/:id", async (req, res) => {// หน้า adddonate ดึงรายการสินค้าตามกลุ่มที่เลือก
+  try {
+    const itemlistgroupid = await service.findItemListBygroupId(req.params.id);
+    if (!itemlistgroupid) throw new Error("Not Found Item !!!");
+    res.json(itemlistgroupid);
+  } catch (ex) {
+    res.error(ex);
+  }
+});
+
+
+
+//----------------------- Donate Detail head ---------------------------------------------------------------------------------------
+router.get("/detail-head/:id/:user", async (req, res) => {// หน้า adddonate ดึงรายการสินค้าตามกลุ่มที่เลือก
+  try {
+    const headid = await service.findheadnumber(req.params.id,req.params.user);
+    if (!headid) throw new Error("Not Found Item !!!");
+    res.json(headid);
+  } catch (ex) {
+    res.error(ex);
+  }
+});
+
+
+
+router.get("/userrole", async (req, res) => {
+  try {
+    const usergroup = await service.findallusergroup();
+    if (!usergroup) throw new Error("Not Found Item !!!");
+    res.json(usergroup);
+  } catch (ex) {
+    res.error(ex);
+  }
+});
+
+
+
+
 
 module.exports = router;

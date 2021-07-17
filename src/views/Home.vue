@@ -44,11 +44,11 @@
 
          <v-col lg="3" md="6" sm="12" cols="12">
           <MenuCard
-            title="กลุ่มภารกิจ"
+            title="ผู้บริจาค / ผู้มอบ"
             avatar_ic="mdi-google-circles-group"
             avatar_bg="#B20F0F"
             subtitle="จัดการข้อมูลกลุ่มภารกิจ"
-            menulink="/mission"
+            menulink="/donor"
           />
         </v-col>
 
@@ -63,7 +63,7 @@
         </v-col>
 
 
-        <v-col lg="3" md="6" sm="12" cols="12">
+        <v-col lg="3" md="6" sm="12" cols="12" v-if="this.$store.getters.getuser_role === '1'">
           <MenuCard
             title="ผู้ใช้งาน"
             avatar_ic="mdi-account-multiple-plus"
