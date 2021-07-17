@@ -21,10 +21,10 @@ try{
 //- Connection configuration
 //-
 var db_config = {
-  host            : '',
-  user            : '',
-  password        : '',
-  database        : '',
+  host            : '172.18.2.2',
+  user            : 'webcvhost',
+  password        : 'WebCpa10665Hos!',
+  database        : 'cpadonate_db',
   charset:'utf8'
 };
 

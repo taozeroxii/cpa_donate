@@ -41,7 +41,7 @@ const routes = [
     path: "/add-donate",
     meta: { auth: true },
     name: "adddonate",
-    component: () => import("../views/AddDonate"),
+    component: () => import("../views/add/AddDonate"),
   },
 
   //-------------------------------------------- จ่ายสินค้า ----------------------------------------------------------
@@ -55,7 +55,7 @@ const routes = [
     path: "/w-draw",
     meta: { auth: true },
     name: "addwDraw",
-    component: () => import("../views/addwDraw"),
+    component: () => import("../views/add/addwDraw"),
   },
 
   //-------------------------------------------- สินค้า ----------------------------------------------------------
@@ -63,7 +63,7 @@ const routes = [
     path: "/item-list", meta: { auth: true }, name: "ItemList",component: () => import("../views/itemList"),
   },
   {
-    path: "/add-item",meta: { auth: true }, name: "additem",component: () => import("../views/AddItem.vue"),
+    path: "/add-item",meta: { auth: true }, name: "additem",component: () => import("../views/add/AddItem.vue"),
   },
   {
     path: "/edit-item/:id", meta: { auth: true },name: "edititem", component: () => import("../views/Edititem"),
@@ -73,7 +73,7 @@ const routes = [
     path: "/item-unit",meta: { auth: true }, name: "itemUnit", component: () => import("../views/itemUnit"),
   },
   {
-    path: "/add-item-unit", meta: { auth: true },name: "additemunid",component: () => import("../views/AddItemUnit"),
+    path: "/add-item-unit", meta: { auth: true },name: "additemunid",component: () => import("../views/add/AddItemUnit"),
   },
   {
     path: "/edit-item-unit/:id", meta: { auth: true },name: "edititemunitid", component: () => import("../views/EdititemUnit"),

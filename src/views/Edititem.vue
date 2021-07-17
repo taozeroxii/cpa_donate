@@ -141,10 +141,10 @@ export default {
           this.form.item_type_id = this.form.item_type_id.trim();
         }
         this.form.staff = this.$store.getters.get_name;
-        console.log(this.form);
+        // console.log(this.form);
 
-        await axios .put(`/api/typeinput/edit-itemlist/${this.$route.params.id}`, this.form) .then((response) => {
-          console.log(response.data.message);
+        await axios .put(`/api/typeinput/edit-itemlist/${this.$route.params.id}`, this.form) .then(() => {
+          // console.log(response.data.message);
           this.form = {
                 group_item_type_id:null,
                 item_type_id:null,

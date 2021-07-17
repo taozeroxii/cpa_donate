@@ -198,7 +198,7 @@ module.exports = {
   updateItemList(id, value) {
     return new Promise((resolve, reject) => {
       const $query = `UPDATE donate_item_list SET  group_item_type_id = ? ,item_name = ? , item_type_id = ? ,staff_update = ? WHERE item_id = ? `;
-      console.log(value);
+      // console.log(value);
       connection.query( $query,[value.group_item_type_id, value.item_name,value.item_type_id, value.staff_update,id,],
         (error, result) => {
           if (error) return reject(error);

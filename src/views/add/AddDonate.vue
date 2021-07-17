@@ -86,12 +86,12 @@
           <v-btn @click="cancle" text>
             Cancel
           </v-btn>
-
           <v-spacer></v-spacer>
 
           <v-btn color="primary" :disabled="!checkinput" text @click="submit">
             Submit
           </v-btn>
+          
         </v-card-actions>
       </v-card>
     </v-col>
@@ -106,6 +106,7 @@ export default {
     checkinput: false,
     ckDonatenumber:false,
     stock: [],
+    stopdornor:"",
     donor: [],
     itemlist: [],
     errorMessages: "",
@@ -148,18 +149,21 @@ export default {
     },
 
     submit() {
-      this.form.staff = this.$store.getters.get_name;
-      this.form.item_id =this.form.item_id[0] + this.form.item_id[1] + this.form.item_id[2];
-      this.form.donor_id =this.form.donor_id[0] + this.form.donor_id[1] + this.form.donor_id[2];
-      if (this.form.itemlist != null) {
-        this.form.itemlist = this.form.itemlist[0] + this.form.itemlist[1] + this.form.itemlist[2];
-        this.form.itemlist = this.form.itemlist.trim();
+      this.stopdornor =  this.form.donor_id;
+      this.form.staff    = this.$store.getters.get_name;
+      this.form.item_id  = this.form.item_id[0] + this.form.item_id[1] + this.form.item_id[2];
+      this.form.donor_id = this.form.donor_id[0] + this.form.donor_id[1] + this.form.donor_id[2];
+      if (this.form.item_id != null) {
+        this.form.item_id = this.form.item_id[0] + this.form.item_id[1] + this.form.item_id[2];
+        this.form.item_id = this.form.item_id.trim();
+      }
+      if (this.form.donor_id != null) {
+        this.form.donor_id = this.form.donor_id[0] + this.form.donor_id[1] + this.form.donor_id[2];
+        this.form.donor_id = this.form.donor_id.trim();
       }
    
       // console.log(this.form);
-      axios
-        .post("api/donate/add-donate", this.form)
-        .then((response) => {
+      axios .post("api/donate/add-donate", this.form) .then((response) => {
           console.log(response);
           this.form.item_id = null;
           this.form.amount = null;
@@ -170,6 +174,7 @@ export default {
         .catch((err) => {
           this.errorRes = err.response.data.message;
         });
+       this.form.donor_id = this.stopdornor ;
     },
 
     clearlistitem() {
