@@ -188,10 +188,11 @@ export default {
     };
   },
   created() {
-    Axios.get("api/typeinput/userrole").then((res) => {
+    Axios.get("api/typeinput/userrole")
+      .then((res) => {
         var i;
         for (i = 0; i < res.data.length; i++) {
-          this.role.push( res.data[i].id +"   : " + res.data[i].role);
+          this.role.push(res.data[i].id + "   : " + res.data[i].role);
         }
       })
       .catch((err) => {
@@ -208,17 +209,24 @@ export default {
       this.$validator.validateAll().then((valid) => {
         // console.log(valid);
         if (!valid) return;
+
+        if (this.account.default_role != null) {
+          this.account.default_role = this.account.default_role[0];
+          this.account.default_role = this.account.default_role.trim();
+        }
         Axios.post("api/account/register", this.account)
-          .then((response) => {
-            console.log(response);
+          .then(() => {
+            // console.log(response);
+
             this.account = {
-              username: "",
-              password: "",
-              pname: "",
-              fname: "",
-              lname: "",
-              default_role: "",
+              username: null,
+              password: null,
+              pname: null,
+              fname: null,
+              lname: null,
+              default_role: null,
             };
+            this.errors.clear();
             this.alertify.success("เพิ่มข้อมูลสำเร็จ");
             // this.errorMessage = "Insert success";
           })

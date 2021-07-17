@@ -91,7 +91,7 @@
                 ></v-col
               >
             </v-row>
-            <p style="color:red">{{errMessage}}</p>
+            <p style="color:red">{{ errMessage }}</p>
           </v-form>
         </v-card-text>
       </v-card>
@@ -100,22 +100,14 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 
 export default {
   name: "Edituser",
   data() {
     return {
       isShowPassword: false,
-      role: [
-        { id: "1", name: "admin" },
-        { id: "2", name: "user" },
-        // { id: "3", name: "ดูแลอุปกรณ์" },
-        // { id: "4", name: "ดูแลเวชภัณฑ์" },
-        // { id: "5", name: "ครุภัณฑ์" },
-        // { id: "6", name: "อุปโภค" },
-        // { id: "7", name: "บริโภค" },
-      ],
+      role: [],
       items: ["นาย", "นาง", "นางสาว"],
       useraccount: {
         username: "",
@@ -133,15 +125,34 @@ export default {
       pnameRule: [(v1) => !!v1 || "โปรดกรอก คำนำหน้าชื่อ"],
       fnameRule: [(v1) => !!v1 || "โปรดกรอก ชื่อ"],
       lnameRule: [(v1) => !!v1 || "โปรดกรอก นามสกุล"],
-      errMessage:""
+      errMessage: "",
     };
   },
-  
+
   async mounted() {
     // console.log(this.$route.params.id)
-    const resdata = await axios.get(`/api/account/get-user/${this.$route.params.id}`);
-    this.useraccount = resdata.data;
-    // console.log( this.useraccount)
+    const resdata = await axios.get( `/api/account/get-user/${this.$route.params.id}`);
+    this.useraccount = {
+        username: resdata.data.username,
+        pname: resdata.data.pname,
+        fname: resdata.data.fname,
+        lname: resdata.data.lname,
+        default_role: resdata.data.default_role+"   : " + resdata.data.role,
+    }
+    // console.log(this.useraccount);
+  },
+
+  created() {
+    axios.get("/api/typeinput/userrole").then((res) => {
+        var i;
+        for (i = 0; i < res.data.length; i++) {
+          this.role.push(res.data[i].id + "   : " + res.data[i].role);
+        }
+      })
+      .catch((err) => {
+        // console.log(err.response.data.message);
+        this.errorMessage = err.res.data.message;
+      });
   },
 
   methods: {
@@ -150,14 +161,24 @@ export default {
     },
     submit() {
       // console.log(this.account);
-      axios.put(`/api/account/edit-user/${this.$route.params.id}`,this.useraccount,(err,res)=>{
-        if(err) return err
-        console.log(res);
-        this.alertify.success('แก้ไขสำเร็จ');
-      }).catch((err) => {this.errMessage = err.response.data.message;});
-
+      if (this.useraccount.default_role != null) {
+        this.useraccount.default_role = this.useraccount.default_role[0];
+        this.useraccount.default_role = this.useraccount.default_role.trim();
+      }
+      axios
+        .put(
+          `/api/account/edit-user/${this.$route.params.id}`,
+          this.useraccount,
+          (err, res) => {
+            if (err) return err;
+            console.log(res);
+            this.alertify.success("แก้ไขสำเร็จ");
+          }
+        )
+        .catch((err) => {
+          this.errMessage = err.response.data.message;
+        });
     },
-
   },
 };
 </script>

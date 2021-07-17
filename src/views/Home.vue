@@ -45,8 +45,8 @@
          <v-col lg="3" md="6" sm="12" cols="12">
           <MenuCard
             title="กลุ่มภารกิจ"
-            avatar_ic="mdi-directions"
-            avatar_bg="#f39c12"
+            avatar_ic="mdi-google-circles-group"
+            avatar_bg="#B20F0F"
             subtitle="จัดการข้อมูลกลุ่มภารกิจ"
             menulink="/mission"
           />
@@ -55,9 +55,9 @@
          <v-col lg="3" md="6" sm="12" cols="12">
           <MenuCard
             title="หน่วยงาน"
-            avatar_ic="mdi-directions"
-            avatar_bg="#f39c12"
-            subtitle="จัดการข้อมูลกลุ่มภารกิจ"
+            avatar_ic="mdi-leaf"
+            avatar_bg="#0F77B2"
+            subtitle="จัดการข้อมูลหน่วยจ่าย"
             menulink="/workgroup"
           />
         </v-col>

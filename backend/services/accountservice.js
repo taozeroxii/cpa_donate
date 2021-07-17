@@ -84,7 +84,10 @@ module.exports = {
   getUserByid(id) {
     return new Promise((resolve, reject) => {
       connection.query(
-        `select id,username, pname,fname,lname,default_role from  donate_user where id = ?`,
+        `select du.id,du.username,du.pname,du.fname,du.lname,du.default_role ,dr.role
+        from  donate_user du 
+        LEFT OUTER JOIN donate_user_role dr on dr.id = du.default_role
+        where du.id = ?`,
         [id],
         (error, res) => {
           if (error) return reject(error);
