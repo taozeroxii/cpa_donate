@@ -66,7 +66,7 @@ const routes = [
     path: "/add-item",meta: { auth: true }, name: "additem",component: () => import("../views/add/AddItem.vue"),
   },
   {
-    path: "/edit-item/:id", meta: { auth: true },name: "edititem", component: () => import("../views/Edititem"),
+    path: "/edit-item/:id", meta: { auth: true },name: "edititem", component: () => import("../views/edit/Edititem"),
   },
    //--------------------------------------- ประเภทหน่วยสินค้า ----------------------------------------------------------
   {
@@ -76,7 +76,7 @@ const routes = [
     path: "/add-item-unit", meta: { auth: true },name: "additemunid",component: () => import("../views/add/AddItemUnit"),
   },
   {
-    path: "/edit-item-unit/:id", meta: { auth: true },name: "edititemunitid", component: () => import("../views/EdititemUnit"),
+    path: "/edit-item-unit/:id", meta: { auth: true },name: "edititemunitid", component: () => import("../views/edit/EdititemUnit"),
   },
 
   //-------------------------------------------- USER ----------------------------------------------------------
@@ -87,7 +87,7 @@ const routes = [
     path: "/register",meta: { auth: true },name: "register",component: () => import("@/views/Register.vue"),
   },
   {//ฟิกต้องเป็นสิทธิตั้งต้นของ admin เท่านั้นที่จะเข้า router นี้ได้
-    path: "/edit-user/:id", meta: { auth:['admin'] }, name: "EditUser",component: () => import("@/views/EditUser.vue"),
+    path: "/edit-user/:id", meta: { auth:['admin'] }, name: "EditUser",component: () => import("@/views/edit/EditUser.vue"),
   },
   {
     path: "/login",name: "login",component: Login,
