@@ -114,13 +114,18 @@ module.exports = {
     return new Promise((resolve, reject) => {
       // resolve("test");
       connection.query(
-        `SELECT dil.item_id,dil.item_name,dit.item_name_type,dgt.type_name as group_type,dil.insert_date,dil.update_date
-            FROM donate_item_list dil 
-            INNER JOIN donate_group_type dgt on dgt.group_item_type_id = dil.group_item_type_id
-            INNER JOIN donate_item_type dit on dit.item_type_id = dil.item_type_id
-            ORDER BY dil.update_date desc
-            `,
-        (error, result) => {
+        `
+        SELECT *,itemlist.all_donate - itemlist.all_widthdraw as remaining_instock
+        FROM(
+          SELECT dil.item_id,dil.item_name,dit.item_name_type,dgt.type_name as group_type,
+          (	SELECT sum(amount)as wd_all FROM donate_detail_instock where item_id = dil.item_id )as all_donate,
+          (	SELECT sum(amount)as wd_all FROM donate_detail_wdraw where item_id = dil.item_id )as all_widthdraw
+          ,dil.insert_date,dil.update_date
+             FROM donate_item_list dil 
+             INNER JOIN donate_group_type dgt on dgt.group_item_type_id = dil.group_item_type_id
+             INNER JOIN donate_item_type dit on dit.item_type_id = dil.item_type_id
+             ORDER BY dil.update_date desc
+        )as itemlist `,(error, result) => {
           if (error) return reject(error);
           resolve(result);
         }
@@ -200,6 +205,19 @@ module.exports = {
       const $query = `UPDATE donate_item_list SET  group_item_type_id = ? ,item_name = ? , item_type_id = ? ,staff_update = ? WHERE item_id = ? `;
       // console.log(value);
       connection.query( $query,[value.group_item_type_id, value.item_name,value.item_type_id, value.staff_update,id,],
+        (error, result) => {
+          if (error) return reject(error);
+          resolve(result);
+        }
+      );
+    });
+  },
+
+  // WORK GROUP ------------------------------------------------------------------------------------
+  findWorkGroup() {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `SELECT * FROM hr_cpa_workgroup ORDER BY id`,
         (error, result) => {
           if (error) return reject(error);
           resolve(result);

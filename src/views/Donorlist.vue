@@ -1,12 +1,12 @@
 <template>
-  <v-container id="itemlist">
+  <v-container id="userlist">
     <!-- Table section -->
     <v-card style="margin:15px">
-      <v-data-table :search="search" :headers="headers" :items="mDataArray"  :loading="loaddata" loading-text="Loading... Please wait" :footer-props="{'items-per-page-options': [10, 20, 30, 40, 50]}" >
+      <v-data-table :search="search" :headers="headers" :items="mDataArray" :loading="loaddata" loading-text="Loading... Please wait">
         <!-- table top section -->
         <template v-slot:top>
           <v-toolbar flat color="white">
-            <v-toolbar-title>ข้อมูลสินค้าทั้งหมด</v-toolbar-title>
+            <v-toolbar-title>รายชื่อผู้รับบริจาค</v-toolbar-title>
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-text-field
               v-model="search"
@@ -17,13 +17,13 @@
             ></v-text-field>
             <v-spacer></v-spacer>
             <v-btn
-              @click="$router.push('/add-item')"
+              @click="$router.push('/Add-Donor')"
               color="primary"
               dark
               class="mb-2"
             >
               <v-icon left>add</v-icon>
-              <span>เพิ่มรายการสินค้า</span>
+              <span>เพิ่มผู้รับบริจาค</span>
             </v-btn>
           </v-toolbar>
         </template>
@@ -31,23 +31,16 @@
         <!-- table tr section -->
         <template v-slot:item="{ item }">
           <tr>
-            <td>{{ item.item_id }}</td>
-            <td>{{ item.item_name }}</td>
-            <td>{{ item.item_name_type }}</td>
-            <td>{{ item.group_type }}</td>
-            <td>{{ item.all_donate }}</td>
-            <td>{{ item.all_widthdraw }}</td>
-            <td>{{ item.remaining_instock }}</td>
-            <td>{{ item.insert_date | date  }}</td>
-            <td>{{ item.update_date | date}}</td>
-            <!-- <td>{{ item.price | currency("฿") }}</td>
-            <td>{{ item.stock | number("0,0") }} pcs.</td> -->
+            <td>{{ item.donor_id }}</td>
+            <td>{{ item.donor_name }}</td>
+            <td>{{ item.insertby }}</td>
+            <td>{{ item.insertdate_time | date}}</td>
             <td>
               <v-icon class="mr-2" @click="editItem(item)">
                 edit
               </v-icon>
               <span class="ma-1"></span>
-              <v-icon @click="deleteItem(item)">
+              <v-icon  @click="deleteItem(item)">
                 delete
               </v-icon>
             </td>
@@ -83,13 +76,8 @@
 
 <script>
 import axios from 'axios'
-
 export default {
-  name: "itemlist",
-  components:{
-    
-  },
-
+  name: "userlist",
   data() {
     return {
       search: "",
@@ -102,48 +90,44 @@ export default {
           text: "Id",
           align: "left",
           sortable: false,
-          value: "item_id",
+          value: "id",
         },
-        { text: "ชื่อรายการ", value: "item_name" },
-        { text: "หน่วยนับ", value: "item_name_type" },
-        { text: "ประเภท", value: "group_type" },
-        { text: "รับบริจาคทั้งหมด", value: "group_type" },
-        { text: "จ่ายทั้งหมด", value: "group_type" },
-        { text: "คงเหลือ", value: "group_type" },
-        { text: "วันที่เพิ่ม", value: "insert_date" },
-        { text: "วันที่แก้ไขล่าสุด", value: "update_date" },
-        { text: "Action", value: "action" },
+        { text: "donor_id", value: "donor_id" },
+        { text: "donor_name", value: "donor_name" },
+        { text: "insertby", value: "insertby" },
+        { text: "insertdate_time", value: "insertdate_time" },
       ],
-
     };
   },
 
 
   methods: {
     editItem(item) {
-      // console.log(item.item_id);
-      this.$router.push(`/edit-item/${item.item_id}`);
+        this.$router.push(`/edit-user/${item.id}`);
     },
     deleteItem(item) {
-        this.selectedUserId = item.item_id;
+        if(this.$store.state.user.default_role_name =='admin'){
+        this.selectedUserId = item.id;
         this.confirmDeleteDlg = true;
         console.log('เลือกลบ id: ' +this.selectedUserId )
+        }
     },
     async confirmDelete() {
         // console.log(this.selectedUserId)
-        // await axios.delete(`api/account/delete-donatein/${this.selectedUserId}`);
+        // await axios.delete(`api/account/delete-user/${this.selectedUserId}`);
         // this.confirmDeleteDlg = false;
-        // this.loadItemlist();
+        // this.loadDonor();
     },
-    async loadItemlist() {
-        await axios.get(`api/typeinput/itemlist` ).then((result) => {this.mDataArray = result.data;  });
+    async loadDonor() {
+        await axios.get(`api/donate/donorlist` ).then((result) => {this.mDataArray = result.data;  });
         this.loaddata = false;
     },
   },
 
+
   mounted() {
-      this.loadItemlist();
-  },
+    this.loadDonor();
+  }
 };
 </script>
 

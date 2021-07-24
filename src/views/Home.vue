@@ -48,7 +48,7 @@
             avatar_ic="mdi-google-circles-group"
             avatar_bg="#B20F0F"
             subtitle="จัดการข้อมูลกลุ่มภารกิจ"
-            menulink="/donor"
+            menulink="/Donor-list"
           />
         </v-col>
 

@@ -79,6 +79,17 @@ const routes = [
     path: "/edit-item-unit/:id", meta: { auth: true },name: "edititemunitid", component: () => import("../views/edit/EdititemUnit"),
   },
 
+  //--------------------------------------- รายการผู้บริจาค ----------------------------------------------------------
+  {
+    path: "/Donor-list",meta: { auth: true }, name: "Donorlist", component: () => import("../views/Donorlist"),
+  },
+
+
+  //--------------------------------------- หน่วยงาน ----------------------------------------------------------
+  {
+    path: "/workgroup",meta: { auth: true }, name: "workgroup", component: () => import("../views/workgroup"),
+  },
+
   //-------------------------------------------- USER ----------------------------------------------------------
   {
     path: "/userlist", meta: { auth:['admin'] },name: "userlist",component: () => import("@/views/userlist.vue"),

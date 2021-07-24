@@ -1,6 +1,5 @@
 <template>
   <div dir="wDraw">
-    
     <v-container id="donate">
       <!-- Table section -->
       <v-card style="margin:15px">
@@ -40,14 +39,16 @@
           <!-- table tr section -->
           <template v-slot:item="{ item }">
             <tr>
-              <td>{{ item.donate_head_id }}</td>
-              <td>{{ item.donate_id }}</td>
-              <td>{{ item.donor }}</td>
+              <td>{{ item.draw_head_id }}</td>
+              <td>{{ item.draw_id }}</td>
+              <td>{{ item.draw_date | date }}</td>
+              <td>{{ item.type_name }}</td>
               <td>{{ item.item_name }}</td>
               <td>{{ item.amount | number("0,0") }}</td>
               <td>{{ item.item_name_type }}</td>
-              <td>{{ item.type_name }}</td>
-              <td>{{ item.insert_date | date }}</td>
+              <td>{{ item.mission_name }}</td>
+              <td>{{ item.workgroup }}</td>
+              <td>{{ item.status }}</td>
               <!-- <td>{{ item.price | currency("฿") }}</td>
             <td>{{ item.stock | number("0,0") }} pcs.</td> -->
               <td>
@@ -73,7 +74,7 @@
               ต้องการลบ ข้อมูลนี้หรือไม่ ?
             </v-card-text>
 
-            <v-card-actions>
+            <!-- <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn text @click="confirmDeleteDlg = false">
                 ยกเลิก
@@ -82,7 +83,7 @@
               <v-btn color="error" text @click="confirmDelete">
                 ยืนยัน
               </v-btn>
-            </v-card-actions>
+            </v-card-actions> -->
           </v-card>
         </v-dialog>
       </v-card>
@@ -91,8 +92,47 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "wDraw",
+  mounted() {
+    this.loadWdraw();
+  },
+  methods: {
+    async loadWdraw() {
+      await axios.get(`api/donate/with-draw`).then((result) => {
+        this.mDataArray = result.data;
+      });
+      this.loaddata = false;
+    },
+  },
+  data() {
+    return {
+      search: "",
+      selectedUserId: "",
+      confirmDeleteDlg: false,
+      loaddata: true,
+      mDataArray: [],
+      headers: [
+        {
+          text: "เลขที่ใบเบิกจ่าย",
+          align: "left",
+          sortable: false,
+          value: "id",
+        },
+        { text: "รหัสรายการ" },
+        { text: "วันที่จ่าย" },
+        { text: "ประเภท" },
+        { text: "ชื่อรายการ" },
+        { text: "จำนวน" },
+        { text: "หน่วย" },
+        { text: "กลุ่มภารกิจ" },
+        { text: "หน่วยงาน" },
+        { text: "สถานะใช้งาน" },
+        { text: "Action" },
+      ],
+    };
+  },
 };
 </script>
 

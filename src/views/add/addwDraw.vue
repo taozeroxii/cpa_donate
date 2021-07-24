@@ -7,12 +7,9 @@
 
           <v-text-field
             ref="head"
-            v-model="form.donate_head_id"
+            v-model="form.draw_head_id"
             :rules="[
-              () => !!form.donate_head_id || 'This field is required',
-              () =>
-                form.donate_head_id.length <= 5 ||
-                'โปรดกรอกตัวอักษร น้อยกว่า 5 ตัว',
+              () => !!form.draw_head_id || 'This field is required',
             ]"
             :error-messages="errorMessages"
             :disabled="ckDonatenumber"
@@ -23,10 +20,10 @@
 
           <v-autocomplete
             ref="workgroup"
-            v-model="form.workgroup_id"
-            :rules="[() => !!form.workgroup_id || 'This field is required']"
+            v-model="draw_department_id"
+            :rules="[() => !!draw_department_id || 'This field is required']"
             :error-messages="errorMessages"
-            :items="donor"
+            :items="workgroup"
             label="หน่วยงาน "
             placeholder=" ..."
             required
@@ -47,8 +44,8 @@
           <v-autocomplete
             ref="itemlist"
             :disabled="!checkinput"
-            v-model="form.item_id"
-            :rules="[() => !!form.item_id || 'This field is required']"
+            v-model="item_id"
+            :rules="[() => !!item_id || 'This field is required']"
             :items="itemlist"
             label="รายการสินค้า"
             placeholder="Select..."
@@ -62,10 +59,8 @@
             ref="amount"
             v-model="form.amount"
             type="number"
-            :rules="[
-              () => !!form.amount || 'This field is required',
-              form.amount <= 50 || 'จำนวนเบิกใช้งานมากกว่าจำนวนคงเหลือ',
-            ]"
+            min="1"
+            :rules="[ () => !!form.amount || 'This field is required',]"
             :error-messages="errorMessages"
             label="จำนวน"
             placeholder="1-9999999"
@@ -75,9 +70,6 @@
           <v-text-field
             ref="note"
             v-model="form.note"
-            :rules="[() => !!form.note || 'This field is required']"
-            :error-messages="errorMessages"
-            :disabled="ckDonatenumber"
             label="หมายเหตุ / note"
             placeholder=""
             required
@@ -109,7 +101,6 @@
           <v-btn @click="cancle" text>
             Cancel
           </v-btn>
-
           <v-spacer></v-spacer>
 
           <v-btn color="primary" :disabled="!checkinput" text @click="submit">
@@ -125,93 +116,87 @@
 import axios from "axios";
 export default {
   data: () => ({
-    counter: 0,
     checkinput: false,
     ckDonatenumber: false,
     stock: [],
-    donor: [],
+    workgroup: [],
+    item_id:[],
     itemlist: [],
     errorMessages: "",
     successMessage: "",
     errorRes: "",
     groupstock_id: "",
+    draw_department_id:"",
     totalamount: null,
     form: {
-      item_id: null,
-      donor_id: null,
-      amount: null,
-      insert_date: null,
-      staff: null,
-      donate_head_id: "",
+      draw_head_id:null,
+      item_id:null,
+      amount:null,
+      draw_department_id: null,
+      staff:null,
+      note:null
     },
   }),
 
   created() {
-    axios
-      .get(`api/typeinput/groupitem`)
-      .then((response) => {
-        //console.log(response.data);
-        var i;
+    axios.get(`api/typeinput/groupitem`) .then((response) => {var i;
         for (i = 0; i < response.data.length; i++) {
-          this.stock.push(
-            response.data[i].group_item_type_id +
-              "   : " +
-              response.data[i].type_name
-          );
+          this.stock.push( response.data[i].group_item_type_id +   "   : " + response.data[i].type_name );
         }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    axios
-      .get(`api/donate/donorlist`)
-      .then((response) => {
-        // console.log(response.data);
-        var i;
+      }).catch((err) => {console.log(err);});
+
+
+    axios .get(`api/typeinput/workgroup`) .then((response) => { 
+      var i;
         for (i = 0; i < response.data.length; i++) {
-          this.donor.push(
-            response.data[i].donor_id + "   : " + response.data[i].donor_name
-          );
+          this.workgroup.push( response.data[i].id + "   : " + response.data[i].workgroup );
         }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    //  this.form.donate_head_id = 'A001';
+      }).catch((err) => {console.log(err); });
   },
 
   computed: {},
+
+
 
   methods: {
     cancle() {
       this.$router.back();
     },
+    
 
     submit() {
-      console.log(this.form);
-      // this.form.staff = this.$store.getters.get_name;
-      // this.form.item_id =this.form.item_id[0] + this.form.item_id[1] + this.form.item_id[2];
-      // this.form.donor_id =this.form.donor_id[0] + this.form.donor_id[1] + this.form.donor_id[2];
-      // if (this.form.itemlist != null) {
-      //   this.form.itemlist = this.form.itemlist[0] + this.form.itemlist[1] + this.form.itemlist[2];
-      //   this.form.itemlist = this.form.itemlist.trim();
-      // }
+      this.form.draw_department_id = this.draw_department_id;
+      this.form.item_id = this.item_id;
+      this.form.staff = this.$store.getters.get_name;
+      if (this.form.item_id != null) {
+           this.form.item_id = this.form.item_id [0] + this.form.item_id [1] + this.form.item_id [2];
+      }
 
-      // // console.log(this.form);
-      // axios
-      //   .post("api/donate/add-donate", this.form)
-      //   .then((response) => {
-      //     console.log(response);
-      //     this.form.item_id = null;
-      //     this.form.amount = null;
-      //     this.checkinput = null;
-      //     this.alertify.success("เพิ่มข้อมูลสำเร็จ !!");
-      //     this.errorRes = "";
-      //   })
-      //   .catch((err) => {
-      //     this.errorRes = err.response.data.message;
-      //   });
+      if (this.form.itemlist != null) {
+        this.form.itemlist = this.form.itemlist[0] + this.form.itemlist[1] + this.form.itemlist[2];
+        this.form.itemlist = this.form.itemlist.trim();
+      }
+
+       if (this.form.draw_department_id != null) {
+        this.form.draw_department_id = this.form.draw_department_id[0] + this.form.draw_department_id[1] + this.form.draw_department_id[2];
+        this.form.draw_department_id = this.form.draw_department_id.trim();
+      }
+
+      console.log(this.form);
+      axios .post("api/donate/add-wdraw", this.form) .then((response) => {
+          console.log(response);
+          this.form.amount = null;
+          this.form.note = null;
+          this.checkinput = null;
+          this.alertify.success("เพิ่มข้อมูลสำเร็จ !!");
+          this.errorRes = "";
+        })
+        .catch((err) => {
+          this.errorRes = err.response.data.message;
+        });
+
     },
+
 
     clearlistitem() {
       this.itemlist = [];
@@ -220,21 +205,14 @@ export default {
 
     adddata() {
       this.itemlist = [];
-      // console.log(this.form.groupstock_id[0]);
-      axios
-        .get(`api/typeinput/itemlistgroupid/${this.groupstock_id[0]}`)
-        .then((response) => {
+      this.form.groupstock_id = this.groupstock_id[0]
+      // console.log(this.form.groupstock_id);
+      axios .get(`api/typeinput/itemlistgroupid/${this.groupstock_id[0]}`) .then((response) => {
           // console.log(response.data);
           this.checkinput = true;
           var i;
           for (i = 0; i < response.data.length; i++) {
-            this.itemlist.push(
-              response.data[i].item_id +
-                "  : " +
-                response.data[i].item_name +
-                " ( " +
-                response.data[i].item_name_type +
-                " ) "
+            this.itemlist.push(  response.data[i].item_id +"  : " +response.data[i].item_name +  " ( " +response.data[i].item_name_type +" ) "
             );
           }
         })

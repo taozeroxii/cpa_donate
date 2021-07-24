@@ -200,6 +200,16 @@ router.get("/detail-head/:id/:user", async (req, res) => {// หน้า adddon
   }
 });
 
+router.get("/workgroup", async (req, res) => {
+  try {
+    const workgroup = await service.findWorkGroup();
+    if (!workgroup) throw new Error("Not Found Item !!!");
+    res.json(workgroup);
+  } catch (ex) {
+    res.error(ex);
+  }
+});
+
 
 
 router.get("/userrole", async (req, res) => {

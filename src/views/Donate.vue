@@ -61,7 +61,8 @@
           </v-card-title>
 
           <v-card-text class="body">
-            ต้องการลบ ข้อมูลนี้หรือไม่ ? 
+            <!-- ต้องการลบ ข้อมูลนี้หรือไม่ ?  -->
+            ยังไม่เปิดใช้งาน
           </v-card-text>
 
           <v-card-actions>
@@ -69,10 +70,10 @@
             <v-btn text @click="confirmDeleteDlg = false">
               ยกเลิก
             </v-btn>
-
+<!-- 
             <v-btn color="error" text @click="confirmDelete">
               ยืนยัน
-            </v-btn>
+            </v-btn> -->
           </v-card-actions>
         </v-card>
       </v-dialog>
