@@ -79,7 +79,7 @@ module.exports = {
       LEFT OUTER JOIN donate_item_list dil on dil.item_id =  dw.item_id
       LEFT OUTER JOIN donate_item_type dit on dit.item_type_id = dil.item_type_id
       LEFT OUTER JOIN hr_cpa_workgroup dd  on dd.id =  dw.draw_department_id
-      LEFT OUTER JOIN hr_cpa_mission hcg on hcg.mission_id = dd.mission_id`, (error, result) => {
+      LEFT OUTER JOIN hr_cpa_mission hcg on hcg.mission_id = dd.mission_id ORDER BY dw.draw_id desc`, (error, result) => {
         if (error) return reject(error);
         resolve(result);
       });
