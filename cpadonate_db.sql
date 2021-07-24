@@ -11,7 +11,7 @@
  Target Server Version : 80018
  File Encoding         : 65001
 
- Date: 24/07/2021 16:22:31
+ Date: 24/07/2021 21:43:59
 */
 
 SET NAMES utf8mb4;
@@ -91,25 +91,31 @@ CREATE TABLE `donate_detail_wdraw`  (
 INSERT INTO `donate_detail_wdraw` VALUES (1, '2021-07-24 14:51:14', 1, 1, '3', 'Y', 100, NULL, 'ทดสอบ', 'นายadmin dev สิทธิการเข้าถึง : admin', NULL, '2021-07-24 14:51:14');
 INSERT INTO `donate_detail_wdraw` VALUES (2, '2021-07-24 14:51:20', 1, 3, '10', 'Y', 100, NULL, 'ทดสอบ', 'นายadmin dev สิทธิการเข้าถึง : admin', NULL, '2021-07-24 14:51:20');
 INSERT INTO `donate_detail_wdraw` VALUES (3, '2021-07-24 15:28:51', 1, 1, '10', 'Y', 50, NULL, 'aaaa', 'นายadmin dev สิทธิการเข้าถึง : admin', NULL, '2021-07-24 15:28:51');
+INSERT INTO `donate_detail_wdraw` VALUES (4, '2021-07-24 19:40:17', 5, 24, '5000', 'Y', 18, NULL, 'test111', 'นายadmin dev สิทธิการเข้าถึง : admin', NULL, '2021-07-24 19:40:17');
 
 -- ----------------------------
 -- Table structure for donate_donor
 -- ----------------------------
 DROP TABLE IF EXISTS `donate_donor`;
 CREATE TABLE `donate_donor`  (
-  `donor_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `donor_id` int(255) NOT NULL AUTO_INCREMENT,
   `donor_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `insertby` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `insertdate_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
+  `status` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `update_staff` varchar(150) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `update_datetime` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`donor_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of donate_donor
 -- ----------------------------
-INSERT INTO `donate_donor` VALUES ('1', 'ผู้บริจาค ก.', 'Dev.', '2021-07-16 12:24:36');
-INSERT INTO `donate_donor` VALUES ('2', 'ผู้บริจาค ข.', 'Dev.', '2021-07-16 12:24:36');
-INSERT INTO `donate_donor` VALUES ('3', 'ผู้บริจาค ค.', 'Dev.', '2021-07-16 15:26:17');
+INSERT INTO `donate_donor` VALUES (1, 'ผู้บริจาค ก.', 'Dev.', '2021-07-24 20:49:02', 'Y', NULL, '2021-07-24 21:23:19');
+INSERT INTO `donate_donor` VALUES (2, 'ผู้บริจาค ข.', 'Dev.', '2021-07-24 20:49:03', 'Y', NULL, '2021-07-24 21:23:19');
+INSERT INTO `donate_donor` VALUES (3, 'ผู้บริจาค ค.', 'Dev.', '2021-07-24 20:49:04', 'Y', NULL, '2021-07-24 21:23:19');
+INSERT INTO `donate_donor` VALUES (4, 'test', 'Dev.', '2021-07-24 21:18:26', 'Y', NULL, '2021-07-24 21:23:19');
+INSERT INTO `donate_donor` VALUES (5, 'ทดสอบแก้ไข', 'Dev.', '2021-07-24 21:43:03', 'Y', 'นายadmin dev สิทธิการเข้าถึง : admin', '2021-07-24 21:43:03');
 
 -- ----------------------------
 -- Table structure for donate_group_type
