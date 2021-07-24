@@ -8,7 +8,7 @@
           <v-text-field
             ref="head"
             v-model="form.donate_head_id"
-            :rules="[() => !!form.donate_head_id || 'This field is required' ,() => form.donate_head_id.length <= 5 || 'โปรดกรอกตัวอักษร น้อยกว่า 5 ตัว']"
+            :rules="[() => !!form.donate_head_id || 'This field is required' ]"
             :error-messages="errorMessages"
             :disabled="ckDonatenumber"
             label="เลขที่รับบริจาค / รับมอบ"
