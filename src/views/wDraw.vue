@@ -55,15 +55,16 @@
                 <v-icon class="mr-2" @click="editItem(item)">
                   edit
                 </v-icon>
+   
                 <span class="ma-1"></span>
-                <v-icon @click="deleteItem(item)">
+                <!-- <v-icon @click="deleteItem(item)">
                   delete
-                </v-icon>
+                </v-icon> -->
               </td>
             </tr>
           </template>
         </v-data-table>
-
+        <!-- 
         <v-dialog v-model="confirmDeleteDlg" max-width="290">
           <v-card>
             <v-card-title primary-title>
@@ -72,9 +73,9 @@
 
             <v-card-text class="body">
               ต้องการลบ ข้อมูลนี้หรือไม่ ?
-            </v-card-text>
+            </v-card-text> -->
 
-            <!-- <v-card-actions>
+        <!-- <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn text @click="confirmDeleteDlg = false">
                 ยกเลิก
@@ -84,8 +85,8 @@
                 ยืนยัน
               </v-btn>
             </v-card-actions> -->
-          </v-card>
-        </v-dialog>
+        <!-- </v-card>
+        </v-dialog> -->
       </v-card>
     </v-container>
   </div>

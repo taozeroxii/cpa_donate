@@ -3,8 +3,7 @@
     <v-row justify="center">
       <v-col cols="12" sm="10" md="8" lg="6">
         <v-card ref="form" class="mt-5">
-          <v-card-text
-            ><h1>เพิ่มรายชื่อผู้บริจาค / ผู้มอบ</h1>
+          <v-card-text><h1>แก้ไช รายชื่อผู้บริจาค / ผู้มอบ</h1>
 
             <v-text-field
               class="mt-5"
@@ -44,6 +43,7 @@
 <script>
 import axios from "axios";
 export default {
+  name: "EditDonor",
   data() {
     return {
       errorMessages: "",
@@ -51,20 +51,25 @@ export default {
       status: null,
       form: {
         donor_name: null,
-        insertby:null
+        update_staff: null,
       },
     };
+  },
+  async created() {
+    await axios.get(`/api/donate/donorlist/${this.$route.params.id}`).then((res)=>{
+        this.form.donor_name =  res.data.donor_name;
+    })
   },
   methods: {
     cancle() {
       this.$router.back();
     },
     submit() {
-      console.log(this.form);
-      this.form.insertby =  this.$store.getters.get_name;
-      axios.post(`api/donate/add-donor`,this.form).then(() => {
-          this.alertify.success("เพิ่มข้อมูลสำเร็จ !!");
+      this.form.update_staff = this.$store.getters.get_name;
+      axios .post(`/api/donate/edit-donor/${this.$route.params.id}`, this.form) .then(() => {
+          this.alertify.success("แก้ไขข้อมูลสำเร็จ !!");
           this.errorRes = "";
+          this.$router.back();
         })
         .catch((err) => {
           this.errorRes = err.response.data.message;

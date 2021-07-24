@@ -118,5 +118,37 @@ module.exports = {
   },
 
 
+  //--------------------------- ผู้บริจาค
+  insertDonor(value){
+    return new Promise((resolve, reject) => {
+      value.insertdate_time = new Date();
+      value.status = "Y";
+      connection.query(`INSERT INTO donate_donor SET ?`, value,(err, result) => {
+          if (err) return reject(err);
+          resolve(result);
+        }
+      );
+    });
+  },
+  editDonor(id,value){
+    return new Promise((resolve, reject) => {
+      connection.query(`UPDATE donate_donor SET ? WHERE donor_id = ?`, [value,id],(err, result) => {
+          if (err) return reject(err);
+          resolve(result);
+        }
+      );
+    });
+  },
+  finddonorlistByid(id){
+    return new Promise((resolve, reject) => {
+      connection.query(
+         `SELECT * FROM donate_donor where donor_id = ?`,[id],(error, result) => {
+          if (error) return reject(error);
+          resolve(result[0]);
+        }
+      );
+    });
+  }
+
 
 };

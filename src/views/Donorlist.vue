@@ -40,15 +40,15 @@
                 edit
               </v-icon>
               <span class="ma-1"></span>
-              <v-icon  @click="deleteItem(item)">
+              <!-- <v-icon  @click="deleteItem(item)">
                 delete
-              </v-icon>
+              </v-icon> -->
             </td>
           </tr>
         </template>
       </v-data-table>
 
-      <v-dialog v-model="confirmDeleteDlg" max-width="290">
+      <!-- <v-dialog v-model="confirmDeleteDlg" max-width="290">
         <v-card>
           <v-card-title primary-title>
             Confirm Delete
@@ -69,7 +69,7 @@
             </v-btn>
           </v-card-actions>
         </v-card>
-      </v-dialog>
+      </v-dialog> -->
     </v-card>
   </v-container>
 </template>
@@ -81,21 +81,22 @@ export default {
   data() {
     return {
       search: "",
+      checkstatus:true,
       selectedUserId: "",
       confirmDeleteDlg: false,
       loaddata:true,
       mDataArray: [],
       headers: [
         {
-          text: "Id",
+          text: "donor_id",
           align: "left",
           sortable: false,
           value: "id",
         },
-        { text: "donor_id", value: "donor_id" },
-        { text: "donor_name", value: "donor_name" },
-        { text: "insertby", value: "insertby" },
-        { text: "insertdate_time", value: "insertdate_time" },
+        { text: "donor_name", value: "donor_id" },
+        { text: "insertby", value: "donor_name" },
+        { text: "insertdate_time", value: "insertby" },
+        { text: "action", value: "insertdate_time" },
       ],
     };
   },
@@ -103,7 +104,7 @@ export default {
 
   methods: {
     editItem(item) {
-        this.$router.push(`/edit-donor/${item.id}`);
+        this.$router.push(`/edit-donor/${item.donor_id}`);
     },
     deleteItem(item) {
         if(this.$store.state.user.default_role_name =='admin'){

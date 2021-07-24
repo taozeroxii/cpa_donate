@@ -86,6 +86,11 @@ const routes = [
   {
     path: "/Add-Donor",meta: { auth: true }, name: "Adddonor", component: () => import("../views/add/AddDonor"),
   },
+  {
+    path: "/edit-donor/:id",meta: { auth: true }, name: "Editdonor", component: () => import("../views/edit/Editdonor"),
+  },
+
+  
 
 
 
