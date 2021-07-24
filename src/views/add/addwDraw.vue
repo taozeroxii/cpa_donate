@@ -8,9 +8,7 @@
           <v-text-field
             ref="head"
             v-model="form.draw_head_id"
-            :rules="[
-              () => !!form.draw_head_id || 'This field is required',
-            ]"
+            :rules="[() => !!form.draw_head_id || 'This field is required',]"
             :error-messages="errorMessages"
             :disabled="ckDonatenumber"
             label="เลขที่จ่ายสิ่งของบริจาค / ส่งรับมอบ"

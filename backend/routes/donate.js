@@ -85,45 +85,25 @@ router.get("/with-draw", async (req, res) => {
 });
 
 router.post("/add-wdraw",[
-    check("draw_head_id", "โปรดใส่เลขที่จ่ายสิ่งของ / ส่งมอบ")
-      .not()
-      .isEmpty(),
-    check("draw_department_id", "โปรดเลือกหน่วยงานที่รับมอบ")
-      .not()
-      .isEmpty(),
-    check("amount", "โปรดกรอกจำนวนที่เป็นตัวเลขมากกว่า 0 เท่านั้น")
-      .not()
-      .isEmpty()
-      .isInt({ gt: 0 }),
-    check("item_id", "โปรดเลือกรายการสิ่งของ")
-      .not()
-      .isEmpty(),
+    check("draw_head_id", "โปรดใส่เลขที่จ่ายสิ่งของ / ส่งมอบ").not().isEmpty(),
+    check("draw_department_id", "โปรดเลือกหน่วยงานที่รับมอบ").not().isEmpty(),
+    check("amount", "โปรดกรอกจำนวนที่เป็นตัวเลขมากกว่า 0 เท่านั้น").not().isEmpty().isInt({ gt: 0 }),
+    check("item_id", "โปรดเลือกรายการสิ่งของ").not().isEmpty(),
   ],
   async (req, res) => {
     try {
       req.validate();
       const checkinstock = await service.findBefore_insert(req.body.item_id);
       // console.log(checkinstock[0].remaining_instock );
-      if (checkinstock[0].remaining_instock == "undefined") {
-        res
-          .status(400)
-          .error({ message: `ไม่พบรายการรับบริจาคสิ่งของดังกล่าว` });
-      } else if (
-        checkinstock[0].remaining_instock == null &&
-        checkinstock[0].amount_all >= req.body.amount
-      ) {
-        res.json({ message: await service.insertWDraw(req.body) });
-      } else if (
-        checkinstock[0].remaining_instock != null &&
-        checkinstock[0].remaining_instock >= req.body.amount
-      ) {
-        res.json({ message: await service.insertWDraw(req.body) });
-      } else {
-        res
-          .status(400)
-          .error({
-            message: `จำนวนสินค้าไม่พอจ่าย คงเหลือทั้งหมด : ${checkinstock[0].remaining_instock} ${checkinstock[0].item_name_type}`,
-          });
+      if (checkinstock[0].remaining_instock == "undefined") { res.status(400) .error({ message: `ไม่พบรายการรับบริจาคสิ่งของดังกล่าว` });
+      } else if ( checkinstock[0].remaining_instock == null && checkinstock[0].amount_all >= req.body.amount) { res.json({ message: await service.insertWDraw(req.body) });
+      } else if ( checkinstock[0].remaining_instock != null &&  checkinstock[0].remaining_instock >= req.body.amount ) {res.json({ message: await service.insertWDraw(req.body) });
+      } else { 
+        if(checkinstock[0].remaining_instock == null){
+          res.status(400).error( { message: `จำนวนสินค้าไม่พอจ่าย คงเหลือทั้งหมด : ${checkinstock[0].amount_all} ${checkinstock[0].item_name_type}`});
+        }else{
+          res.status(400).error( { message: `จำนวนสินค้าไม่พอจ่าย คงเหลือทั้งหมด : ${checkinstock[0].remaining_instock} ${checkinstock[0].item_name_type}`});
+        }
       }
     } catch (ex) {
       res.error(ex);
