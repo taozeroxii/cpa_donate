@@ -57,7 +57,7 @@
           </v-card-title>
 
           <v-card-text class="body">
-            ต้องการลบ user Account นี้หรือไม่ ? 
+           ยังไม่เปิดให้ใช้งาน
           </v-card-text>
 
           <v-card-actions>
@@ -66,9 +66,9 @@
               ยกเลิก
             </v-btn>
 
-            <v-btn color="error" text @click="confirmDelete">
+            <!-- <v-btn color="error" text @click="confirmDelete">
               ยืนยัน
-            </v-btn>
+            </v-btn> -->
           </v-card-actions>
         </v-card>
       </v-dialog>

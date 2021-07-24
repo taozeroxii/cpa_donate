@@ -11,7 +11,7 @@
  Target Server Version : 80018
  File Encoding         : 65001
 
- Date: 28/05/2021 08:40:06
+ Date: 24/07/2021 16:22:31
 */
 
 SET NAMES utf8mb4;
@@ -34,7 +34,7 @@ CREATE TABLE `donate_data`  (
   `staff_update` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'ผู้บันทึกรายการ',
   `ipupdate` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'IP ผู้บันทึกรายการ',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of donate_data
@@ -47,48 +47,23 @@ DROP TABLE IF EXISTS `donate_detail_instock`;
 CREATE TABLE `donate_detail_instock`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `item_id` int(11) NULL DEFAULT NULL COMMENT 'รหัสสินค้า',
-  `donor` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'ชื่อผู้บริจาค freetext',
+  `donor_id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'รหัสผู้บริจาค',
   `amount` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'จำนวนรับบริจาค',
   `insert_date` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT 'วันที่เพิ่ม',
   `update_datetime` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT 'วันที่แก้ไขล่าสุด',
   `staff` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'ผุ้บันทึก',
   `update_staff` datetime(0) NULL DEFAULT NULL COMMENT 'ผู้แก้ไขล่าสุด',
+  `donate_head_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'รหัสใบรับไว้เช็คว่าครั้งนี้มีการรับสินค้าอะไรมาบ้าง',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of donate_detail_instock
 -- ----------------------------
-INSERT INTO `donate_detail_instock` VALUES (1, 2, 'โรงพยาบาล', '2', '2021-05-11 00:00:00', '2021-05-11 11:42:06', NULL, NULL);
-INSERT INTO `donate_detail_instock` VALUES (2, 2, 'บ้าน', '2', '2021-05-11 00:00:00', '2021-05-11 11:53:28', NULL, NULL);
-INSERT INTO `donate_detail_instock` VALUES (3, 5, 'ทดสอบ', '20', '2021-05-12 09:48:03', '2021-05-12 09:48:03', NULL, NULL);
-INSERT INTO `donate_detail_instock` VALUES (4, 2, '555', '20000', '2021-05-11 00:00:00', '2021-05-11 22:36:42', NULL, NULL);
-INSERT INTO `donate_detail_instock` VALUES (5, 2, '555', '20000', '2021-05-11 00:00:00', '2021-05-11 22:46:06', NULL, NULL);
-INSERT INTO `donate_detail_instock` VALUES (6, 1, 'ผู้บริจาค', '1', '2021-05-22 19:38:41', '2021-05-22 19:38:45', NULL, NULL);
-INSERT INTO `donate_detail_instock` VALUES (7, 2, 'aaa', '111', '2021-05-22 19:38:45', '2021-05-22 19:38:49', NULL, NULL);
-INSERT INTO `donate_detail_instock` VALUES (8, 1, 'aaaaaaa', '111', NULL, '2021-05-14 15:11:51', NULL, NULL);
-INSERT INTO `donate_detail_instock` VALUES (9, 1, 'ผู้บริจาค2', '1', NULL, '2021-05-14 15:34:21', NULL, NULL);
-INSERT INTO `donate_detail_instock` VALUES (10, 1, 'ผู้บริจาค2', '1', '2021-05-14 16:11:10', '2021-05-14 16:11:10', NULL, NULL);
-INSERT INTO `donate_detail_instock` VALUES (11, 6, 'testsetskdfoskadkl', '999999999', '2021-05-14 16:11:35', '2021-05-14 16:11:35', NULL, NULL);
-INSERT INTO `donate_detail_instock` VALUES (12, 2, 'asdasdasdsadasdqwe', '11111', '2021-05-14 16:13:44', '2021-05-14 16:13:44', NULL, NULL);
-INSERT INTO `donate_detail_instock` VALUES (13, 1, 'taotest', '1000', '2021-05-16 09:41:15', '2021-05-16 09:41:15', NULL, NULL);
-INSERT INTO `donate_detail_instock` VALUES (14, 5, 'taotest', '500', '2021-05-16 09:41:44', '2021-05-16 09:41:44', NULL, NULL);
-INSERT INTO `donate_detail_instock` VALUES (15, 1, 'test', '1', '2021-05-16 09:42:51', '2021-05-16 09:42:50', NULL, NULL);
-INSERT INTO `donate_detail_instock` VALUES (16, 3, 'td123', '123456', '2021-05-16 09:44:06', '2021-05-16 09:44:05', NULL, NULL);
-INSERT INTO `donate_detail_instock` VALUES (17, 2, 'aa', '11', '2021-05-16 09:44:31', '2021-05-16 09:44:30', NULL, NULL);
-INSERT INTO `donate_detail_instock` VALUES (18, 1, '1', '1', '2021-05-16 09:44:58', '2021-05-16 09:44:58', NULL, NULL);
-INSERT INTO `donate_detail_instock` VALUES (19, 1, 'aaaaa', '111', '2021-05-16 09:49:50', '2021-05-16 09:49:50', 'นาย admin dev', NULL);
-INSERT INTO `donate_detail_instock` VALUES (20, 1, 'aaaaa', '111', '2021-05-16 09:49:54', '2021-05-16 09:49:53', 'นาย admin dev', NULL);
-INSERT INTO `donate_detail_instock` VALUES (21, 1, 'aa', '1', '2021-05-16 09:52:50', '2021-05-16 09:52:50', 'นาย admin dev', NULL);
-INSERT INTO `donate_detail_instock` VALUES (22, 1, '1111', '1111', '2021-05-16 09:53:30', '2021-05-16 09:53:30', 'นาย admin dev', NULL);
-INSERT INTO `donate_detail_instock` VALUES (23, 3, 'taotest', '51', '2021-05-16 09:53:44', '2021-05-16 09:53:43', 'นาย admin dev', NULL);
-INSERT INTO `donate_detail_instock` VALUES (24, 2, 'บริจาค ก.', '150', '2021-05-16 09:54:18', '2021-05-16 09:54:17', 'นาย admin dev', NULL);
-INSERT INTO `donate_detail_instock` VALUES (25, 3, 'บริจาค ก.', '100', '2021-05-16 09:54:24', '2021-05-16 09:54:24', 'นาย admin dev', NULL);
-INSERT INTO `donate_detail_instock` VALUES (26, 2, 'ไม่ระบุ', '9000000', '2021-05-16 14:35:50', '2021-05-16 14:35:51', 'นาย admin dev', NULL);
-INSERT INTO `donate_detail_instock` VALUES (27, 2, 'ไม่ระบุ', '9000000', '2021-05-16 14:36:28', '2021-05-16 14:36:29', 'นาย admin dev', NULL);
-INSERT INTO `donate_detail_instock` VALUES (28, 25, 'a', '111', '2021-05-16 14:39:30', '2021-05-16 14:39:31', 'นาย admin dev', NULL);
-INSERT INTO `donate_detail_instock` VALUES (29, 24, 'นายเอ', '90456465489', '2021-05-16 14:39:59', '2021-05-16 14:40:00', 'นาย admin dev', NULL);
-INSERT INTO `donate_detail_instock` VALUES (30, 24, 'สวีดัส', '1', '2021-05-22 18:58:52', '2021-05-22 18:58:53', 'นายadmin dev สิทธิการเข้าถึง : admin', NULL);
+INSERT INTO `donate_detail_instock` VALUES (1, 1, '3', '33', '2021-07-17 14:20:47', '2021-07-17 14:20:46', 'นายadmin dev สิทธิการเข้าถึง : admin', NULL, 'a');
+INSERT INTO `donate_detail_instock` VALUES (2, 4, '2', '33', '2021-07-17 14:21:20', '2021-07-17 14:21:19', 'นายadmin dev สิทธิการเข้าถึง : admin', NULL, 'test');
+INSERT INTO `donate_detail_instock` VALUES (3, 3, '2', '22', '2021-07-17 14:21:28', '2021-07-17 14:21:28', 'นายadmin dev สิทธิการเข้าถึง : admin', NULL, 'test');
+INSERT INTO `donate_detail_instock` VALUES (4, 24, '2', '10000', '2021-07-17 14:21:56', '2021-07-17 14:21:56', 'นายadmin dev สิทธิการเข้าถึง : admin', NULL, 'test');
 
 -- ----------------------------
 -- Table structure for donate_detail_wdraw
@@ -96,21 +71,45 @@ INSERT INTO `donate_detail_instock` VALUES (30, 24, 'สวีดัส', '1', '
 DROP TABLE IF EXISTS `donate_detail_wdraw`;
 CREATE TABLE `donate_detail_wdraw`  (
   `draw_id` int(11) NOT NULL AUTO_INCREMENT,
-  `draw_date` datetime(0) NOT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT 'วันที่เบิกของ',
+  `draw_date` datetime(0) NOT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT 'วันที่เบิกจ่ายของครั้งแรกที่ทำการกดบันทึก',
+  `groupstock_id` int(55) NULL DEFAULT NULL COMMENT 'หมวดหมู่ประเภทรับบริจาค',
+  `item_id` int(50) NULL DEFAULT NULL COMMENT 'รหัสรายการสินค้า',
   `amount` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'จำนวนที่เบิก',
-  `update_datetime` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT 'วันที่แก้ไขล่าสุด',
-  `staff` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'ผุ้บันทึก',
-  `update_staff` datetime(0) NULL DEFAULT NULL COMMENT 'ผู้แก้ไขล่าสุด',
   `status` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'สถานะการจ่ายสินค้า',
   `draw_department_id` int(50) NULL DEFAULT NULL COMMENT 'รหัสแผนกที่ขอเบิก',
   `note` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'หมายเหตุ',
-  `income_id` int(60) NOT NULL COMMENT 'รหัสใบรับบริจาค',
+  `draw_head_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'รหัสใบจ่ายสินค้า',
+  `staff` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'ผุ้บันทึก',
+  `update_staff` datetime(0) NULL DEFAULT NULL COMMENT 'ผู้แก้ไขล่าสุด',
+  `update_datetime` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT 'วันที่แก้ไขล่าสุด',
   PRIMARY KEY (`draw_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of donate_detail_wdraw
 -- ----------------------------
+INSERT INTO `donate_detail_wdraw` VALUES (1, '2021-07-24 14:51:14', 1, 1, '3', 'Y', 100, NULL, 'ทดสอบ', 'นายadmin dev สิทธิการเข้าถึง : admin', NULL, '2021-07-24 14:51:14');
+INSERT INTO `donate_detail_wdraw` VALUES (2, '2021-07-24 14:51:20', 1, 3, '10', 'Y', 100, NULL, 'ทดสอบ', 'นายadmin dev สิทธิการเข้าถึง : admin', NULL, '2021-07-24 14:51:20');
+INSERT INTO `donate_detail_wdraw` VALUES (3, '2021-07-24 15:28:51', 1, 1, '10', 'Y', 50, NULL, 'aaaa', 'นายadmin dev สิทธิการเข้าถึง : admin', NULL, '2021-07-24 15:28:51');
+
+-- ----------------------------
+-- Table structure for donate_donor
+-- ----------------------------
+DROP TABLE IF EXISTS `donate_donor`;
+CREATE TABLE `donate_donor`  (
+  `donor_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `donor_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `insertby` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `insertdate_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
+  PRIMARY KEY (`donor_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of donate_donor
+-- ----------------------------
+INSERT INTO `donate_donor` VALUES ('1', 'ผู้บริจาค ก.', 'Dev.', '2021-07-16 12:24:36');
+INSERT INTO `donate_donor` VALUES ('2', 'ผู้บริจาค ข.', 'Dev.', '2021-07-16 12:24:36');
+INSERT INTO `donate_donor` VALUES ('3', 'ผู้บริจาค ค.', 'Dev.', '2021-07-16 15:26:17');
 
 -- ----------------------------
 -- Table structure for donate_group_type
@@ -173,7 +172,7 @@ INSERT INTO `donate_item_list` VALUES (23, '17', 4, 'เครื่องดื
 INSERT INTO `donate_item_list` VALUES (24, '8', 5, 'เงินสด', '2021-05-16 11:57:15', '2021-05-16 11:57:14', 'นาย admin dev', NULL);
 INSERT INTO `donate_item_list` VALUES (25, '8', 5, 'เช็ค', '2021-05-16 11:57:23', '2021-05-16 11:57:23', 'นาย admin dev', NULL);
 INSERT INTO `donate_item_list` VALUES (26, '17', 4, 'วิตามิน', '2021-05-16 19:22:41', '2021-05-16 19:22:41', 'นายadmin dev สิทธิการเข้าถึง : admin', NULL);
-INSERT INTO `donate_item_list` VALUES (27, '20', 5, 'test', '2021-05-17 16:08:08', '2021-05-17 16:08:08', 'นายadmin dev สิทธิการเข้าถึง : admin', NULL);
+INSERT INTO `donate_item_list` VALUES (27, '8', 5, 'ทดสอบแก้ไข2', '2021-05-17 16:08:08', '2021-07-20 10:11:34', 'นายadmin dev สิทธิการเข้าถึง : admin', NULL);
 
 -- ----------------------------
 -- Table structure for donate_item_type
@@ -213,7 +212,7 @@ INSERT INTO `donate_item_type` VALUES (16, 'ชุด', NULL, '2021-05-16 11:11:
 INSERT INTO `donate_item_type` VALUES (17, 'ขวด', NULL, '2021-05-16 11:56:23', '2021-05-16 11:56:24', NULL, NULL, NULL);
 INSERT INTO `donate_item_type` VALUES (18, 'ลัง', NULL, '2021-05-16 11:56:25', '2021-05-16 11:56:27', NULL, NULL, NULL);
 INSERT INTO `donate_item_type` VALUES (19, 'test', 'note', '2021-05-16 15:37:03', '2021-05-16 18:08:17', 'นาย admin dev', 'นายadmin dev', NULL);
-INSERT INTO `donate_item_type` VALUES (20, 'test', 'notesssss', '2021-05-16 15:34:30', '2021-05-22 19:12:18', 'นาย admin dev', 'นายadmin dev สิทธิการเข้าถึง : admin', NULL);
+INSERT INTO `donate_item_type` VALUES (20, 'test', 'ทดสอบหมายเหตุ', '2021-05-16 15:34:30', '2021-07-17 14:29:12', 'นาย admin dev', 'นายadmin dev สิทธิการเข้าถึง : admin', NULL);
 
 -- ----------------------------
 -- Table structure for donate_spclty
@@ -248,20 +247,27 @@ CREATE TABLE `donate_user`  (
   `staff_update` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `isuse` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'สถานะใช้งาน',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of donate_user
 -- ----------------------------
 INSERT INTO `donate_user` VALUES (1, 'admintaonaja', '6d59b638fe405cf7ec3ff85bcd94839dd1babd40', 'นาย', 'admin', 'dev', '34w94Or', '2021-05-10 21:08:49', '2021-05-13 09:16:07', '1', NULL, 'Y');
-INSERT INTO `donate_user` VALUES (2, 'testupdate', 'f812326b25177330633accd601445d35345ba5e5', 'นาง', 'testupdatee', 'testupdate', '35Uvrbc', '2021-05-10 21:23:38', '2021-05-16 12:10:07', '2', NULL, 'Y');
-INSERT INTO `donate_user` VALUES (3, 'qwe', '3b24a8f0d63d456d9a97ef88cc6a72085fe15bab', 'นาย', 'ทดสอบupdateasd', 'ระบบ1fontendasd', 'VcwMbfx', '2021-05-10 23:50:14', '2021-05-13 10:28:13', '1', NULL, 'Y');
-INSERT INTO `donate_user` VALUES (4, 'admintao1', '9d37bdfe742007e79a690f47ca6a524a8086cc25', 'นาย', 'asdasdsadas', 'dasdasdasdas', 'S5iwEle', '2021-05-11 11:30:29', '2021-05-13 10:28:14', '2', NULL, 'Y');
+INSERT INTO `donate_user` VALUES (2, 'testupdate', 'f812326b25177330633accd601445d35345ba5e5', 'นาง', 'testupdatee', 'testupdate', '35Uvrbc', '2021-05-10 21:23:38', '2021-07-17 09:19:40', '2', NULL, 'N');
+INSERT INTO `donate_user` VALUES (3, 'a', '8d6150cf892125ba6587538e838b3cb826ec0702', 'นาย', 'aa', 'a', 'NLdePCp', '2021-05-10 23:50:14', '2021-07-17 09:24:48', '2', NULL, 'Y');
+INSERT INTO `donate_user` VALUES (4, 'admintao1', '9d37bdfe742007e79a690f47ca6a524a8086cc25', 'นาย', 'asdasdsadas', 'dasdasdasdas', 'S5iwEle', '2021-05-11 11:30:29', '2021-07-17 09:19:46', '2', NULL, 'N');
 INSERT INTO `donate_user` VALUES (5, 'a', '4ae46edcf5e84a599079a564c18f8fc8edc0572a', 'นาย', 'a', 'a', '6U4l5Nu', '2021-05-11 12:22:06', '2021-05-22 19:00:15', '2', NULL, 'N');
 INSERT INTO `donate_user` VALUES (6, 'user', '7f462fdc5f7b25baeb78a6208f897364455de07f', 'นาง', 'usertest', 'usertest', 'AKqde2G', '2021-05-11 13:55:48', '2021-05-16 18:50:54', '2', NULL, 'Y');
 INSERT INTO `donate_user` VALUES (7, 'asd', 'b6133a3b49d42ac956f885e762259453f653e2cf', 'นาย', 'เฟิส', 'เฟิส', '8ZORHcr', '2021-05-11 14:48:06', '2021-05-13 09:16:11', '1', NULL, 'Y');
-INSERT INTO `donate_user` VALUES (8, 'testalert', '6f8ba0be7dead91f98df32b4eeade88edf8795fe', 'นาย', 'testalert', 'testalert', 'ksBRV3o', '2021-05-16 19:17:26', '2021-05-16 19:17:27', '2', NULL, 'Y');
+INSERT INTO `donate_user` VALUES (8, 'test', '2139b2ff0546a545285e0748e2d0c7168240b0ae', 'นาย', 'testtest', 'testalert', 'epDFn1P', '2021-05-16 19:17:26', '2021-07-17 09:22:53', '2', NULL, 'Y');
 INSERT INTO `donate_user` VALUES (9, 'dsadsads', '04e879bb70bd08051d5d6f4c7c26f0b4b2a0e547', 'นางสาว', 'asdasdas', 'dasdas', '2k8l4me', '2021-05-16 19:18:34', '2021-05-16 19:19:16', '2', NULL, 'Y');
+INSERT INTO `donate_user` VALUES (10, 'test123', 'dca07a2a8aeff24e12999302e2375dbe3d1669e1', 'นาย', 'aa', 'aa', 'UHZJya4', '2021-07-17 10:37:13', '2021-07-17 10:37:13', '6', NULL, 'Y');
+INSERT INTO `donate_user` VALUES (11, '111111111', '705667c517c65086341a258dbb8d6e73c8fc1a8c', 'นาง', 'test11111', '1213414', 'k5MxdNc', '2021-07-17 10:38:32', '2021-07-17 10:38:32', '4', NULL, 'Y');
+INSERT INTO `donate_user` VALUES (12, 'ddddddddddddddddddddd', '6788216517f694c2a24bbc9d2a9e8455e1051d73', 'นาง', 'adddddddddddddddddd', 'dddddddddddddddddd', 'mkWSXbv', '2021-07-17 10:39:55', '2021-07-17 11:06:34', '4', NULL, 'N');
+INSERT INTO `donate_user` VALUES (13, 'qweqwewqeqw', '228afc51625ba0be3e17fa476be785102b51dae1', 'นาย', 'a', 'dd', 'nO5KBb0', '2021-07-17 10:41:26', '2021-07-17 10:41:26', '2', NULL, 'Y');
+INSERT INTO `donate_user` VALUES (14, 'zxczxczxczxczczxccz', '6d3d46b62ab504c7212eea98549e98115bb8fb2d', 'นาง', 'asdasqwew', 'asdasd', 'PwNOWBo', '2021-07-17 10:41:50', '2021-07-17 10:41:50', '4', NULL, 'Y');
+INSERT INTO `donate_user` VALUES (15, 'asdasd', '4dbb73446b1857c39c2c9f89287abcd6ba83d5f5', 'นาง', 'asd', 'asd', 'gFiztkR', '2021-07-17 10:43:13', '2021-07-17 11:06:31', '5', NULL, 'N');
+INSERT INTO `donate_user` VALUES (16, '11111111111111', '413e43a8e7a3f2d64874b2d3263bfa7c87539318', 'นาง', 'test12131', 'test', 'fh2idco', '2021-07-17 10:45:32', '2021-07-17 11:06:30', '5', NULL, 'N');
 
 -- ----------------------------
 -- Table structure for donate_user_role
@@ -277,12 +283,12 @@ CREATE TABLE `donate_user_role`  (
 -- Records of donate_user_role
 -- ----------------------------
 INSERT INTO `donate_user_role` VALUES (1, 'admin');
-INSERT INTO `donate_user_role` VALUES (2, 'user');
-INSERT INTO `donate_user_role` VALUES (3, 'ดูแลอุปกรณ์');
-INSERT INTO `donate_user_role` VALUES (4, 'ดูแลเวชภัณฑ์');
-INSERT INTO `donate_user_role` VALUES (5, 'ครุภัณฑ์');
-INSERT INTO `donate_user_role` VALUES (6, 'อุปโภค');
-INSERT INTO `donate_user_role` VALUES (7, 'บริโภค');
+INSERT INTO `donate_user_role` VALUES (2, 'user เข้าได้ทุกหน่วยงาน');
+INSERT INTO `donate_user_role` VALUES (3, 'เครื่องมือ / อุปกรณ์การแพทย์');
+INSERT INTO `donate_user_role` VALUES (4, 'เวชภัณฑ์มิใช่ยา / น้ำยาฆ่าเชื้อ');
+INSERT INTO `donate_user_role` VALUES (5, 'ครุภัณฑ์ทั่วไป / งานบ้านงานครัว');
+INSERT INTO `donate_user_role` VALUES (6, 'อุปโภค / บริโภค');
+INSERT INTO `donate_user_role` VALUES (7, 'เงินบริจาค');
 
 -- ----------------------------
 -- Table structure for donate_user_role_list
@@ -293,10 +299,147 @@ CREATE TABLE `donate_user_role_list`  (
   `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'รหัสผู้ใช้งาน',
   `role_id` int(11) NULL DEFAULT NULL COMMENT 'สิทธิการเข้าถึงแต่ละหน้า',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of donate_user_role_list
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for hr_cpa_mission
+-- ----------------------------
+DROP TABLE IF EXISTS `hr_cpa_mission`;
+CREATE TABLE `hr_cpa_mission`  (
+  `mission_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ภารกิจ',
+  `mission_id` int(11) NOT NULL COMMENT 'รหัสกลุ่มภารกิจ',
+  PRIMARY KEY (`mission_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of hr_cpa_mission
+-- ----------------------------
+INSERT INTO `hr_cpa_mission` VALUES ('ภารกิจด้านอำนวยการ', 1);
+INSERT INTO `hr_cpa_mission` VALUES ('ภารกิจด้านบริการปฐมภูมิ', 2);
+INSERT INTO `hr_cpa_mission` VALUES ('ภารกิจด้านพัฒนาระบบบริการและสนับสนุนบริการสุขภาพ', 3);
+INSERT INTO `hr_cpa_mission` VALUES ('ภารกิจด้านบริการทุติยภูมิและตติยภูมิ', 4);
+INSERT INTO `hr_cpa_mission` VALUES ('ภารกิจด้านการพยาบาล', 5);
+INSERT INTO `hr_cpa_mission` VALUES ('ภารกิจด้านผลิตบุคลากรทางการแพทย์', 6);
+
+-- ----------------------------
+-- Table structure for hr_cpa_workgroup
+-- ----------------------------
+DROP TABLE IF EXISTS `hr_cpa_workgroup`;
+CREATE TABLE `hr_cpa_workgroup`  (
+  `id` int(11) NOT NULL,
+  `workgroup` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `mission_id` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `isuse` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of hr_cpa_workgroup
+-- ----------------------------
+INSERT INTO `hr_cpa_workgroup` VALUES (1, 'ภารกิจด้านอำนวยการ', '1', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (2, 'กลุ่มงานบริหารทั่วไป', '1', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (3, 'งานสารบรรณ', '1', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (4, 'งานเลขานุการ', '1', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (5, 'งานประชาสัมพันธ์', '1', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (6, 'งานสนาม', '1', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (7, 'งานยานพาหนะ', '1', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (8, 'งานแม่บ้าน', '1', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (9, 'กลุ่มงานทรัพยากรบุคคล', '1', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (10, 'กลุ่มงานการเงิน', '1', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (11, 'กลุ่มงานบัญชี', '1', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (12, 'สหกรณ์ รพ.', '1', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (13, 'กลุ่มงานพัสดุ', '1', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (14, 'กลุ่มงานโครงสร้างพื้นฐานและวิศวกรรมทางการแพทย์', '1', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (15, 'งานโรงงาน', '1', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (16, 'งานบำบัดน้ำเสีย', '1', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (17, 'งานประปา', '1', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (18, 'กลุ่มงานการแพทย์แผนไทยและการแพทย์ทางเลือก', '2', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (19, 'กลุ่มงานสุขศึกษา', '2', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (20, 'กลุ่มงานเวชกรรมสังคม', '2', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (21, 'เวชปฏิบัติครอบครัวและชุมชนศูนย์สุขภาพชุมชนเมือง', '2', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (22, 'เจ้าหน้าที่ประจำสถานีอนามัย', '2', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (23, 'กลุ่มงานการพยาบาลชุมชน', '2', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (24, 'กลุ่มงานอาชีวเวชกรรม', '2', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (25, 'กลุ่มงานยุทธศาสตร์และแผนงานโครงการ', '3', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (26, 'กลุ่มงานสารสนเทศทางการแพทย์', '3', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (27, 'ศูนย์ไอ.ที', '3', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (28, 'กลุ่มงานประกันสุขภาพ', '3', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (29, 'กลุ่มงานพัฒนาทรัพยากรบุคคล', '3', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (30, 'เวชนิทัศน์และโสตทัศนศึกษา', '3', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (31, 'ศูนย์พัฒนาคุณภาพ', '3', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (32, 'กลุ่มงานนิติเวช', '4', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (33, 'กลุ่มงานโสต ศอ นาสิก', '4', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (34, 'กลุ่มงานโภชนศาสตร์', '4', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (35, 'กลุ่มงานพยาธิวิทยากายวิภาค', '4', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (36, 'กลุ่มงานจิตเวช', '4', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (37, 'กลุ่มงานทันตกรรม', '4', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (38, 'กลุ่มงานรังสีวิทยา', '4', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (39, 'กลุ่มงานพยาธิวิทยาคลีนิค  ', '4', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (40, 'กลุ่มงานเวชกรรมฟื้นฟู', '4', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (41, 'กลุ่มงานสังคมสงเคราะห์', '4', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (42, 'กลุ่มงานเภสัชกรรม', '4', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (43, 'กลุ่มการพยาบาล', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (44, 'งานติดเชื้อ', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (45, 'ศูนย์เครื่องมือแพทย์', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (46, 'วันเดย์', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (47, 'จ่ายกลาง', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (48, 'ซักฟอก-ตัดเย็บ', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (49, 'ศูนย์เปล', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (50, 'ผู้ป่วยนอก  ', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (51, 'อุบัติเหตุและฉุกเฉิน', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (52, 'งาน EMS', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (53, 'ไอ.ซี.ยู.ศัลยกรรม', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (54, 'พิเศษรวมศัลยกรรม ', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (55, 'ศัลยกรรมชาย', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (56, 'ศัลยกรรมหญิง', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (57, 'ศัลยกรรมกระดูก', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (58, 'ห้องเฝือก', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (59, 'ผ่าตัด', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (60, 'ผ่าตัดเล็ก', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (61, 'วิสัญญี', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (62, 'ผู้ป่วยโรคหลอดเลือดสมอง', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (63, 'อายุรกรรมชาย 1', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (64, 'อายุรกรรมชาย 2', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (65, 'ผู้ป่วยแยกโรค', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (66, 'อายุรกรรมหญิง', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (67, 'วิกฤตทางเดินหายใจ ricu', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (68, 'วิกฤตหัวใจและหลอดเลือด  ccu', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (69, 'เครื่องมือพิเศษ', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (70, 'ห้องปฏิบัติการสวนหัวใจ', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (71, 'ไตเทียม', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (72, 'ธเนศวร', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (73, 'สูติกรรมสามัญ', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (74, 'โอ.พี.ดี.สูติ (เงินเอาไปนับกับ โอ.พี.ดี)', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (75, 'สูติกรรมพิเศษ 1', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (76, 'สูติกรรมพิเศษ 2', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (77, 'สูติกรรมแผนไทย', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (78, 'ห้องคลอด', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (79, 'เด็กสามัญ', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (80, 'เด็กพิเศษ', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (81, 'ไอ.ซี.ยู.เด็ก  NICU', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (82, 'PICU&SNB ', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (83, 'ไอ.ซี.ยู.อายุรกรรม micu', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (84, 'ตา หู คอ จมูก ', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (85, 'ตรวจรักษาพิเศษจักษุ', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (86, 'พิเศษสุวัทนา  ', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (87, 'พิเศษรวมอายุรกรรม ', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (88, 'เคมีบำบัด', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (89, 'ศูนย์ Logistic', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (90, 'นักเรียนทุนพยาบาลวิชาชีพ ปี 2564  (ยังไม่ได้ประจำตึก)', '5', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (91, 'ศูนย์แพทยศาสตรชั้นคลินิก', '6', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (92, 'องค์กรแพทย์', '6', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (93, 'แพทย์ลูกจ้างชั่วคราว', '6', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (94, 'แพทย์ฝึก ปี 3', '6', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (95, 'แพทย์ฝึก ปี 2', '6', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (96, 'แพทย์ฝึกปี 1 ', '6', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (97, 'แพทย์ที่ยังสอบไม่ผ่าน', '6', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (98, 'ลาศึกษาต่อ', '6', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (99, 'มาช่วยราชการ  ', '6', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (100, 'ไปช่วยราชการ', '6', 'Y');
+INSERT INTO `hr_cpa_workgroup` VALUES (101, 'ปฏิบัติราชการที่ สสจ.ปจ', '6', 'Y');
 
 SET FOREIGN_KEY_CHECKS = 1;

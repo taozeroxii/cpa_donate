@@ -103,7 +103,7 @@ export default {
 
   methods: {
     editItem(item) {
-        this.$router.push(`/edit-user/${item.id}`);
+        this.$router.push(`/edit-donor/${item.id}`);
     },
     deleteItem(item) {
         if(this.$store.state.user.default_role_name =='admin'){

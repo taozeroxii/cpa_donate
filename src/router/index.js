@@ -83,6 +83,10 @@ const routes = [
   {
     path: "/Donor-list",meta: { auth: true }, name: "Donorlist", component: () => import("../views/Donorlist"),
   },
+  {
+    path: "/Add-Donor",meta: { auth: true }, name: "Adddonor", component: () => import("../views/add/AddDonor"),
+  },
+
 
 
   //--------------------------------------- หน่วยงาน ----------------------------------------------------------
