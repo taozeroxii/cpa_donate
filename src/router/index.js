@@ -43,6 +43,12 @@ const routes = [
     name: "adddonate",
     component: () => import("../views/add/AddDonate"),
   },
+  {
+    path: "/edit-donate/:id",
+    meta: { auth: true },
+    name: "editdonate",
+    component: () => import("../views/edit/EditDonate"),
+  },
 
   //-------------------------------------------- จ่ายสินค้า ----------------------------------------------------------
   {

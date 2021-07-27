@@ -113,8 +113,8 @@ export default {
 
 
   methods: {
-    editItem() {
-        // this.$router.push(`/edit-donatein/${item.id}`);
+    editItem(item) {
+        this.$router.push(`/edit-donate/${item.donate_id}`);
     },
     deleteItem(item) {
         this.selectedUserId = item.donate_id;
