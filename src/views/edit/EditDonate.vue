@@ -40,7 +40,7 @@
               required
               @click="clearlistitem"
             ></v-autocomplete>
-            <v-btn v-model="checkinput" @click="adddata">เลือกประเภท</v-btn> รายการเดิม{{ olditem}}
+            <v-btn v-model="checkinput" @click="adddata">เลือกประเภท</v-btn> รายการเดิม {{ olditem}}
 
             <v-autocomplete
               ref="itemlist"
@@ -176,29 +176,28 @@ export default {
       this.form.item_id = this.form.item_id[0] + this.form.item_id[1] + this.form.item_id[2];
       this.form.donor_id = this.form.donor_id[0] + this.form.donor_id[1] + this.form.donor_id[2];
       if (this.form.item_id != null) {
-        this.form.item_id =
-          this.form.item_id[0] + this.form.item_id[1] + this.form.item_id[2];
+        this.form.item_id = this.form.item_id[0] + this.form.item_id[1] + this.form.item_id[2];
         this.form.item_id = this.form.item_id.trim();
       }
       if (this.form.donor_id != null) {
-        this.form.donor_id =
-          this.form.donor_id[0] + this.form.donor_id[1] + this.form.donor_id[2];
+        this.form.donor_id =this.form.donor_id[0] + this.form.donor_id[1] + this.form.donor_id[2];
         this.form.donor_id = this.form.donor_id.trim();
       }
 
-      // console.log(this.form);
+      console.log(this.form);
       // axios .post(`api/donate/edit-donate${this.$route.params.id}`, this.form) .then((response) => {
       //     console.log(response);
       //     this.form.item_id = null;
       //     this.form.amount = null;
       //     this.checkinput = null;
       //     this.alertify.success("เพิ่มข้อมูลสำเร็จ !!");
+      //     this.$router.back();
       //     this.errorRes = "";
       //   })
       //   .catch((err) => {
       //     this.errorRes = err.response.data.message;
       //   });
-      this.form.donor_id = this.stopdornor;
+      // this.form.donor_id = this.stopdornor;
     },
 
     clearlistitem() {
