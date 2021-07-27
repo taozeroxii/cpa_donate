@@ -28,6 +28,26 @@ module.exports = {
     });
   },
 
+  findOneDonatelist(id) {
+    //ข้ออมูลรับบริจาคตาม id
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `SELECT ddi.*,dil.group_item_type_id,dgt.type_name as group_item_type_name,dd.donor_name as  donor,
+        dil.item_name as  item
+        FROM donate_detail_instock ddi
+        INNER JOIN donate_donor dd on dd.donor_id = ddi.donor_id
+        INNER JOIN donate_item_list dil on dil.item_id = ddi.item_id
+        INNER JOIN donate_group_type dgt on dgt.group_item_type_id = dil.group_item_type_id
+        where  id =  ? `,[id],(error, result) => {
+          if (error) return reject(error);
+          // console.log(result)
+          resolve(result[0]);
+        }
+      );
+    });
+  },
+
+
   findDonateInBygroup(id) {
     //ข้ออมูลรับบริจาคตาม id
     return new Promise((resolve, reject) => {
@@ -55,9 +75,6 @@ module.exports = {
     });
   },
 
-  updateDetaildonate() {},
-
-  deleteDetaildonate() {},
   //--------------------------------------------------------------------------------
 
   findAllDonor() {

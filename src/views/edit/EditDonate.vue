@@ -5,8 +5,8 @@
       <v-col cols="12" sm="10" md="8" lg="6">
         <v-card ref="form" class="mt-5">
           <v-card-text>
-            <h1 class="mb-5">แก้ไขข้อมูลรับบริจาค / รับมอบ </h1>
-            <p> itemlist_id :{{this.$route.params.id}}</p>
+            <h1 class="mb-5">แก้ไขข้อมูลรับบริจาค / รับมอบ</h1>
+            <p>itemlist_id :{{ this.$route.params.id }}</p>
 
             <v-text-field
               ref="head"
@@ -40,7 +40,7 @@
               required
               @click="clearlistitem"
             ></v-autocomplete>
-            <v-btn v-model="checkinput" @click="adddata">เลือกประเภท</v-btn>
+            <v-btn v-model="checkinput" @click="adddata">เลือกประเภท</v-btn> รายการเดิม{{ olditem}}
 
             <v-autocomplete
               ref="itemlist"
@@ -117,6 +117,7 @@ export default {
     successMessage: "",
     errorRes: "",
     groupstock_id: "",
+    olditem:"",
     form: {
       item_id: null,
       donor_id: null,
@@ -128,19 +129,18 @@ export default {
   }),
 
   created() {
-    axios.get(`api/typeinput/groupitem`).then((response) => {
+
+    axios.get(`/api/typeinput/groupitem`).then((response) => {
         var i;
         for (i = 0; i < response.data.length; i++) {
           this.stock.push(
-            response.data[i].group_item_type_id +
-              "   : " +
-              response.data[i].type_name
+            response.data[i].group_item_type_id +"   : " + response.data[i].type_name
           );
         }
-      }).catch((err) => {
+      }) .catch((err) => {
         console.log(err);
       });
-    axios.get(`api/donate/donorlist`).then((response) => {
+    axios.get(`/api/donate/donorlist`).then((response) => {
         var i;
         for (i = 0; i < response.data.length; i++) {
           this.donor.push(
@@ -152,27 +152,42 @@ export default {
       });
     //  this.form.donate_head_id = 'A001';
   },
-   methods: {
+
+  async mounted() {
+     const resdata = await axios.get(`/api/donate/donatelist/${this.$route.params.id}`)
+    //  console.log(resdata.data);
+     this.olditem = resdata.data.item_id +"   : " +  resdata.data.item;
+     this.groupstock_id  =  resdata.data.group_item_type_id +"   : " +resdata.data.group_item_type_name ;
+     this.form =  { 
+        donate_head_id :resdata.data.donate_head_id,
+        amount  :resdata.data.amount,
+        donor_id :resdata.data.donor_id + "   : " +resdata.data.donor
+     }
+  },
+
+  methods: {
     cancle() {
       this.$router.back();
     },
 
     submit() {
-      this.stopdornor =  this.form.donor_id;
-      this.form.staff    = this.$store.getters.get_name;
-      this.form.item_id  = this.form.item_id[0] + this.form.item_id[1] + this.form.item_id[2];
+      this.stopdornor = this.form.donor_id;
+      this.form.staff = this.$store.getters.get_name;
+      this.form.item_id = this.form.item_id[0] + this.form.item_id[1] + this.form.item_id[2];
       this.form.donor_id = this.form.donor_id[0] + this.form.donor_id[1] + this.form.donor_id[2];
       if (this.form.item_id != null) {
-        this.form.item_id = this.form.item_id[0] + this.form.item_id[1] + this.form.item_id[2];
+        this.form.item_id =
+          this.form.item_id[0] + this.form.item_id[1] + this.form.item_id[2];
         this.form.item_id = this.form.item_id.trim();
       }
       if (this.form.donor_id != null) {
-        this.form.donor_id = this.form.donor_id[0] + this.form.donor_id[1] + this.form.donor_id[2];
+        this.form.donor_id =
+          this.form.donor_id[0] + this.form.donor_id[1] + this.form.donor_id[2];
         this.form.donor_id = this.form.donor_id.trim();
       }
-   
+
       // console.log(this.form);
-      // axios .post("api/donate/add-donate", this.form) .then((response) => {
+      // axios .post(`api/donate/edit-donate${this.$route.params.id}`, this.form) .then((response) => {
       //     console.log(response);
       //     this.form.item_id = null;
       //     this.form.amount = null;
@@ -183,7 +198,7 @@ export default {
       //   .catch((err) => {
       //     this.errorRes = err.response.data.message;
       //   });
-       this.form.donor_id = this.stopdornor ;
+      this.form.donor_id = this.stopdornor;
     },
 
     clearlistitem() {
@@ -195,12 +210,14 @@ export default {
       this.itemlist = [];
       // console.log(this.form.groupstock_id[0]);
       axios
-        .get(`api/typeinput/itemlistgroupid/${this.groupstock_id[0]}`) .then((response) => {
+        .get(`/api/typeinput/itemlistgroupid/${this.groupstock_id[0]}`)
+        .then((response) => {
           // console.log(response.data);
           this.checkinput = true;
           var i;
           for (i = 0; i < response.data.length; i++) {
-            this.itemlist.push( response.data[i].item_id +  "  : " +response.data[i].item_name + " ( " +response.data[i].item_name_type + " ) "
+            this.itemlist.push(
+              response.data[i].item_id + "  : " + response.data[i].item_name + " ( " +response.data[i].item_name_type +  " ) "
             );
           }
         })
@@ -210,8 +227,6 @@ export default {
         });
     },
   },
-
-
 };
 </script>
 

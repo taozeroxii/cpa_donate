@@ -15,7 +15,7 @@ router.get("/donatelist", async (req, res) => {
     res.error(ex);
   }
 });
-router.post( "/add-donate",[
+router.post("/add-donate",[
     check("donate_head_id", "โปรดใส่เลขที่รับบริจาค").not().isEmpty(),
     check("donor_id", "โปรดเลือกผู้รับบริจาค") .not() .isEmpty(),
     check("amount", "โปรดกรอกจำนวนที่เป็นตัวเลขเท่านั้น").not().isEmpty() .isInt({ min: 1 }),
@@ -29,6 +29,16 @@ router.post( "/add-donate",[
     }
   }
 );
+router.get("/donatelist/:id", async (req, res) => {
+  try {
+    // console.log(req.params.id)
+    const donateitem = await service.findOneDonatelist(req.params.id);
+    if (!donateitem) throw new Error("Not Found Item !!!");
+    res.json(donateitem);
+  } catch (ex) {
+    // res.error(ex);
+  }
+});
 
 
 //------------------------ผู้รับบริจาค ผู้มอบ ---------------------------------------------------------
