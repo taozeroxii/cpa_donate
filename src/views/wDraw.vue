@@ -52,7 +52,7 @@
               <!-- <td>{{ item.price | currency("฿") }}</td>
             <td>{{ item.stock | number("0,0") }} pcs.</td> -->
               <td>
-                <v-icon class="mr-2" @click="editItem(item)">
+                <v-icon class="mr-2" @click="editItem(item.draw_id)">
                   edit
                 </v-icon>
    
@@ -105,6 +105,10 @@ export default {
         this.mDataArray = result.data;
       });
       this.loaddata = false;
+    },
+    editItem(item_id){
+      // console.log(`/edit-wdraw/${item_id}`);
+      this.$router.push(`/edit-wdraw/${item_id}`);
     },
   },
   data() {

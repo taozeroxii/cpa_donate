@@ -113,6 +113,24 @@ module.exports = {
     });
   },
 
+  findOneWdraw(id) {
+    //ข้ออมูลรับบริจาคตาม id
+    return new Promise((resolve, reject) => {
+      connection.query(`SELECT ddi.*,wk.workgroup,dil.item_name,dit.item_name_type,dgt.type_name FROM donate_detail_wdraw ddi
+          INNER JOIN hr_cpa_workgroup wk ON wk.id = ddi.draw_department_id
+          INNER JOIN donate_item_list dil ON dil.item_id = ddi.item_id
+          INNER JOIN donate_group_type dgt ON dgt.group_item_type_id = dil.group_item_type_id
+          LEFT OUTER JOIN donate_item_type dit ON dit.item_type_id = dil.item_type_id 
+          WHERE ddi.draw_id =  ? `,[id],(error, result) => {
+          if (error) return reject(error);
+          // console.log(result)
+          resolve(result[0]);
+        }
+      );
+    });
+  },
+
+
   findBefore_insert(id){//เช็คจำนวนสิ่งของก่อนทำการเพิ่มลงฐานข้อมูล มีข้อมูลรับเข้าทั้งหมดจ่ายออกทั้งหมดและคงเหลือ
     return new Promise((resolve, reject) => {
       connection.query(
@@ -143,6 +161,17 @@ module.exports = {
       );
     });
   },
+
+  editwDraw(id,value){
+    return new Promise((resolve, reject) => {
+      connection.query(`UPDATE donate_detail_wdraw SET ? WHERE draw_id = ?`, [value,id],(err, result) => {
+          if (err) return reject(err);
+          resolve(result);
+        }
+      );
+    });
+  },
+
 
 
   //--------------------------- ผู้บริจาค

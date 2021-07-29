@@ -63,6 +63,12 @@ const routes = [
     name: "addwDraw",
     component: () => import("../views/add/addwDraw"),
   },
+  {
+    path: "/edit-wdraw/:id",
+    meta: { auth: true },
+    name: "EditwDraw",
+    component: () => import("../views/edit/EditwDraw"),
+  },
 
   //-------------------------------------------- สินค้า ----------------------------------------------------------
   {
