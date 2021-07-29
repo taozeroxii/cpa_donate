@@ -152,8 +152,9 @@ router.post("/edit-wdraw/:id",[
     try {
       req.validate();
       const checkinstock = await service.findBefore_insert(req.body.item_id);
-      // console.log(checkinstock[0].remaining_instock );
-      if (checkinstock[0].remaining_instock == "undefined") { res.status(400) .error({ message: `ไม่พบรายการรับบริจาคสิ่งของดังกล่าว` });
+      // console.log(checkinstock);
+      if(Array.isArray(checkinstock) && checkinstock.length  === 0) { res.status(400) .error({ message: `ไม่พบรายการรับบริจาคสินค้าดังกล่าวหรือไม่ได้เลือกรายการ ` })}
+      else if (typeof checkinstock[0].remaining_instock == "undefined") { res.status(400) .error({ message: `ไม่พบรายการรับบริจาคสินค้าดังกล่าวหรือไม่ได้เลือกรายการ ` });
       } else if ( checkinstock[0].remaining_instock == null && checkinstock[0].amount_all >= req.body.amount) { res.json({ message: await service.editwDraw(req.params.id,req.body) });
       } else if ( checkinstock[0].remaining_instock != null &&  checkinstock[0].remaining_instock >= req.body.amount ) {res.json({ message: await service.editwDraw(req.params.id,req.body) });
       } else { 

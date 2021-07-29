@@ -20,9 +20,9 @@
             ></v-text-field>
 
             <v-autocomplete
-              ref="workgroup_id"
-              v-model="form.workgroup_id"
-              :rules="[() => !!form.workgroup_id || 'This field is required']"
+              ref="draw_department_id"
+              v-model="form.draw_department_id"
+              :rules="[() => !!form.draw_department_id || 'This field is required']"
               :error-messages="errorMessages"
               :items="workgroup"
               label="ผู้รับบริจาค / ผู้รับมอบ / หน่วยงาน"
@@ -119,16 +119,16 @@ export default {
     olditem:"",
     form: {
       item_id: null,
-      workgroup_id: null,
+      draw_department_id: null,
+      groupstock_id:null,
       amount: null,
       insert_date: null,
       update_staff: null,
-      draw_head_id: "",
+      draw_head_id: null,
     },
   }),
 
   created() {
-
     axios.get(`/api/typeinput/groupitem`).then((response) => {
         var i;
         for (i = 0; i < response.data.length; i++) {
@@ -147,7 +147,6 @@ export default {
       }).catch((err) => {
         console.log(err);
       });
-    //  this.form.draw_head_id = 'A001';
   },
 
   async mounted() {
@@ -158,7 +157,7 @@ export default {
      this.form =  { 
         draw_head_id :resdata.data.draw_head_id,
         amount  :resdata.data.amount,
-        workgroup_id :resdata.data.draw_department_id + "   : " +resdata.data.workgroup
+        draw_department_id :resdata.data.draw_department_id + "   : " +resdata.data.workgroup
      }
   },
 
@@ -168,25 +167,28 @@ export default {
     },
 
     submit() {
-      this.stopdornor = this.form.workgroup_id;
+      this.stopdornor = this.form.draw_department_id;
       this.form.update_staff = this.$store.getters.get_name;
       this.form.item_id = this.form.item_id[0] + this.form.item_id[1] + this.form.item_id[2];
-      this.form.workgroup_id = this.form.workgroup_id[0] + this.form.workgroup_id[1] + this.form.workgroup_id[2];
+      this.form.draw_department_id = this.form.draw_department_id[0] + this.form.draw_department_id[1] + this.form.draw_department_id[2];
+      this.form.groupstock_id = this.groupstock_id;
+
       if (this.form.item_id != null) {
         this.form.item_id = this.form.item_id[0] + this.form.item_id[1] + this.form.item_id[2];
         this.form.item_id = this.form.item_id.trim();
       }
-      if (this.form.workgroup_id != null) {
-        this.form.workgroup_id =this.form.workgroup_id[0] + this.form.workgroup_id[1] + this.form.workgroup_id[2];
-        this.form.workgroup_id = this.form.workgroup_id.trim();
+      if (this.form.draw_department_id != null) {
+        this.form.draw_department_id =this.form.draw_department_id[0] + this.form.draw_department_id[1] + this.form.draw_department_id[2];
+        this.form.draw_department_id = this.form.draw_department_id.trim();
+      }
+       if (this.form.groupstock_id != null) {
+        this.form.groupstock_id =this.form.groupstock_id[0] + this.form.groupstock_id[1] + this.form.groupstock_id[2];
+        this.form.groupstock_id = this.form.groupstock_id.trim();
       }
 
       // console.log(this.form);
-      axios .post(`/api/donate/edit-donate/${this.$route.params.id}`, this.form) .then((response) => {
+      axios .post(`/api/donate/edit-wdraw/${this.$route.params.id}`, this.form) .then((response) => {
           console.log(response);
-          this.form.item_id = null;
-          this.form.amount = null;
-          this.checkinput = null;
           this.alertify.success("เพิ่มข้อมูลสำเร็จ !!");
           this.$router.back();
           this.errorRes = "";
@@ -194,7 +196,7 @@ export default {
         .catch((err) => {
           this.errorRes = err.response.data.message;
         });
-      this.form.workgroup_id = this.stopdornor;
+      this.form.draw_department_id = this.stopdornor;
     },
 
     clearlistitem() {
@@ -205,8 +207,7 @@ export default {
     adddata() {
       this.itemlist = [];
       // console.log(this.form.groupstock_id[0]);
-      axios
-        .get(`/api/typeinput/itemlistgroupid/${this.groupstock_id[0]}`)
+      axios.get(`/api/typeinput/itemlistgroupid/${this.groupstock_id[0]}`)
         .then((response) => {
           // console.log(response.data);
           this.checkinput = true;

@@ -180,9 +180,9 @@ export default {
         this.form.draw_department_id = this.form.draw_department_id.trim();
       }
 
-      console.log(this.form);
-      axios .post("api/donate/add-wdraw", this.form) .then((response) => {
-          console.log(response);
+      // console.log(this.form);
+      axios .post("api/donate/add-wdraw", this.form) .then(() => {
+          // console.log(response);
           this.form.amount = null;
           this.form.note = null;
           this.checkinput = null;
