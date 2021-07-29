@@ -23,5 +23,6 @@ npm start
 
 
 
-user ทดสอบ admin taotest
+ทดสอบ admin : admin 123456
+ทดสอบ user  : a     123456
 
