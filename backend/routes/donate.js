@@ -29,6 +29,19 @@ router.post("/add-donate",[
     }
   }
 );
+router.post("/edit-donate/:id",[
+  check("donate_head_id", "โปรดกรอกเลขที่รับมอบ").not().isEmpty(),
+  check("item_id", "โปรดเลือกรายการสินค้า").not().isEmpty(),
+  ],async (req, res) => {
+    try {
+      req.validate();
+      res.json({ message: await service.editDonate(req.params.id,req.body) });
+    } catch (ex) {
+      res.error(ex);
+    }
+  }
+);
+
 router.get("/donatelist/:id", async (req, res) => {
   try {
     // console.log(req.params.id)

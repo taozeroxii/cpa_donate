@@ -123,7 +123,7 @@ export default {
       donor_id: null,
       amount: null,
       insert_date: null,
-      staff: null,
+      update_staff: null,
       donate_head_id: "",
     },
   }),
@@ -172,7 +172,7 @@ export default {
 
     submit() {
       this.stopdornor = this.form.donor_id;
-      this.form.staff = this.$store.getters.get_name;
+      this.form.update_staff = this.$store.getters.get_name;
       this.form.item_id = this.form.item_id[0] + this.form.item_id[1] + this.form.item_id[2];
       this.form.donor_id = this.form.donor_id[0] + this.form.donor_id[1] + this.form.donor_id[2];
       if (this.form.item_id != null) {
@@ -184,20 +184,20 @@ export default {
         this.form.donor_id = this.form.donor_id.trim();
       }
 
-      console.log(this.form);
-      // axios .post(`api/donate/edit-donate${this.$route.params.id}`, this.form) .then((response) => {
-      //     console.log(response);
-      //     this.form.item_id = null;
-      //     this.form.amount = null;
-      //     this.checkinput = null;
-      //     this.alertify.success("เพิ่มข้อมูลสำเร็จ !!");
-      //     this.$router.back();
-      //     this.errorRes = "";
-      //   })
-      //   .catch((err) => {
-      //     this.errorRes = err.response.data.message;
-      //   });
-      // this.form.donor_id = this.stopdornor;
+      // console.log(this.form);
+      axios .post(`/api/donate/edit-donate/${this.$route.params.id}`, this.form) .then((response) => {
+          console.log(response);
+          this.form.item_id = null;
+          this.form.amount = null;
+          this.checkinput = null;
+          this.alertify.success("เพิ่มข้อมูลสำเร็จ !!");
+          this.$router.back();
+          this.errorRes = "";
+        })
+        .catch((err) => {
+          this.errorRes = err.response.data.message;
+        });
+      this.form.donor_id = this.stopdornor;
     },
 
     clearlistitem() {

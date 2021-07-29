@@ -75,6 +75,16 @@ module.exports = {
     });
   },
 
+  editDonate(id,value){
+    return new Promise((resolve, reject) => {
+      connection.query(`UPDATE donate_detail_instock SET ? WHERE id = ?`, [value,id],(err, result) => {
+          if (err) return reject(err);
+          resolve(result);
+        }
+      );
+    });
+  },
+
   //--------------------------------------------------------------------------------
 
   findAllDonor() {
