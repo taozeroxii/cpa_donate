@@ -11,7 +11,7 @@
  Target Server Version : 80018
  File Encoding         : 65001
 
- Date: 24/07/2021 21:43:59
+ Date: 29/07/2021 23:10:29
 */
 
 SET NAMES utf8mb4;
@@ -52,10 +52,10 @@ CREATE TABLE `donate_detail_instock`  (
   `insert_date` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT 'วันที่เพิ่ม',
   `update_datetime` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT 'วันที่แก้ไขล่าสุด',
   `staff` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'ผุ้บันทึก',
-  `update_staff` datetime(0) NULL DEFAULT NULL COMMENT 'ผู้แก้ไขล่าสุด',
+  `update_staff` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'ผู้แก้ไขล่าสุด',
   `donate_head_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'รหัสใบรับไว้เช็คว่าครั้งนี้มีการรับสินค้าอะไรมาบ้าง',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of donate_detail_instock
@@ -64,6 +64,10 @@ INSERT INTO `donate_detail_instock` VALUES (1, 1, '3', '33', '2021-07-17 14:20:4
 INSERT INTO `donate_detail_instock` VALUES (2, 4, '2', '33', '2021-07-17 14:21:20', '2021-07-17 14:21:19', 'นายadmin dev สิทธิการเข้าถึง : admin', NULL, 'test');
 INSERT INTO `donate_detail_instock` VALUES (3, 3, '2', '22', '2021-07-17 14:21:28', '2021-07-17 14:21:28', 'นายadmin dev สิทธิการเข้าถึง : admin', NULL, 'test');
 INSERT INTO `donate_detail_instock` VALUES (4, 24, '2', '10000', '2021-07-17 14:21:56', '2021-07-17 14:21:56', 'นายadmin dev สิทธิการเข้าถึง : admin', NULL, 'test');
+INSERT INTO `donate_detail_instock` VALUES (5, 6, '5', '50', '2021-07-24 21:50:58', '2021-07-24 21:50:57', 'นายadmin dev สิทธิการเข้าถึง : admin', NULL, '64072401');
+INSERT INTO `donate_detail_instock` VALUES (6, 1, '1', '11', '2021-07-29 16:00:17', '2021-07-29 16:00:17', 'นายadmin dev สิทธิการเข้าถึง : admin', NULL, 'test');
+INSERT INTO `donate_detail_instock` VALUES (7, 2, '1', '33', '2021-07-29 16:00:22', '2021-07-29 16:00:21', 'นายadmin dev สิทธิการเข้าถึง : admin', NULL, 'test');
+INSERT INTO `donate_detail_instock` VALUES (8, 3, '1', '150', '2021-07-29 16:40:10', '2021-07-29 16:40:10', 'นายadmin dev สิทธิการเข้าถึง : admin', 'นายadmin dev สิทธิการเข้าถึง : admin', 'test');
 
 -- ----------------------------
 -- Table structure for donate_detail_wdraw
@@ -71,19 +75,19 @@ INSERT INTO `donate_detail_instock` VALUES (4, 24, '2', '10000', '2021-07-17 14:
 DROP TABLE IF EXISTS `donate_detail_wdraw`;
 CREATE TABLE `donate_detail_wdraw`  (
   `draw_id` int(11) NOT NULL AUTO_INCREMENT,
-  `draw_date` datetime(0) NOT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT 'วันที่เบิกจ่ายของครั้งแรกที่ทำการกดบันทึก',
-  `groupstock_id` int(55) NULL DEFAULT NULL COMMENT 'หมวดหมู่ประเภทรับบริจาค',
-  `item_id` int(50) NULL DEFAULT NULL COMMENT 'รหัสรายการสินค้า',
+  `draw_date` datetime(0) NOT NULL COMMENT 'วันที่เบิกจ่ายของครั้งแรกที่ทำการกดบันทึก',
+  `groupstock_id` int(55) NOT NULL COMMENT 'หมวดหมู่ประเภทรับบริจาค',
+  `item_id` int(50) NOT NULL COMMENT 'รหัสรายการสินค้า',
   `amount` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'จำนวนที่เบิก',
   `status` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'สถานะการจ่ายสินค้า',
-  `draw_department_id` int(50) NULL DEFAULT NULL COMMENT 'รหัสแผนกที่ขอเบิก',
+  `draw_department_id` int(50) NOT NULL COMMENT 'รหัสแผนกที่ขอเบิก',
   `note` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'หมายเหตุ',
   `draw_head_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'รหัสใบจ่ายสินค้า',
   `staff` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'ผุ้บันทึก',
-  `update_staff` datetime(0) NULL DEFAULT NULL COMMENT 'ผู้แก้ไขล่าสุด',
+  `update_staff` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'ผู้แก้ไขล่าสุด',
   `update_datetime` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT 'วันที่แก้ไขล่าสุด',
   PRIMARY KEY (`draw_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of donate_detail_wdraw
@@ -92,6 +96,13 @@ INSERT INTO `donate_detail_wdraw` VALUES (1, '2021-07-24 14:51:14', 1, 1, '3', '
 INSERT INTO `donate_detail_wdraw` VALUES (2, '2021-07-24 14:51:20', 1, 3, '10', 'Y', 100, NULL, 'ทดสอบ', 'นายadmin dev สิทธิการเข้าถึง : admin', NULL, '2021-07-24 14:51:20');
 INSERT INTO `donate_detail_wdraw` VALUES (3, '2021-07-24 15:28:51', 1, 1, '10', 'Y', 50, NULL, 'aaaa', 'นายadmin dev สิทธิการเข้าถึง : admin', NULL, '2021-07-24 15:28:51');
 INSERT INTO `donate_detail_wdraw` VALUES (4, '2021-07-24 19:40:17', 5, 24, '5000', 'Y', 18, NULL, 'test111', 'นายadmin dev สิทธิการเข้าถึง : admin', NULL, '2021-07-24 19:40:17');
+INSERT INTO `donate_detail_wdraw` VALUES (5, '2021-07-24 22:02:29', 2, 6, '10', 'Y', 66, NULL, '64072401', 'นายadmin dev สิทธิการเข้าถึง : admin', NULL, '2021-07-24 22:02:28');
+INSERT INTO `donate_detail_wdraw` VALUES (6, '2021-07-24 22:02:57', 5, 24, '500', 'Y', 66, NULL, '64072401', 'นายadmin dev สิทธิการเข้าถึง : admin', NULL, '2021-07-24 22:02:57');
+INSERT INTO `donate_detail_wdraw` VALUES (7, '2021-07-24 22:03:06', 5, 24, '10', 'Y', 66, NULL, '64072401', 'นายadmin dev สิทธิการเข้าถึง : admin', 'นายadmin dev สิทธิการเข้าถึง : admin', '2021-07-29 23:05:36');
+INSERT INTO `donate_detail_wdraw` VALUES (8, '2021-07-29 23:03:23', 1, 1, '3', 'Y', 1, NULL, '640722edit', 'นายadmin dev สิทธิการเข้าถึง : admin', 'นายadmin dev สิทธิการเข้าถึง : admin', '2021-07-29 23:03:23');
+INSERT INTO `donate_detail_wdraw` VALUES (9, '2021-07-29 23:06:53', 1, 1, '1', 'Y', 19, 'test', 'testadd', 'นายadmin dev สิทธิการเข้าถึง : admin', NULL, '2021-07-29 23:06:53');
+INSERT INTO `donate_detail_wdraw` VALUES (10, '2021-07-29 23:07:07', 1, 1, '5', 'Y', 19, NULL, 'testadd', 'นายadmin dev สิทธิการเข้าถึง : admin', 'นายadmin dev สิทธิการเข้าถึง : admin', '2021-07-29 23:08:22');
+INSERT INTO `donate_detail_wdraw` VALUES (11, '2021-07-29 23:09:02', 1, 1, '1', 'Y', 3, 'note', 'test', 'นายadmin dev สิทธิการเข้าถึง : admin', NULL, '2021-07-29 23:09:02');
 
 -- ----------------------------
 -- Table structure for donate_donor
@@ -106,7 +117,7 @@ CREATE TABLE `donate_donor`  (
   `update_staff` varchar(150) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `update_datetime` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`donor_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of donate_donor
@@ -228,7 +239,7 @@ CREATE TABLE `donate_spclty`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `spclty` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'แผนก',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of donate_spclty
