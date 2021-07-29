@@ -11,7 +11,7 @@
  Target Server Version : 80018
  File Encoding         : 65001
 
- Date: 29/07/2021 23:10:29
+ Date: 29/07/2021 23:17:37
 */
 
 SET NAMES utf8mb4;
@@ -269,7 +269,7 @@ CREATE TABLE `donate_user`  (
 -- ----------------------------
 -- Records of donate_user
 -- ----------------------------
-INSERT INTO `donate_user` VALUES (1, 'admintaonaja', '6d59b638fe405cf7ec3ff85bcd94839dd1babd40', 'นาย', 'admin', 'dev', '34w94Or', '2021-05-10 21:08:49', '2021-05-13 09:16:07', '1', NULL, 'Y');
+INSERT INTO `donate_user` VALUES (1, 'admintaonaja', 'a2603c2e896dbd814fee91cb6d4ef076cc9c6fb9', 'นาย', 'admin', 'dev', '4gPuQ9e', '2021-05-10 21:08:49', '2021-07-29 23:16:29', '1', NULL, 'Y');
 INSERT INTO `donate_user` VALUES (2, 'testupdate', 'f812326b25177330633accd601445d35345ba5e5', 'นาง', 'testupdatee', 'testupdate', '35Uvrbc', '2021-05-10 21:23:38', '2021-07-17 09:19:40', '2', NULL, 'N');
 INSERT INTO `donate_user` VALUES (3, 'a', '8d6150cf892125ba6587538e838b3cb826ec0702', 'นาย', 'aa', 'a', 'NLdePCp', '2021-05-10 23:50:14', '2021-07-17 09:24:48', '2', NULL, 'Y');
 INSERT INTO `donate_user` VALUES (4, 'admintao1', '9d37bdfe742007e79a690f47ca6a524a8086cc25', 'นาย', 'asdasdsadas', 'dasdasdasdas', 'S5iwEle', '2021-05-11 11:30:29', '2021-07-17 09:19:46', '2', NULL, 'N');

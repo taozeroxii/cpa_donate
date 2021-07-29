@@ -102,7 +102,7 @@ export default {
     useDefault() {
       this.account = {
         username: "admintaonaja",
-        password: "taotest",
+        password: "123456",
       };
     },
   },

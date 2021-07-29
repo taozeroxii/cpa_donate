@@ -131,19 +131,21 @@ export default {
 
   async mounted() {
     // console.log(this.$route.params.id)
-    const resdata = await axios.get( `/api/account/get-user/${this.$route.params.id}`);
+    const resdata = await axios.get(
+      `/api/account/get-user/${this.$route.params.id}`
+    );
     this.useraccount = {
-        username: resdata.data.username,
-        pname: resdata.data.pname,
-        fname: resdata.data.fname,
-        lname: resdata.data.lname,
-        default_role: resdata.data.default_role+"   : " + resdata.data.role,
-    }
+      username: resdata.data.username,
+      pname: resdata.data.pname,
+      fname: resdata.data.fname,
+      lname: resdata.data.lname,
+      default_role: resdata.data.default_role + "   : " + resdata.data.role,
+    };
     // console.log(this.useraccount);
   },
 
   created() {
-    axios.get("/api/typeinput/userrole").then((res) => {
+    axios .get("/api/typeinput/userrole").then((res) => {
         var i;
         for (i = 0; i < res.data.length; i++) {
           this.role.push(res.data[i].id + "   : " + res.data[i].role);
@@ -165,18 +167,14 @@ export default {
         this.useraccount.default_role = this.useraccount.default_role[0];
         this.useraccount.default_role = this.useraccount.default_role.trim();
       }
-      axios
-        .put(
-          `/api/account/edit-user/${this.$route.params.id}`,
-          this.useraccount,
-          (err, res) => {
-            if (err) return err;
-            console.log(res);
-            this.alertify.success("แก้ไขสำเร็จ");
-          }
-        )
+        axios.put(`/api/account/edit-user/${this.$route.params.id}`,this.useraccount).then(() => {
+          // console.log(response);
+          this.alertify.success("เพิ่มข้อมูลสำเร็จ !!");
+          this.$router.back();
+          this.errorRes = "";
+        })
         .catch((err) => {
-          this.errMessage = err.response.data.message;
+          this.errorRes = err.response.data.message;
         });
     },
   },
