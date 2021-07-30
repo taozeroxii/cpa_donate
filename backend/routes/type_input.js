@@ -121,7 +121,7 @@ router.delete("/itemtype/:id",authenticated, async (req, res) => {
 
 //----------------------- itemlist ---------------------------------------------------------------------------------------
 //เพิ่มข้อมูลสินค้ารับบริจาครายชื่อและพประเภทต่างๆ
-router.post( "/add-item",
+router.post( "/add-item",authenticated,
   [
     check( "item_type_id", "โปรดเลือกหน่วยบรรจุ") .not() .isEmpty() .isInt(),
     check("group_item_type_id", "โปรดเลือกกลุ่มประเภท").not().isEmpty().isInt(),
@@ -136,7 +136,7 @@ router.post( "/add-item",
     }
   }
 );
-router.get("/itemlist", async (req, res) => {
+router.get("/itemlist",authenticated, async (req, res) => {
   try {
     const itemlist = await service.findItemList();
     if (!itemlist) throw new Error("Not Found Item !!!");
@@ -146,7 +146,7 @@ router.get("/itemlist", async (req, res) => {
   }
 });
 //แสดงข้อมูลแค่ 1 rowเพื่อแก้ไข
-router.get("/itemlist/:id", async (req, res) => {
+router.get("/itemlist/:id", authenticated,async (req, res) => {
   try {
     // console.log(req.params.id)
     const onelistitem = await service.findItemListByid(req.params.id);
@@ -156,7 +156,7 @@ router.get("/itemlist/:id", async (req, res) => {
     res.error(ex);
   }
 });
-router.put("/edit-itemlist/:id",[
+router.put("/edit-itemlist/:id",authenticated,[
   param('id').isInt(),// check param id from url ต้องเป็น int
   check('group_item_type_id').not().isEmpty(),
   check('item_type_id').not().isEmpty(),
@@ -174,7 +174,7 @@ router.put("/edit-itemlist/:id",[
   catch (ex) { res.error(ex);
   }
 });
-router.get("/itemlistgroupid/:id", async (req, res) => {// หน้า adddonate ดึงรายการสินค้าตามกลุ่มที่เลือก
+router.get("/itemlistgroupid/:id",authenticated, async (req, res) => {// หน้า adddonate ดึงรายการสินค้าตามกลุ่มที่เลือก
   try {
     const itemlistgroupid = await service.findItemListBygroupId(req.params.id);
     if (!itemlistgroupid) throw new Error("Not Found Item !!!");
