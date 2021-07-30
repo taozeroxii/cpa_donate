@@ -187,7 +187,7 @@ router.get("/itemlistgroupid/:id",authenticated, async (req, res) => {// หน�
 
 
 //----------------------- Donate Detail head ---------------------------------------------------------------------------------------
-router.get("/detail-head/:id/:user", async (req, res) => {// หน้า adddonate ดึงรายการสินค้าตามกลุ่มที่เลือก
+router.get("/detail-head/:id/:user", authenticated,async (req, res) => {// หน้า adddonate ดึงรายการสินค้าตามกลุ่มที่เลือก
   try {
     const headid = await service.findheadnumber(req.params.id,req.params.user);
     if (!headid) throw new Error("Not Found Item !!!");
@@ -197,7 +197,7 @@ router.get("/detail-head/:id/:user", async (req, res) => {// หน้า adddon
   }
 });
 
-router.get("/workgroup", async (req, res) => {
+router.get("/workgroup",authenticated, async (req, res) => {
   try {
     const workgroup = await service.findWorkGroup();
     if (!workgroup) throw new Error("Not Found Item !!!");
@@ -209,7 +209,7 @@ router.get("/workgroup", async (req, res) => {
 
 
 
-router.get("/userrole", async (req, res) => {
+router.get("/userrole",authenticated, async (req, res) => {
   try {
     const usergroup = await service.findallusergroup();
     if (!usergroup) throw new Error("Not Found Item !!!");
