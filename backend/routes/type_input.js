@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const { check, query ,param} = require("express-validator");
 const service = require("../services/serviceinput");
-
+const {authenticated} = require('../configs/security')
 // 
 router.get("/", async (req, res) => {
   res.json("this is type_input Route");
@@ -11,7 +11,7 @@ router.get("/", async (req, res) => {
 
 
 //----------------------- groupitem หรือ คลังสินค้า -------------------------------------------------------------------------------------------
-router.get("/groupitem", async (req, res) => {
+router.get("/groupitem",authenticated, async (req, res) => {
   try {
     const groupitem = await service.findGroupitem();
     if (!groupitem) throw new Error("Not Found Item !!!");
@@ -21,7 +21,7 @@ router.get("/groupitem", async (req, res) => {
   }
 });
 // เรียกข้อมูลบริจาครายนชิ้นเพื่อแสดงข้อมูลตอนแก้ไข
-router.get("/groupitem/:id", async (req, res) => {
+router.get("/groupitem/:id",authenticated, async (req, res) => {
   try {
     const itemtype = await service.findItemtypeByid(req.params.id);
     if (!itemtype) throw new Error("Not Found Item !!!");
@@ -31,7 +31,7 @@ router.get("/groupitem/:id", async (req, res) => {
   }
 });
 //เพิ่มข้อมูลกลุ่มรายการสินค้า
-router.post( "/groupitem",[check("type_name", "โปรดกรอกข้อมูลชื่อกลุ่มสินค้าหรือชื่อที่จัดเก็บสินค้า") .not().isEmpty() ],
+router.post( "/groupitem",authenticated,[check("type_name", "โปรดกรอกข้อมูลชื่อกลุ่มสินค้าหรือชื่อที่จัดเก็บสินค้า") .not().isEmpty() ],
   async (req, res) => {
     try {
       req.validate();
@@ -42,7 +42,7 @@ router.post( "/groupitem",[check("type_name", "โปรดกรอกข้อ
   }
 );
 // แก้ไขกลุ่ม
-router.put("/groupitem/:id",[
+router.put("/groupitem/:id",authenticated,[
   check('item_name_type').not().isEmpty(),
 ], async (req, res) => {
   try {
@@ -56,7 +56,7 @@ router.put("/groupitem/:id",[
   }
 });
 //ลบกลุ่ม
-router.delete("/groupitem/:id", async (req, res) => {
+router.delete("/groupitem/:id",authenticated, async (req, res) => {
   try {
     const groupitem = await service.DeleteGroupitemByid({ groupitem_id: req.params.id,});
     if (!groupitem) throw new Error("Not Found Item !!!");
@@ -70,7 +70,7 @@ router.delete("/groupitem/:id", async (req, res) => {
 
 
 //----------------------- itemtype --------------------------------------------------------------------------------------------
-router.get("/itemtype", async (req, res) => {
+router.get("/itemtype", authenticated,async (req, res) => {
   try {
     const itemtype = await service.findItemtype();
     if (!itemtype) throw new Error("Not Found Item !!!");
@@ -80,9 +80,7 @@ router.get("/itemtype", async (req, res) => {
   }
 });
 //เพิ่มข้อมูลกลุ่มรายการสินค้า
-router.post(
-  "/itemtype",
-  [
+router.post("/itemtype",authenticated,[
     check("item_name_type", "โปรดกรอกชื่อหน่วยนับที่ต้องการ").not().isEmpty(),
   ],
   async (req, res) => {
@@ -95,8 +93,7 @@ router.post(
   }
 );
 //แก้ไขรายการสินค้า
-router.put(
-  "/itemtype/:id",
+router.put("/itemtype/:id",authenticated,
   [
     check("item_name_type", "โปรดกรอกชื่อหน่วยนับที่ต้องการ").not().isEmpty(),
     check("amount", "โปรดกรอกจำนวนต่อหน่วย").not().isEmpty().isInt(),
@@ -110,7 +107,7 @@ router.put(
     }
   }
 );
-router.delete("/itemtype/:id", async (req, res) => {
+router.delete("/itemtype/:id",authenticated, async (req, res) => {
   try {
     res.json({ message: await service.onDeleteItemType(req.params.id) });
   } catch (ex) {

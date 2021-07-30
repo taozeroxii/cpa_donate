@@ -100,10 +100,10 @@ export default {
       };
     },
     useDefault() {
-      this.account = {
-        username: "admintaonaja",
-        password: "123456",
-      };
+      // this.account = {
+      //   username: "admintaonaja",
+      //   password: "123456",
+      // };
     },
   },
 };

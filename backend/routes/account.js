@@ -1,12 +1,14 @@
 const router = require("express").Router();
 const { check, query, validationResult ,param} = require("express-validator");
 const services = require("../services/accountservice");
+const {authenticated} = require('../configs/security')
+
 
 router.get("/", async (req, res) => {
   res.json({ message: "account route" });
 });
 
-router.post( "/register",
+router.post( "/register",authenticated,
   [
     check("pname", "โปรดกรอกคำนำหน้า") .not().isEmpty(),
     check("fname", "โปรดกรอกชื่อ").not().isEmpty(),
@@ -44,7 +46,7 @@ router.post( "/login",
   }
 );
 
-router.get("/getuserlist", async (req, res) => {
+router.get("/getuserlist", authenticated,async (req, res) => {
   try {
     const model =  await services.getAlluserlist();
     if (!model) throw new Error("ไม่พบข้อมูลที่ค้นหา");
@@ -55,7 +57,7 @@ router.get("/getuserlist", async (req, res) => {
 });
 
 //ดึง user เพื่อ login และเก็บลง session
-router.post("/getUserLogin", (req, res) => {
+router.post("/getUserLogin",authenticated, (req, res) => {
   try {
     if (req.session.userLogin) {
       return res.json(req.session.userLogin);
@@ -75,7 +77,7 @@ router.post( "/logout",(req,res)=>{
   }
 });
 
-router.get("/get-user/:id", async (req, res) => {
+router.get("/get-user/:id",authenticated, async (req, res) => {
     try {
       const model = await services.getUserByid(req.params.id);
       if (!model) throw new Error("ไม่พบข้อมูลที่ค้นหา");
@@ -86,7 +88,7 @@ router.get("/get-user/:id", async (req, res) => {
 });
 
 
-router.put("/edit-user/:id",[
+router.put("/edit-user/:id",authenticated,[
   param('id').isInt(),// check param id from url ต้องเป็น int
   check('username').not().isEmpty(),
   check('password').not().isEmpty(),
@@ -108,7 +110,7 @@ router.put("/edit-user/:id",[
 
 
 
-router.delete("/delete-user/:id",[
+router.delete("/delete-user/:id",authenticated,[
   param('id').isInt(),// check param id from url ต้องเป็น int
 ], async (req, res) => {
   try {

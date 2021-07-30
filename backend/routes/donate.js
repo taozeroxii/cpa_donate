@@ -1,13 +1,14 @@
 const router = require("express").Router();
 const { check, query } = require("express-validator");
 const service = require("../services/servicedonate");
+const {authenticated} = require('../configs/security')
 
 router.get("/", (req, res) => {
   res.json({ message: "donate route" });
 });
 
 //--------------------แสดงข้อมูลรับบริจาคทั้งหมด------------------------------------------------------------------------
-router.get("/donatelist", async (req, res) => {
+router.get("/donatelist",authenticated, async (req, res) => {
   try {
     const result = await service.findAllDonateList();
     res.json(result);
@@ -15,7 +16,7 @@ router.get("/donatelist", async (req, res) => {
     res.error(ex);
   }
 });
-router.post("/add-donate",[
+router.post("/add-donate",authenticated,[
     check("donate_head_id", "โปรดใส่เลขที่รับบริจาค").not().isEmpty(),
     check("donor_id", "โปรดเลือกผู้รับบริจาค") .not() .isEmpty(),
     check("amount", "โปรดกรอกจำนวนที่เป็นตัวเลขเท่านั้น").not().isEmpty() .isInt({ min: 1 }),
@@ -29,7 +30,7 @@ router.post("/add-donate",[
     }
   }
 );
-router.post("/edit-donate/:id",[
+router.post("/edit-donate/:id",authenticated,[
   check("donate_head_id", "โปรดกรอกเลขที่รับมอบ").not().isEmpty(),
   check("item_id", "โปรดเลือกรายการสินค้า").not().isEmpty(),
   ],async (req, res) => {
@@ -42,7 +43,7 @@ router.post("/edit-donate/:id",[
   }
 );
 
-router.get("/donatelist/:id", async (req, res) => {
+router.get("/donatelist/:id", authenticated,async (req, res) => {
   try {
     // console.log(req.params.id)
     const donateitem = await service.findOneDonatelist(req.params.id);
@@ -55,7 +56,7 @@ router.get("/donatelist/:id", async (req, res) => {
 
 
 //------------------------ผู้รับบริจาค ผู้มอบ ---------------------------------------------------------
-router.get("/donorlist", async (req, res) => {
+router.get("/donorlist", authenticated,async (req, res) => {
   try {
     const result = await service.findAllDonor();
     res.json(result);
@@ -63,7 +64,7 @@ router.get("/donorlist", async (req, res) => {
     res.error(ex);
   }
 });
-router.get("/donorlist/:id", async (req, res) => {
+router.get("/donorlist/:id", authenticated,async (req, res) => {
   try {
     // console.log(req.params.id)
     const onelistitem = await service.finddonorlistByid(req.params.id);
@@ -73,7 +74,7 @@ router.get("/donorlist/:id", async (req, res) => {
     res.error(ex);
   }
 });
-router.post("/add-donor",[
+router.post("/add-donor",authenticated,[
   check("donor_name", "โปรดกรอกข้อมูล").not().isEmpty(),
   ],async (req, res) => {
     try {
@@ -84,7 +85,7 @@ router.post("/add-donor",[
     }
   }
 );
- router.post("/edit-donor/:id",[
+router.post("/edit-donor/:id",authenticated,[
   check("donor_name", "โปรดกรอกข้อมูล").not().isEmpty(),
   ],async (req, res) => {
     try {
@@ -98,7 +99,7 @@ router.post("/add-donor",[
 
 //--------------------เบิกจ่าย------------------------------------------------------------------------
 
-router.get("/with-draw", async (req, res) => {
+router.get("/with-draw", authenticated,async (req, res) => {
   try {
     const result = await service.findAllWdraw();
     res.json(result);
@@ -107,7 +108,7 @@ router.get("/with-draw", async (req, res) => {
   }
 });
 
-router.get("/with-draw/:id", async (req, res) => {
+router.get("/with-draw/:id",authenticated, async (req, res) => {
   try {
     const result = await service.findOneWdraw(req.params.id);
     res.json(result);
@@ -116,7 +117,7 @@ router.get("/with-draw/:id", async (req, res) => {
   }
 });
 
-router.post("/add-wdraw",[
+router.post("/add-wdraw",authenticated,[
     check("draw_head_id", "โปรดใส่เลขที่จ่ายสิ่งของ / ส่งมอบ").not().isEmpty(),
     check("draw_department_id", "โปรดเลือกหน่วยงานที่รับมอบ").not().isEmpty(),
     check("amount", "โปรดกรอกจำนวนที่เป็นตัวเลขมากกว่า 0 เท่านั้น").not().isEmpty().isInt({ gt: 0 }),
@@ -143,7 +144,7 @@ router.post("/add-wdraw",[
   }
 );
 
-router.post("/edit-wdraw/:id",[
+router.post("/edit-wdraw/:id",authenticated,[
   check("draw_head_id", "โปรดใส่เลขที่จ่ายสิ่งของ / ส่งมอบ").not().isEmpty(),
   check("draw_department_id", "โปรดเลือกหน่วยงานที่รับมอบ").not().isEmpty(),
   check("amount", "โปรดกรอกจำนวนที่เป็นตัวเลขมากกว่า 0 เท่านั้น").not().isEmpty().isInt({ gt: 0 }),
